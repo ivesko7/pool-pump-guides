@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Pentair &amp; Sta‑Rite Residential Pool Pump Guide</title>
+  <script>
+    // Cookie functions
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      // For local file, we need to use localStorage instead of cookies
+      try {
+        localStorage.setItem(name, value);
+      } catch (e) {
+        console.error("Local storage not available", e);
+        // Fallback to cookies
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+      }
+    }
+
+    function getCookie(name) {
+      // Try localStorage first
+      try {
+        const value = localStorage.getItem(name);
+        if (value !== null) {
+          return value;
+        }
+      } catch (e) {
+        console.error("Local storage not available", e);
+      }
+
+      // Fallback to cookies
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+  </script>
+  <style>
+    :root {
+      --base-font-size: 16px;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --text-color: #333;
+      --border-color: #eee;
+      --shadow-color: rgba(0,0,0,0.1);
+      --link-color: #0066cc;
+      --link-color-install: #cc6600;
+    }
+
+    .dark-mode {
+      --bg-color: #222;
+      --card-bg: #333;
+      --text-color: #eee;
+      --border-color: #444;
+      --shadow-color: rgba(0,0,0,0.3);
+      --link-color: #4d9fff;
+      --link-color-install: #ff9d4d;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+      font-size: var(--base-font-size);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .controls-container {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .font-controls, .theme-control {
+      background: var(--card-bg);
+      border-radius: 5px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .font-btn, .theme-btn {
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 2px;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .font-btn:hover, .theme-btn:hover {
+      background: var(--border-color);
+    }
+    .pump-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .pump-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      width: 300px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+    .pump-card:hover {
+      transform: scale(1.02);
+    }
+    .image-container {
+      position: relative;
+      height: 150px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--card-bg);
+      transition: background-color 0.3s;
+    }
+    .image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+    .eye-button {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 30px;
+      font-size: 16px;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: color 0.3s;
+    }
+    .manual-link {
+      margin-right: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      position: relative;
+      display: inline-block;
+      line-height: 1;
+    }
+    .user-manual {
+      color: var(--link-color);
+      transition: color 0.3s;
+    }
+    .install-manual {
+      color: var(--link-color-install);
+      transition: color 0.3s;
+    }
+    .manual-tag {
+      font-size: 7px;
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+      background-color: rgba(255,255,255,0.7);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+    .pump-card h3 {
+      margin: 10px;
+      padding: 0 5px;
+      font-size: calc(1rem * var(--font-scale, 1));
+      text-align: center;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+    }
+    .pump-details {
+      padding: 0 15px 15px 15px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Ensure consistent spacing */
+    .pump-details a {
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+    .pump-details p {
+      font-size: calc(0.9rem * var(--font-scale, 1));
+      margin: 10px 0;
+    }
+    .pump-specs {
+      flex-shrink: 0;
+      margin-bottom: 5px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      transition: border-color 0.3s;
+    }
+    .part-list, .hardware-list {
+      font-size: calc(0.85rem * var(--font-scale, 1));
+      padding-left: 15px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+    .part-list li, .hardware-list li {
+      margin-bottom: 6px;
+    }
+    .hardware-title {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    sub {
+      font-size: 0.75em;
+      vertical-align: baseline;
+      position: relative;
+      top: -0.4em;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls-container">
+    <div class="theme-control">
+      <button class="theme-btn" id="toggle-theme">🌓</button>
+    </div>
+    <div class="font-controls">
+      <button class="font-btn" id="decrease-font">-</button>
+      <button class="font-btn" id="increase-font">+</button>
+    </div>
+  </div>
+  <h1>Pentair &amp; Sta‑Rite Residential Pool Pump Guide</h1>
+  <div class="pump-list">
+
+    <!-- Pentair SuperFlo -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/superflo.jpg" alt="Pentair SuperFlo">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+SuperFlo" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/pumps/superflo/user-manuals/superflo-pump-manual-english.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USR</span></a>Pentair SuperFlo</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 1.0 – 2.5 HP</p>
+          <p><strong>Plumbing Size:</strong> 1.5″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            355067 (1 HP) <a href="https://www.pool360.com/Search?query=355067" target="_blank">[🔍]</a><br>
+            355074 (1.5 HP) <a href="https://www.pool360.com/Search?query=355074" target="_blank">[🔍]</a><br>
+            355093 (2 HP/2.5 HP up‑rated) <a href="https://www.pool360.com/Search?query=355093" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            355617 (for 0.5–1 HP) <a href="https://www.pool360.com/Search?query=355617" target="_blank">[🔍]</a><br>
+            355618 (for 1.5–2 HP) <a href="https://www.pool360.com/Search?query=355618" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            354545S <a href="https://www.pool360.com/Search?query=354545S" target="_blank">[🔍]</a><br>
+            PS‑200 <a href="https://www.pool360.com/Search?query=PS‑200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            356012 <a href="https://www.pool360.com/Search?query=356012" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            355022S <a href="https://www.pool360.com/Search?query=355022S" target="_blank">[🔍]</a><br>
+            355024S <a href="https://www.pool360.com/Search?query=355024S" target="_blank">[🔍]</a><br>
+            355026S <a href="https://www.pool360.com/Search?query=355026S" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            N/A <a href="https://www.pool360.com/Search?query=Pentair%20SuperFlo%20VS%20Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            355619 (OEM) <a href="https://www.pool360.com/Search?query=355619" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            355030 (OEM) <a href="https://www.pool360.com/Search?query=355030" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            357255 (OEM) <a href="https://www.pool360.com/Search?query=357255" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Basket:</strong> 070387Z <a href="https://www.pool360.com/Search?query=070387Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong> 350015 <a href="https://www.pool360.com/Search?query=350015" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pentair SuperFlo VS -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/superflo-vs.jpg" alt="Pentair SuperFlo VS">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+SuperFlo+VS" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/pumps/archive/superflo-vs/manuals/superflovs-variable-speed-pump-manual-english.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USR</span></a><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/pumps/archive/superflo-vs/manuals/superflovs-variable-speed-pump-manual-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair SuperFlo VS</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 1.5 HP (Variable Speed)</p>
+          <p><strong>Plumbing Size:</strong> 1.5″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            355074 <a href="https://www.pool360.com/Search?query=355074" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            355618 <a href="https://www.pool360.com/Search?query=355618" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            354545S <a href="https://www.pool360.com/Search?query=354545S" target="_blank">[🔍]</a><br>
+            PS‑200 <a href="https://www.pool360.com/Search?query=PS‑200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            356012 <a href="https://www.pool360.com/Search?query=356012" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            Integrated VS motor (e.g., 353134S) <a href="https://www.pool360.com/Search?query=353134S" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            Integrated onboard <a href="https://www.pool360.com/Search?query=Pentair%20SuperFlo%20VS%20VS%20Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            355619 (OEM) <a href="https://www.pool360.com/Search?query=355619" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            355030 (OEM) <a href="https://www.pool360.com/Search?query=355030" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            357255 (OEM) <a href="https://www.pool360.com/Search?query=357255" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Basket:</strong> 070387Z <a href="https://www.pool360.com/Search?query=070387Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong> 350015 <a href="https://www.pool360.com/Search?query=350015" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor/Seal Plate Bolts:</strong><br>
+            070429Z <a href="https://www.pool360.com/Search?query=070429Z" target="_blank">[🔍]</a><br>
+            070430 <a href="https://www.pool360.com/Search?query=070430" target="_blank">[🔍]</a><br>
+            070431 <a href="https://www.pool360.com/Search?query=070431" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Drive Assemblies:</strong><br>
+            Lower Drive Kit #356163Z <a href="https://www.pool360.com/Search?query=356163Z" target="_blank">[🔍]</a><br>
+            Upper Control Kit #356159Z <a href="https://www.pool360.com/Search?query=356159Z" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pentair WhisperFlo XF -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/whisperflo-xf.png" alt="Pentair WhisperFlo XF">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+WhisperFlo+XF" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/commercial/pumps/whisperflo-xf/manuals/whisperfloxf-and-maxeproxf-pump-manual-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair WhisperFlo XF</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 2.0 – 2.5 HP</p>
+          <p><strong>Plumbing Size:</strong> 2″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            400015Z <a href="https://www.pool360.com/Search?query=400015Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            400010 <a href="https://www.pool360.com/Search?query=400010" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            071734S <a href="https://www.pool360.com/Search?query=071734S" target="_blank">[🔍]</a><br>
+            PS‑1000 <a href="https://www.pool360.com/Search?query=PS‑1000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            400002 <a href="https://www.pool360.com/Search?query=400002" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            354817S (2 HP) <a href="https://www.pool360.com/Search?query=354817S" target="_blank">[🔍]</a><br>
+            354819S (2.5 HP) <a href="https://www.pool360.com/Search?query=354819S" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            N/A <a href="https://www.pool360.com/Search?query=Pentair%20WhisperFlo%20XF%20VS%20Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            400003 <a href="https://www.pool360.com/Search?query=400003" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            400004 <a href="https://www.pool360.com/Search?query=400004" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            400005 <a href="https://www.pool360.com/Search?query=400005" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Basket:</strong> 400007Z <a href="https://www.pool360.com/Search?query=400007Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong> 400000 <a href="https://www.pool360.com/Search?query=400000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Support Base:</strong> 400004Z <a href="https://www.pool360.com/Search?query=400004Z" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pentair WhisperFlo -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/whisperflo.jpg" alt="Pentair WhisperFlo">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+WhisperFlo" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/pumps/whisperflo/manuals/whisperflo-pump-manual-english-spanish.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair WhisperFlo</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 1.0 – 3.0 HP</p>
+          <p><strong>Plumbing Size:</strong> 2″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            073128 <a href="https://www.pool360.com/Search?query=073128" target="_blank">[🔍]</a><br>
+            073129 <a href="https://www.pool360.com/Search?query=073129" target="_blank">[🔍]</a><br>
+            073130 <a href="https://www.pool360.com/Search?query=073130" target="_blank">[🔍]</a><br>
+            073131 <a href="https://www.pool360.com/Search?query=073131" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            072927 <a href="https://www.pool360.com/Search?query=072927" target="_blank">[🔍]</a><br>
+            072928 <a href="https://www.pool360.com/Search?query=072928" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            354545S <a href="https://www.pool360.com/Search?query=354545S" target="_blank">[🔍]</a><br>
+            PS‑200 <a href="https://www.pool360.com/Search?query=PS‑200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            074564 <a href="https://www.pool360.com/Search?query=074564" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            56J series <a href="https://www.pool360.com/Search?query=Pentair%20WhisperFlo%20Motor" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            N/A <a href="https://www.pool360.com/Search?query=Pentair%20WhisperFlo%20VS%20Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            357100 (OEM) <a href="https://www.pool360.com/Search?query=357100" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            355227 (OEM) <a href="https://www.pool360.com/Search?query=355227" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            350013 (OEM) <a href="https://www.pool360.com/Search?query=350013" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Basket:</strong> 070387Z <a href="https://www.pool360.com/Search?query=070387Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong> 350015 <a href="https://www.pool360.com/Search?query=350015" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Support Base:</strong> 070927 <a href="https://www.pool360.com/Search?query=070927" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pentair WhisperFlo XF VS 5HP -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/whisperflo-xf-vs.jpg" alt="Pentair WhisperFlo XF VS 5HP">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+WhisperFlo+XF+VS+5HP" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/commercial/pumps/whisperflo-xf/manuals/whisperfloxf-and-maxeproxf-pump-manual-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair WhisperFlo XF VS 5HP</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 5.0 HP (Variable Speed)</p>
+          <p><strong>Plumbing Size:</strong> 2.5″ – 3″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            400023Z <a href="https://www.pool360.com/Search?query=400023Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            400011Z <a href="https://www.pool360.com/Search?query=400011Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            17351-0101S <a href="https://www.pool360.com/Search?query=17351-0101S" target="_blank">[🔍]</a><br>
+            PS‑201 <a href="https://www.pool360.com/Search?query=PS‑201" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            400002 <a href="https://www.pool360.com/Search?query=400002" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            Integrated 5HP VS motor <a href="https://www.pool360.com/Search?query=Pentair%20WhisperFlo%20XF%205HP%20VS%20Motor" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            Integrated <a href="https://www.pool360.com/Search?query=Pentair%20WhisperFlo%20XF%205HP%20VS%20Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            351446 (OEM) <a href="https://www.pool360.com/Search?query=351446" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            350336 (OEM) <a href="https://www.pool360.com/Search?query=350336" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            35505-1440 (OEM) <a href="https://www.pool360.com/Search?query=35505-1440" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Basket:</strong> 400007Z <a href="https://www.pool360.com/Search?query=400007Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong> 400000 <a href="https://www.pool360.com/Search?query=400000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Support Base:</strong> 400004Z <a href="https://www.pool360.com/Search?query=400004Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate Bolts:</strong><br>
+            074164Z <a href="https://www.pool360.com/Search?query=074164Z" target="_blank">[🔍]</a><br>
+            070430 <a href="https://www.pool360.com/Search?query=070430" target="_blank">[🔍]</a><br>
+            070431 <a href="https://www.pool360.com/Search?query=070431" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pentair IntelliFlo VSF2 -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/intelliflo-vsf2.jpg" alt="Pentair IntelliFlo VSF2">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+IntelliFlo+VSF2" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/pumps/archive/intelliflo-vsf/intelliflo-vsf-om-eng.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair IntelliFlo VSF2</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 3.0 HP (Variable Speed)</p>
+          <p><strong>Plumbing Size:</strong> 2″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            073131 (3 HP) <a href="https://www.pool360.com/Search?query=073131" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            072928 <a href="https://www.pool360.com/Search?query=072928" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            071734 <a href="https://www.pool360.com/Search?query=071734" target="_blank">[🔍]</a><br>
+            PS‑1000 <a href="https://www.pool360.com/Search?query=PS‑1000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            074564 <a href="https://www.pool360.com/Search?query=074564" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            350105 (3.2 kW VS motor) <a href="https://www.pool360.com/Search?query=350105" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            350108 <a href="https://www.pool360.com/Search?query=350108" target="_blank">[🔍]</a><br>
+            (or kit 356879Z <a href="https://www.pool360.com/Search?query=356879Z" target="_blank">[🔍]</a>)
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            U9‑376 (OEM) <a href="https://www.pool360.com/Search?query=U9-376" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            U9‑374 (OEM) <a href="https://www.pool360.com/Search?query=U9-374" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            35505-1440 (OEM) <a href="https://www.pool360.com/Search?query=35505-1440" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Lid &amp; Clamp Assembly:</strong><br>
+            356172Z (lid) <a href="https://www.pool360.com/Search?query=356172Z" target="_blank">[🔍]</a><br>
+            357199 (clamp) <a href="https://www.pool360.com/Search?query=357199" target="_blank">[🔍]</a><br>
+            <strong>Lid O‑Ring:</strong> 356189Z <a href="https://www.pool360.com/Search?query=356189Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Basket:</strong> 070387Z <a href="https://www.pool360.com/Search?query=070387Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong><br>
+            350015 <a href="https://www.pool360.com/Search?query=350015" target="_blank">[🔍]</a><br>
+            356175Z <a href="https://www.pool360.com/Search?query=356175Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Support Base:</strong><br>
+            070927 <a href="https://www.pool360.com/Search?query=070927" target="_blank">[🔍]</a><br>
+            356149Z <a href="https://www.pool360.com/Search?query=356149Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate Bolts:</strong><br>
+            070429Z <a href="https://www.pool360.com/Search?query=070429Z" target="_blank">[🔍]</a><br>
+            070430 <a href="https://www.pool360.com/Search?query=070430" target="_blank">[🔍]</a><br>
+            070431 <a href="https://www.pool360.com/Search?query=070431" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Drive Assemblies:</strong><br>
+            Lower Drive Kit 356163Z <a href="https://www.pool360.com/Search?query=356163Z" target="_blank">[🔍]</a><br>
+            Touchscreen Add-On 356159Z <a href="https://www.pool360.com/Search?query=356159Z" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pentair IntelliFlo VSF3 -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/intelliflo-vsf3.jpg" alt="Pentair IntelliFlo VSF3">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+IntelliFlo+VSF3" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/pumps/intelliflo3-vsf/manuals/users-guide/intelliflo3-pro3-vsf-users-guide.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USR</span></a><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/pumps/intelliflo3-vsf/manuals/install-guide/intelliflo3-pro3-vsf-install-guide.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair IntelliFlo VSF3</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 3.0 HP (Variable Speed)</p>
+          <p><strong>Plumbing Size:</strong> 2.5″ × 2.5″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            356177Z <a href="https://www.pool360.com/Search?query=356177Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            356156Z <a href="https://www.pool360.com/Search?query=356156Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            071734 <a href="https://www.pool360.com/Search?query=071734" target="_blank">[🔍]</a><br>
+            PS‑1000 <a href="https://www.pool360.com/Search?query=PS‑1000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            074564 <a href="https://www.pool360.com/Search?query=074564" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            350105 (3.2 kW VS motor) <a href="https://www.pool360.com/Search?query=350105" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            350108 <a href="https://www.pool360.com/Search?query=350108" target="_blank">[🔍]</a><br>
+            (or kit 356879Z <a href="https://www.pool360.com/Search?query=356879Z" target="_blank">[🔍]</a>)
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            356173Z (OEM) <a href="https://www.pool360.com/Search?query=356173Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            356190Z (OEM) <a href="https://www.pool360.com/Search?query=356190Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            350013 (OEM) <a href="https://www.pool360.com/Search?query=350013" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Lid &amp; Clamp Assembly:</strong><br>
+            356172Z (lid) <a href="https://www.pool360.com/Search?query=356172Z" target="_blank">[🔍]</a><br>
+            357199 (clamp) <a href="https://www.pool360.com/Search?query=357199" target="_blank">[🔍]</a><br>
+            <strong>Lid O‑Ring:</strong> 356189Z <a href="https://www.pool360.com/Search?query=356189Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Basket:</strong> 070387Z <a href="https://www.pool360.com/Search?query=070387Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong><br>
+            350015 <a href="https://www.pool360.com/Search?query=350015" target="_blank">[🔍]</a><br>
+            356175Z <a href="https://www.pool360.com/Search?query=356175Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Support Base:</strong><br>
+            070927 <a href="https://www.pool360.com/Search?query=070927" target="_blank">[🔍]</a><br>
+            356149Z <a href="https://www.pool360.com/Search?query=356149Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate Bolts:</strong><br>
+            070429Z <a href="https://www.pool360.com/Search?query=070429Z" target="_blank">[🔍]</a><br>
+            070430 <a href="https://www.pool360.com/Search?query=070430" target="_blank">[🔍]</a><br>
+            070431 <a href="https://www.pool360.com/Search?query=070431" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Drive Assemblies:</strong><br>
+            Lower Drive Kit 356163Z <a href="https://www.pool360.com/Search?query=356163Z" target="_blank">[🔍]</a><br>
+            Touchscreen Add-On 356159Z <a href="https://www.pool360.com/Search?query=356159Z" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sta‑Rite SuperMax VS (343001) -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/sta-rite-supermax-vs.jpg" alt="Sta‑Rite SuperMax VS 343001">
+        <a href="https://www.google.com/search?tbm=isch&q=Sta-Rite+SuperMax+VS+343001" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/aquatics/pool-pad-pro-assets/pumps/inground-pumps/superflo-vs-variable-speed-pump/356292-superflovs-superflovst-supermaxvs-owners-manual.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USR</span></a>Sta‑Rite SuperMax VS (343001)</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 1.5 HP (Variable Speed)</p>
+          <p><strong>Plumbing Size:</strong> 1.5″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            355074 <a href="https://www.pool360.com/Search?query=355074" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            355618 <a href="https://www.pool360.com/Search?query=355618" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            354545S <a href="https://www.pool360.com/Search?query=354545S" target="_blank">[🔍]</a><br>
+            PS‑200 <a href="https://www.pool360.com/Search?query=PS‑200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            356012 <a href="https://www.pool360.com/Search?query=356012" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            1.5 HP VS motor <a href="https://www.pool360.com/Search?query=Sta-Rite%20SuperMax%20VS%20Motor" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            Integrated <a href="https://www.pool360.com/Search?query=Sta-Rite%20SuperMax%20VS%20VS%20Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            355619 (OEM) <a href="https://www.pool360.com/Search?query=355619" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            355030 (OEM) <a href="https://www.pool360.com/Search?query=355030" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            357255 (OEM) <a href="https://www.pool360.com/Search?query=357255" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Lid &amp; Clamp:</strong><br>
+            Sta‑Rite Lid #C3-139P1 <a href="https://www.pool360.com/Search?query=C3-139P1" target="_blank">[🔍]</a><br>
+            Clamp #C19-37A <a href="https://www.pool360.com/Search?query=C19-37A" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Basket:</strong> 27180-033-000 <a href="https://www.pool360.com/Search?query=27180-033-000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong><br>
+            Volute #C176-47P1 <a href="https://www.pool360.com/Search?query=C176-47P1" target="_blank">[🔍]</a><br>
+            Trap Body #C153-53P1 <a href="https://www.pool360.com/Search?query=C153-53P1" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Support Bracket:</strong><br>
+            #C104-42P <a href="https://www.pool360.com/Search?query=C104-42P" target="_blank">[🔍]</a><br>
+            (or #C104-41P <a href="https://www.pool360.com/Search?query=C104-41P" target="_blank">[🔍]</a> for larger models)
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pentair SuperMax 1HP -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/sta-rite-supermax-1hp.jpg" alt="Pentair SuperMax 1HP">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+SuperMax+1HP" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Pentair SuperMax 1HP</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 1.0 HP</p>
+          <p><strong>Plumbing Size:</strong> 1.5″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            355067 <a href="https://www.pool360.com/Search?query=355067" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            355617 <a href="https://www.pool360.com/Search?query=355617" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            354545S <a href="https://www.pool360.com/Search?query=354545S" target="_blank">[🔍]</a><br>
+            PS‑200 <a href="https://www.pool360.com/Search?query=PS‑200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            356012 <a href="https://www.pool360.com/Search?query=356012" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            1 HP single‑speed motor <a href="https://www.pool360.com/Search?query=Pentair%20SuperMax%201HP%20Motor" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            N/A <a href="https://www.pool360.com/Search?query=Pentair%20SuperMax%201HP%20VS%20Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            355619 (OEM) <a href="https://www.pool360.com/Search?query=355619" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            355030 (OEM) <a href="https://www.pool360.com/Search?query=355030" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            357255 (OEM) <a href="https://www.pool360.com/Search?query=357255" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Lid &amp; Clamp:</strong> See standard Pentair pump kit
+          </li>
+          <li>
+            <strong>Pump Basket:</strong> 070387Z <a href="https://www.pool360.com/Search?query=070387Z" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong> 350015 <a href="https://www.pool360.com/Search?query=350015" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Support Base:</strong> 070927 <a href="https://www.pool360.com/Search?query=070927" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sta‑Rite IntelliPro VS -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/sta-rite-intellipro-vs.jpg" alt="Sta‑Rite IntelliPro VS">
+        <a href="https://www.google.com/search?tbm=isch&q=Sta-Rite+IntelliPro+VS" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/pumps/archive/intellipro-vsf1/manual/intelliprovsf-pump-manual-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Sta‑Rite IntelliPro VS</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 3.0 HP (Variable Speed)</p>
+          <p><strong>Plumbing Size:</strong> 2″</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            C105-238PLA <a href="https://www.pool360.com/Search?query=C105-238PLA" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            C1-271P <a href="https://www.pool360.com/Search?query=C1-271P" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            17304-0100S <a href="https://www.pool360.com/Search?query=17304-0100S" target="_blank">[🔍]</a><br>
+            PS‑201 <a href="https://www.pool360.com/Search?query=PS‑201" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            17307-0110S <a href="https://www.pool360.com/Search?query=17307-0110S" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            3 HP VS motor <a href="https://www.pool360.com/Search?query=Sta-Rite%20IntelliPro%20VS%20Motor" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            Integrated <a href="https://www.pool360.com/Search?query=Sta-Rite%20IntelliPro%20VS%20VS%20Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            U9‑376 <a href="https://www.pool360.com/Search?query=U9-376" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            U9‑374 <a href="https://www.pool360.com/Search?query=U9-374" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            35505-1440 <a href="https://www.pool360.com/Search?query=35505-1440" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>
+            <strong>Pump Lid &amp; Clamp:</strong><br>
+            Sta‑Rite Lid #C3-139P1 <a href="https://www.pool360.com/Search?query=C3-139P1" target="_blank">[🔍]</a><br>
+            Clamp #C19-37A <a href="https://www.pool360.com/Search?query=C19-37A" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Basket:</strong> <br>
+			27180-033-000 <a href="https://www.pool360.com/Search?query=27180-033-000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Housing:</strong><br>
+            #C176-47P1 <a href="https://www.pool360.com/Search?query=C176-47P1" target="_blank">[🔍]</a><br>
+            + #C153-53P1 <a href="https://www.pool360.com/Search?query=C153-53P1" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Support Bracket:</strong><br>
+            #C104-42P <a href="https://www.pool360.com/Search?query=C104-42P" target="_blank">[🔍]</a><br>
+            (or #C104-41P <a href="https://www.pool360.com/Search?query=C104-41P" target="_blank">[🔍]</a>)
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sta‑Rite Max‑E‑Pro -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Pentair Residential Pool Pump Guide_files/sta-rite-max-e-pro.jpg" alt="Sta‑Rite Max‑E‑Pro">
+        <a href="https://www.google.com/search?tbm=isch&q=Sta-Rite+Max-E-Pro" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/pumps/max-e-pro/manuals/max-e-pro-pool-pump-manual-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Sta‑Rite Max‑E‑Pro</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 0.5 – 3.0 HP</p>
+          <p><strong>Plumbing Size:</strong> 2″</p>
+          <p><strong>Replacement Parts (Updated for II):</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            C105-238PX-II <a href="https://www.pool360.com/Search?query=C105-238PX-II" target="_blank">[🔍]</a><br>
+            to<br>
+            C105-238PLA-II <a href="https://www.pool360.com/Search?query=C105-238PLA-II" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            C1-271P1-II <a href="https://www.pool360.com/Search?query=C1-271P1-II" target="_blank">[🔍]</a><br>
+            /<br>
+            C1-271P-II <a href="https://www.pool360.com/Search?query=C1-271P-II" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            17304-0100S <a href="https://www.pool360.com/Search?query=17304-0100S" target="_blank">[🔍]</a><br>
+            PSR‑200 <a href="https://www.pool360.com/Search?query=17304-0100S" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            U9-228A (OEM) <a href="https://www.pool360.com/Search?query=U9-228A" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            U9-226 (OEM) <a href="https://www.pool360.com/Search?query=U9-226" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            U9-229 (OEM) <a href="https://www.pool360.com/Search?query=U9-229" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Initialize controls
+    function initControls() {
+      console.log('Initializing controls');
+      initThemeToggle();
+      initFontSize();
+    }
+
+    // Dark mode toggle
+    function initThemeToggle() {
+      console.log('Initializing theme toggle');
+
+      // Check for saved theme preference
+      const savedTheme = getCookie('darkMode');
+      console.log('Retrieved saved theme:', savedTheme);
+
+      // Apply saved theme or default to light
+      if (savedTheme === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('toggle-theme').textContent = '☀️';
+      } else {
+        document.getElementById('toggle-theme').textContent = '🌓';
+      }
+
+      // Add event listener for theme toggle
+      document.getElementById('toggle-theme').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+
+        // Update button icon
+        this.textContent = isDarkMode ? '☀️' : '🌓';
+
+        // Save preference
+        setCookie('darkMode', isDarkMode.toString(), 365);
+        console.log('Saved theme preference:', isDarkMode);
+      });
+    }
+
+    // Font size control
+    function initFontSize() {
+      console.log('Initializing font size controls');
+
+      // Set initial font scale from localStorage or default to 1
+      let savedScale = getCookie('fontScale');
+      console.log('Retrieved saved font scale:', savedScale);
+
+      let fontScale = savedScale ? parseFloat(savedScale) : 1;
+      console.log('Using font scale:', fontScale);
+
+      document.documentElement.style.setProperty('--font-scale', fontScale);
+
+      // Increase font size
+      document.getElementById('increase-font').addEventListener('click', function() {
+        fontScale += 0.1;
+        if (fontScale > 1.5) fontScale = 1.5; // Maximum scale
+        updateFontSize(fontScale);
+      });
+
+      // Decrease font size
+      document.getElementById('decrease-font').addEventListener('click', function() {
+        fontScale -= 0.1;
+        if (fontScale < 0.7) fontScale = 0.7; // Minimum scale
+        updateFontSize(fontScale);
+      });
+
+      // Update font size and save to localStorage
+      function updateFontSize(scale) {
+        console.log('Updating font size to:', scale);
+        document.documentElement.style.setProperty('--font-scale', scale);
+        setCookie('fontScale', scale.toString(), 365); // Save for 1 year
+        console.log('Saved font scale:', scale.toString());
+      }
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initControls);
+    } else {
+      // DOM already loaded
+      initControls();
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

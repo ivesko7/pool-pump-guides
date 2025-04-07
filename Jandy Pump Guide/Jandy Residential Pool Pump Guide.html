@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jandy Residential Pool Pump Guide</title>
+  <script>
+    // Cookie functions
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      // For local file, we need to use localStorage instead of cookies
+      try {
+        localStorage.setItem(name, value);
+      } catch (e) {
+        console.error("Local storage not available", e);
+        // Fallback to cookies
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+      }
+    }
+
+    function getCookie(name) {
+      // Try localStorage first
+      try {
+        const value = localStorage.getItem(name);
+        if (value !== null) {
+          return value;
+        }
+      } catch (e) {
+        console.error("Local storage not available", e);
+      }
+
+      // Fallback to cookies
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+  </script>
+  <style>
+    :root {
+      --base-font-size: 16px;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --text-color: #333;
+      --border-color: #eee;
+      --shadow-color: rgba(0,0,0,0.1);
+      --link-color: #0066cc;
+      --link-color-install: #cc6600;
+    }
+
+    .dark-mode {
+      --bg-color: #222;
+      --card-bg: #333;
+      --text-color: #eee;
+      --border-color: #444;
+      --shadow-color: rgba(0,0,0,0.3);
+      --link-color: #4d9fff;
+      --link-color-install: #ff9d4d;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+      font-size: var(--base-font-size);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .controls-container {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .font-controls, .theme-control {
+      background: var(--card-bg);
+      border-radius: 5px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .font-btn, .theme-btn {
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 2px;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .font-btn:hover, .theme-btn:hover {
+      background: var(--border-color);
+    }
+    .pump-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .pump-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      width: 300px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+    .pump-card:hover {
+      transform: scale(1.02);
+    }
+    .image-container {
+      position: relative;
+      height: 150px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--card-bg);
+      transition: background-color 0.3s;
+    }
+    .image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+    .eye-button {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 30px;
+      font-size: 16px;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: color 0.3s;
+    }
+    .pump-card h3 {
+      margin: 10px;
+      padding: 0 5px;
+      font-size: calc(1rem * var(--font-scale, 1));
+      text-align: center;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+    }
+    .pump-details {
+      padding: 0 15px 15px 15px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Ensure consistent spacing */
+    .pump-details a {
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+    .pump-details p {
+      font-size: calc(0.9rem * var(--font-scale, 1));
+      margin: 10px 0;
+    }
+
+    .pump-specs {
+      flex-shrink: 0;
+      margin-bottom: 5px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      transition: border-color 0.3s;
+    }
+    .part-list, .hardware-list {
+      font-size: calc(0.85rem * var(--font-scale, 1));
+      padding-left: 15px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+    .part-list li, .hardware-list li {
+      margin-bottom: 6px;
+    }
+    .hardware-title {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    a {
+      color: var(--link-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .manual-link {
+      margin-right: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      position: relative;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    .user-manual {
+      color: var(--link-color);
+      transition: color 0.3s;
+    }
+
+    .install-manual {
+      color: var(--link-color-install);
+      transition: color 0.3s;
+    }
+
+    .manual-tag {
+      font-size: 7px;
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+      background-color: rgba(255,255,255,0.7);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls-container">
+    <div class="theme-control">
+      <button class="theme-btn" id="toggle-theme">🌓</button>
+    </div>
+    <div class="font-controls">
+      <button class="font-btn" id="decrease-font">-</button>
+      <button class="font-btn" id="increase-font">+</button>
+    </div>
+  </div>
+  <h1>Jandy Residential Pool Pump Guide</h1>
+  <div class="pump-list">
+
+    <!-- Jandy FloPro -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Jandy Residential Pool Pump Guide_files/flopro.jpg" alt="Jandy FloPro">
+        <a href="https://www.google.com/search?tbm=isch&q=Jandy+FloPro+pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Jandy FloPro</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 0.75 – 2.5 HP (Up-Rated)</p>
+          <p><strong>Plumbing Size:</strong> 2″ x 2.5″ (Unionized)</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            R0479601 (0.75 HP) <a href="https://www.pool360.com/Search?query=R0479601" target="_blank">[🔍]</a><br>
+            R0479602 (1 HP) <a href="https://www.pool360.com/Search?query=R0479602" target="_blank">[🔍]</a><br>
+            R0479603 (1.5 HP) <a href="https://www.pool360.com/Search?query=R0479603" target="_blank">[🔍]</a><br>
+            R0479604 (2 HP) <a href="https://www.pool360.com/Search?query=R0479604" target="_blank">[🔍]</a><br>
+            R0479605 (2.5 HP) <a href="https://www.pool360.com/Search?query=R0479605" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            R0479702 (for 0.75–1 HP) <a href="https://www.pool360.com/Search?query=R0479702" target="_blank">[🔍]</a><br>
+            R0479701 (for 1.5–2.5 HP) <a href="https://www.pool360.com/Search?query=R0479701" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            R0479400 <a href="https://www.pool360.com/Search?query=R0479400" target="_blank">[🔍]</a><br>
+            PS‑200
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            R0479500 (Backplate kit) <a href="https://www.pool360.com/Search?query=R0479500" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            R0479301 (0.75 HP) <a href="https://www.pool360.com/Search?query=R0479301" target="_blank">[🔍]</a><br>
+            R0479302 (1.0 HP) <a href="https://www.pool360.com/Search?query=R0479302" target="_blank">[🔍]</a><br>
+            R0479303 (1.5 HP) <a href="https://www.pool360.com/Search?query=R0479303" target="_blank">[🔍]</a><br>
+            R0479304 (2.0 HP) <a href="https://www.pool360.com/Search?query=R0479304" target="_blank">[🔍]</a><br>
+            R0479305 (3.0 HP) <a href="https://www.pool360.com/Search?query=R0479305" target="_blank">[🔍]</a> (single-speed, varies by HP)
+          </li>
+          <li>
+            <strong>VS Drive:</strong> N/A <a href="https://www.pool360.com/Search?query=Jandy+FloPro+VS+Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            R0480300 (Backplate O‑ring kit) <a href="https://www.pool360.com/Search?query=R0480300" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            R0622000 <a href="https://www.pool360.com/Search?query=R0622000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            R0480200 (Lid O‑ring kit) <a href="https://www.pool360.com/Search?query=R0480200" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>Pump Basket: R0480100 <a href="https://www.pool360.com/Search?query=R0480100" target="_blank">[🔍]</a></li>
+          <li>Pump Housing: R0479800 <a href="https://www.pool360.com/Search?query=R0479800" target="_blank">[🔍]</a></li>
+          <li>Mounting Base: R0479900 <a href="https://www.pool360.com/Search?query=R0479900" target="_blank">[🔍]</a></li>
+          <li>Lid &amp; Lock Ring: R0480000 <a href="https://www.pool360.com/Search?query=R0480000" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Jandy VS FloPro -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Jandy Residential Pool Pump Guide_files/vs-flopro.jpg" alt="Jandy VS FloPro">
+        <a href="https://www.google.com/search?tbm=isch&q=Jandy+VS+FloPro+pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Jandy VS FloPro</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 0.85 HP &amp; 1.65 HP (Variable Speed)</p>
+          <p><strong>Plumbing Size:</strong> 2″ x 2.5″ (Unionized)</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            R0479605 (uses FloPro 2.5 HP impeller) <a href="https://www.pool360.com/Search?query=R0479605" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            R0479701 (uses FloPro high HP diffuser) <a href="https://www.pool360.com/Search?query=R0479701" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            R0479400 <a href="https://www.pool360.com/Search?query=R0479400" target="_blank">[🔍]</a><br>
+            PS‑200
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            R0479500 <a href="https://www.pool360.com/Search?query=R0479500" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            R0571000 (1.65 HP with VS) <a href="https://www.pool360.com/Search?query=R0571000" target="_blank">[🔍]</a><br>
+            R0856100 (0.85/1.65 HP updated VS motor) <a href="https://www.pool360.com/Search?query=R0856100" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong> N/A <a href="https://www.pool360.com/Search?query=Jandy+VS+FloPro+VS+Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            R0480300 <a href="https://www.pool360.com/Search?query=R0480300" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            R0622000 <a href="https://www.pool360.com/Search?query=R0622000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            R0480200 <a href="https://www.pool360.com/Search?query=R0480200" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>Pump Basket: R0480100 <a href="https://www.pool360.com/Search?query=R0480100" target="_blank">[🔍]</a></li>
+          <li>Pump Housing: R0479800 <a href="https://www.pool360.com/Search?query=R0479800" target="_blank">[🔍]</a></li>
+          <li>Mounting Base: R0479900 <a href="https://www.pool360.com/Search?query=R0479900" target="_blank">[🔍]</a></li>
+          <li>Lid &amp; Lock Ring: R0480000 <a href="https://www.pool360.com/Search?query=R0480000" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Jandy PlusHP -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Jandy Residential Pool Pump Guide_files/plushp.png" alt="Jandy PlusHP">
+        <a href="https://www.google.com/search?tbm=isch&q=Jandy+PlusHP+pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Jandy PlusHP</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 0.5 – 2.5 HP (Up-Rated High Head)</p>
+          <p><strong>Plumbing Size:</strong> 2.5″ x 3″ (Unionized)</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            R0445301 (0.5 FR / 0.75 UR) <a href="https://www.pool360.com/Search?query=R0445301" target="_blank">[🔍]</a><br>
+            R0445302 (0.75 FR / 1.0 UR) <a href="https://www.pool360.com/Search?query=R0445302" target="_blank">[🔍]</a><br>
+            R0445303 (1.0 FR / 1.5 UR) <a href="https://www.pool360.com/Search?query=R0445303" target="_blank">[🔍]</a><br>
+            R0445304 (1.5 FR / 2.0 UR) <a href="https://www.pool360.com/Search?query=R0445304" target="_blank">[🔍]</a><br>
+            R0445305 (2.0 FR / 2.5 UR) <a href="https://www.pool360.com/Search?query=R0445305" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            R0445400 (fits all PlusHP/Stealth models) <a href="https://www.pool360.com/Search?query=R0445400" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            R0479400 <a href="https://www.pool360.com/Search?query=R0479400" target="_blank">[🔍]</a><br>
+            PS‑201
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            R0445200 (Backplate kit) <a href="https://www.pool360.com/Search?query=R0445200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            R0445101 (0.75 HP) <a href="https://www.pool360.com/Search?query=R0445101" target="_blank">[🔍]</a><br>
+            R0445102 (1 HP) <a href="https://www.pool360.com/Search?query=R0445102" target="_blank">[🔍]</a><br>
+            R0445103 (1.5 HP) <a href="https://www.pool360.com/Search?query=R0445103" target="_blank">[🔍]</a><br>
+            R0445104 (2 HP) <a href="https://www.pool360.com/Search?query=R0445104" target="_blank">[🔍]</a><br>
+            R0445105 (2.5 HP) <a href="https://www.pool360.com/Search?query=R0445105" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong> N/A <a href="https://www.pool360.com/Search?query=Jandy+PlusHP+VS+Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            R0446300 <a href="https://www.pool360.com/Search?query=R0446300" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            R0622000 <a href="https://www.pool360.com/Search?query=R0622000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            R0446200 (Lid seal kit) <a href="https://www.pool360.com/Search?query=R0446200" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>Pump Basket: R0445900 <a href="https://www.pool360.com/Search?query=R0445900" target="_blank">[🔍]</a></li>
+          <li>Pump Housing: R0445601 <a href="https://www.pool360.com/Search?query=R0445601" target="_blank">[🔍]</a></li>
+          <li>Mounting Base: R0445700 <a href="https://www.pool360.com/Search?query=R0445700" target="_blank">[🔍]</a></li>
+          <li>Lid &amp; Lock Ring: R0445800 <a href="https://www.pool360.com/Search?query=R0445800" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Jandy Stealth -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Jandy Residential Pool Pump Guide_files/stealth.png" alt="Jandy Stealth">
+        <a href="https://www.google.com/search?tbm=isch&q=Jandy+Stealth+pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Jandy Stealth</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 0.75 – 3.0 HP (Full-Rated High Head)</p>
+          <p><strong>Plumbing Size:</strong> 2.5″ x 3″ (Unionized)</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            R0807203 (0.75 HP) <a href="https://www.pool360.com/Search?query=R0807203" target="_blank">[🔍]</a><br>
+            R0807202 (1.0 HP) <a href="https://www.pool360.com/Search?query=R0807202" target="_blank">[🔍]</a><br>
+            R0807201 (1.5 HP) <a href="https://www.pool360.com/Search?query=R0807201" target="_blank">[🔍]</a><br>
+            R0807200 (2.0 HP) <a href="https://www.pool360.com/Search?query=R0807200" target="_blank">[🔍]</a><br>
+            R0807205 (3.0 HP) <a href="https://www.pool360.com/Search?query=R0807205" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            R0445400 <a href="https://www.pool360.com/Search?query=R0445400" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            R0479400 <a href="https://www.pool360.com/Search?query=R0479400" target="_blank">[🔍]</a><br>
+            PS‑201
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            R0445200 <a href="https://www.pool360.com/Search?query=R0445200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            R0445101 (0.75 HP) <a href="https://www.pool360.com/Search?query=R0445101" target="_blank">[🔍]</a><br>
+            R0445102 (1.0 HP) <a href="https://www.pool360.com/Search?query=R0445102" target="_blank">[🔍]</a><br>
+            R0445103 (1.5 HP) <a href="https://www.pool360.com/Search?query=R0445103" target="_blank">[🔍]</a><br>
+            R0445104 (2.0 HP) <a href="https://www.pool360.com/Search?query=R0445104" target="_blank">[🔍]</a><br>
+            R0445105 (2.5 HP) <a href="https://www.pool360.com/Search?query=R0445105" target="_blank">[🔍]</a><br>
+            R0445106 (3.0 HP) <a href="https://www.pool360.com/Search?query=R0445106" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong> N/A <a href="https://www.pool360.com/Search?query=Jandy+Stealth+VS+Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            R0446300 <a href="https://www.pool360.com/Search?query=R0446300" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            R0622000 <a href="https://www.pool360.com/Search?query=R0622000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            R0446200 <a href="https://www.pool360.com/Search?query=R0446200" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>Pump Basket: R0445900 <a href="https://www.pool360.com/Search?query=R0445900" target="_blank">[🔍]</a></li>
+          <li>Pump Housing: R0445601 <a href="https://www.pool360.com/Search?query=R0445601" target="_blank">[🔍]</a></li>
+          <li>Mounting Base: R0445700 <a href="https://www.pool360.com/Search?query=R0445700" target="_blank">[🔍]</a></li>
+          <li>Lid &amp; Lock Ring: R0445800 <a href="https://www.pool360.com/Search?query=R0445800" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Jandy Waterfall -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Jandy Residential Pool Pump Guide_files/waterfall.png" alt="Jandy Waterfall">
+        <a href="https://www.google.com/search?tbm=isch&q=Jandy+Waterfall+pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Jandy Waterfall</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 0.75 &amp; 1.5 HP (High-Flow Low-Head)</p>
+          <p><strong>Plumbing Size:</strong> 2.5″ x 3″ (Unionized)</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            R0445307 (for 0.75 HP) <a href="https://www.pool360.com/Search?query=R0445307" target="_blank">[🔍]</a><br>
+            R0445308 (for 1.5 HP) <a href="https://www.pool360.com/Search?query=R0445308" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            R0445401 (Low-head diffuser) <a href="https://www.pool360.com/Search?query=R0445401" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            R0479400 <a href="https://www.pool360.com/Search?query=R0479400" target="_blank">[🔍]</a><br>
+            PS‑200
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            R0445200 <a href="https://www.pool360.com/Search?query=R0445200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            R0445101 (0.75 HP) <a href="https://www.pool360.com/Search?query=R0445101" target="_blank">[🔍]</a><br>
+            R0445103 (1.5 HP) <a href="https://www.pool360.com/Search?query=R0445103" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>VS Drive:</strong> N/A <a href="https://www.pool360.com/Search?query=Jandy+Waterfall+VS+Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            R0446300 <a href="https://www.pool360.com/Search?query=R0446300" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            R0622000 <a href="https://www.pool360.com/Search?query=R0622000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            R0446200 <a href="https://www.pool360.com/Search?query=R0446200" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>Pump Basket: R0445900 <a href="https://www.pool360.com/Search?query=R0445900" target="_blank">[🔍]</a></li>
+          <li>Pump Housing: R0445601 <a href="https://www.pool360.com/Search?query=R0445601" target="_blank">[🔍]</a></li>
+          <li>Mounting Base: R0445700 <a href="https://www.pool360.com/Search?query=R0445700" target="_blank">[🔍]</a></li>
+          <li>Lid &amp; Lock Ring: R0445800 <a href="https://www.pool360.com/Search?query=R0445800" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Jandy ePump (Variable Speed) -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Jandy Residential Pool Pump Guide_files/epump.png" alt="Jandy ePump">
+        <a href="https://www.google.com/search?tbm=isch&q=Jandy+ePump+variable+speed+pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Jandy ePump (Variable Speed)</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 1.5 – 2.7 HP (Older Models), up to 3.8 HP (Newest)</p>
+          <p><strong>Plumbing Size:</strong> 2.5″ x 3″ (Unionized)</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <li>
+            <strong>Impeller:</strong><br>
+            R0807201 (for 1.5–2.7 HP models) <a href="https://www.pool360.com/Search?query=R0807201" target="_blank">[🔍]</a><br>
+            R0807200 (for 3.8 HP model) <a href="https://www.pool360.com/Search?query=R0807200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            R0445400 <a href="https://www.pool360.com/Search?query=R0445400" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            R0479400 <a href="https://www.pool360.com/Search?query=R0479400" target="_blank">[🔍]</a><br>
+            PS‑201
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            R0445200 <a href="https://www.pool360.com/Search?query=R0445200" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Motor:</strong><br>
+            R0562201 <a href="https://www.pool360.com/Search?query=R0562201" target="_blank">[🔍]</a><br>
+            R0562202 <a href="https://www.pool360.com/Search?query=R0562202" target="_blank">[🔍]</a> (VS drive motor assemblies)
+          </li>
+          <li>
+            <strong>VS Drive:</strong><br>
+            JEP-R remote controller (external digital controller) <a href="https://www.pool360.com/Search?query=Jandy+ePump+VS+Drive" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            R0446300 <a href="https://www.pool360.com/Search?query=R0446300" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            R0622000 <a href="https://www.pool360.com/Search?query=R0622000" target="_blank">[🔍]</a>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            R0446200 <a href="https://www.pool360.com/Search?query=R0446200" target="_blank">[🔍]</a>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li>Pump Basket: R0445900 <a href="https://www.pool360.com/Search?query=R0445900" target="_blank">[🔍]</a></li>
+          <li>Pump Housing: R0445601 <a href="https://www.pool360.com/Search?query=R0445601" target="_blank">[🔍]</a></li>
+          <li>Mounting Base: R0445700 <a href="https://www.pool360.com/Search?query=R0445700" target="_blank">[🔍]</a></li>
+          <li>Lid &amp; Lock Ring: R0445800 <a href="https://www.pool360.com/Search?query=R0445800" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Initialize controls
+    function initControls() {
+      console.log('Initializing controls');
+      initThemeToggle();
+      initFontSize();
+    }
+
+    // Dark mode toggle
+    function initThemeToggle() {
+      console.log('Initializing theme toggle');
+
+      // Check for saved theme preference
+      const savedTheme = getCookie('darkMode');
+      console.log('Retrieved saved theme:', savedTheme);
+
+      // Apply saved theme or default to light
+      if (savedTheme === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('toggle-theme').textContent = '☀️';
+      } else {
+        document.getElementById('toggle-theme').textContent = '🌓';
+      }
+
+      // Add event listener for theme toggle
+      document.getElementById('toggle-theme').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+
+        // Update button icon
+        this.textContent = isDarkMode ? '☀️' : '🌓';
+
+        // Save preference
+        setCookie('darkMode', isDarkMode.toString(), 365);
+        console.log('Saved theme preference:', isDarkMode);
+      });
+    }
+
+    // Font size control
+    function initFontSize() {
+      console.log('Initializing font size controls');
+
+      // Set initial font scale from localStorage or default to 1
+      let savedScale = getCookie('fontScale');
+      console.log('Retrieved saved font scale:', savedScale);
+
+      let fontScale = savedScale ? parseFloat(savedScale) : 1;
+      console.log('Using font scale:', fontScale);
+
+      document.documentElement.style.setProperty('--font-scale', fontScale);
+
+      // Increase font size
+      document.getElementById('increase-font').addEventListener('click', function() {
+        fontScale += 0.1;
+        if (fontScale > 1.5) fontScale = 1.5; // Maximum scale
+        updateFontSize(fontScale);
+      });
+
+      // Decrease font size
+      document.getElementById('decrease-font').addEventListener('click', function() {
+        fontScale -= 0.1;
+        if (fontScale < 0.7) fontScale = 0.7; // Minimum scale
+        updateFontSize(fontScale);
+      });
+
+      // Update font size and save to localStorage
+      function updateFontSize(scale) {
+        console.log('Updating font size to:', scale);
+        document.documentElement.style.setProperty('--font-scale', scale);
+        setCookie('fontScale', scale.toString(), 365); // Save for 1 year
+        console.log('Saved font scale:', scale.toString());
+      }
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initControls);
+    } else {
+      // DOM already loaded
+      initControls();
+    }
+  </script>
+</body>
+</html>
