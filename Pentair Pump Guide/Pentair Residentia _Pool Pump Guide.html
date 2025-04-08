@@ -308,6 +308,40 @@
     .image-container img {
       cursor: pointer;
     }
+
+    /* Guide Navigation Styles */
+    .guide-nav {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border-radius: 5px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      padding: 5px;
+      margin-left: 10px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .guide-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 3px;
+      margin: 0 3px;
+      border-radius: 3px;
+      transition: background-color 0.2s;
+    }
+
+    .guide-btn:hover {
+      background-color: var(--border-color);
+    }
+
+    .guide-btn img {
+      height: 24px;
+      width: auto;
+    }
   </style>
 </head>
 <body>
@@ -319,6 +353,14 @@
       <button class="font-btn" id="decrease-font">-</button>
       <button class="font-btn" id="reset-font" title="Reset font size">R</button>
       <button class="font-btn" id="increase-font">+</button>
+    </div>
+    <div class="guide-nav">
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide">
+        <img src="./hayward-logo.png" alt="Hayward Logo">
+      </a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide">
+        <img src="./jandy-logo.png" alt="Jandy Logo">
+      </a>
     </div>
   </div>
   <h1>Pentair &amp; Sta‑Rite Residential Pool Pump Guide</h1>
@@ -1584,12 +1626,12 @@
         <p class="hardware-title">Max-E-Glas II Specific Parts:</p>
         <ul class="hardware-list">
           <li><strong>Impeller:</strong><br>
-            C105-238PX-II (1 HP) <a href="https://www.pool360.com/Search?query=C105-238PX-II" target="_blank">[🔍]</a><br>
-            C105-238PLA-II (3 HP) <a href="https://www.pool360.com/Search?query=C105-238PLA-II" target="_blank">[🔍]</a>
+            C105-238PX (1 HP) <a href="https://www.pool360.com/Search?query=C105-238PX" target="_blank">[🔍]</a><br>
+            C105-238PLA (3 HP) <a href="https://www.pool360.com/Search?query=C105-238PLA" target="_blank">[🔍]</a>
           </li>
           <li><strong>Diffuser:</strong><br>
-            C1-271P1-II (0.5‑1.5 HP) <a href="https://www.pool360.com/Search?query=C1-271P1-II" target="_blank">[🔍]</a><br>
-            C1-271P-II (2‑3 HP) <a href="https://www.pool360.com/Search?query=C1-271P-II" target="_blank">[🔍]</a>
+            C1-271P1 (0.5‑1.5 HP) <a href="https://www.pool360.com/Search?query=C1-271P1" target="_blank">[🔍]</a><br>
+            C1-271P (2‑3 HP) <a href="https://www.pool360.com/Search?query=C1-271P" target="_blank">[🔍]</a>
           </li>
         </ul>
         <p class="hardware-title">Additional Hardware (Common to Both I & II):</p>

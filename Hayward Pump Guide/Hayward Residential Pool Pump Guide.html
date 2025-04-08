@@ -258,6 +258,102 @@
       padding: 0 2px;
       border-radius: 2px;
     }
+
+    /* Expandable Section Styles */
+    .expandable-section {
+      display: none;
+      margin-top: 10px;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 10px;
+    }
+
+    .expand-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 10px 0 0;
+      padding: 5px;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      color: var(--text-color);
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+
+    .expand-btn:hover {
+      background: var(--border-color);
+    }
+
+    /* Image Modal Styles */
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      max-height: 90%;
+      transform-origin: center center;
+      cursor: move;
+    }
+
+    .modal-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      transform-origin: 0 0;
+      transition: transform 0.1s ease-out;
+    }
+
+    .image-container img {
+      cursor: pointer;
+    }
+
+    /* Guide Navigation Styles */
+    .guide-nav {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border-radius: 5px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      padding: 5px;
+      margin-left: 10px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .guide-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 3px;
+      margin: 0 3px;
+      border-radius: 3px;
+      transition: background-color 0.2s;
+    }
+
+    .guide-btn:hover {
+      background-color: var(--border-color);
+    }
+
+    .guide-btn img {
+      height: 24px;
+      width: auto;
+    }
   </style>
 </head>
 <body>
@@ -267,7 +363,16 @@
     </div>
     <div class="font-controls">
       <button class="font-btn" id="decrease-font">-</button>
+      <button class="font-btn" id="reset-font" title="Reset font size">R</button>
       <button class="font-btn" id="increase-font">+</button>
+    </div>
+    <div class="guide-nav">
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residentia%20_Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide">
+        <img src="./pentair-logo.png" alt="Pentair Logo" style="height: 24px;">
+      </a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide">
+        <img src="./jandy-logo.png" alt="Jandy Logo">
+      </a>
     </div>
   </div>
   <h1>Hayward Residential Pool Pump Guide</h1>
@@ -901,6 +1006,12 @@
         updateFontSize(fontScale);
       });
 
+      // Reset font size
+      document.getElementById('reset-font').addEventListener('click', function() {
+        fontScale = 1.0; // Reset to default
+        updateFontSize(fontScale);
+      });
+
       // Update font size and save to localStorage
       function updateFontSize(scale) {
         console.log('Updating font size to:', scale);
@@ -912,10 +1023,150 @@
 
     // Initialize when DOM is loaded
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initControls);
+      document.addEventListener('DOMContentLoaded', function() {
+        initControls();
+        initImageModal();
+      });
     } else {
       // DOM already loaded
       initControls();
+      initImageModal();
+    }
+
+    // Image Modal Functionality
+    function initImageModal() {
+      // Create modal element
+      const modal = document.createElement('div');
+      modal.className = 'image-modal';
+      modal.innerHTML = '<div class="modal-content"><img class="modal-image" src="" alt="Enlarged pump image"></div>';
+      document.body.appendChild(modal);
+
+      const modalContent = modal.querySelector('.modal-content');
+      const modalImg = modal.querySelector('.modal-image');
+
+      // Variables for zoom and pan
+      let scale = 1;
+      let isDragging = false;
+      let startX, startY, translateX = 0, translateY = 0;
+      let lastX, lastY;
+
+      // Track if we're dragging to prevent accidental dismissal
+      let hasDragged = false;
+
+      // Add click event to all pump images
+      const pumpImages = document.querySelectorAll('.image-container img');
+      pumpImages.forEach(img => {
+        img.addEventListener('click', function() {
+          modalImg.src = this.src;
+          modal.style.display = 'block';
+          // Reset zoom and position
+          scale = 1;
+          translateX = 0;
+          translateY = 0;
+          updateTransform();
+        });
+      });
+
+      // Close modal with click, Esc key, or space bar
+      modal.addEventListener('mousedown', function(e) {
+        hasDragged = false;
+      });
+
+      modal.addEventListener('mousemove', function(e) {
+        if (e.buttons > 0) {
+          hasDragged = true;
+        }
+      });
+
+      modal.addEventListener('click', function(e) {
+        if (!hasDragged && (e.target === modal || e.target === modalContent || e.target === modalImg)) {
+          modal.style.display = 'none';
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (modal.style.display === 'block' && (e.key === 'Escape' || e.key === ' ')) {
+          modal.style.display = 'none';
+        }
+      });
+
+      // Mouse wheel zoom functionality
+      modal.addEventListener('wheel', function(e) {
+        e.preventDefault();
+
+        if (modal.style.display === 'block') {
+          const rect = modalImg.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          const mouseY = e.clientY - rect.top;
+
+          // Calculate mouse position relative to image
+          const x = mouseX / rect.width;
+          const y = mouseY / rect.height;
+
+          // Determine zoom direction
+          const delta = -Math.sign(e.deltaY);
+          const scaleFactor = delta > 0 ? 1.1 : 0.9;
+
+          // Calculate new scale with limits (0.25x to 4x)
+          const newScale = Math.min(Math.max(scale * scaleFactor, 0.25), 4);
+
+          // Calculate new translate values to zoom toward mouse position
+          // For both zooming in and out, we want to keep the point under the mouse in the same position
+          const zoomPointX = rect.width * x;
+          const zoomPointY = rect.height * y;
+
+          // Calculate how much the point would move due to scaling
+          const scaleDiffX = zoomPointX * (newScale - scale) / scale;
+          const scaleDiffY = zoomPointY * (newScale - scale) / scale;
+
+          // Adjust translation to compensate for the scaling
+          translateX = translateX - scaleDiffX;
+          translateY = translateY - scaleDiffY;
+
+          scale = newScale;
+          updateTransform();
+        }
+      }, { passive: false });
+
+      // Mouse drag functionality
+      modalImg.addEventListener('mousedown', function(e) {
+        e.preventDefault(); // Prevent image dragging default behavior
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        modalImg.style.cursor = 'grabbing';
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+          e.preventDefault(); // Prevent unwanted selections while dragging
+          translateX = e.clientX - startX;
+          translateY = e.clientY - startY;
+          lastX = e.clientX;
+          lastY = e.clientY;
+          updateTransform();
+        }
+      });
+
+      document.addEventListener('mouseup', function() {
+        if (isDragging) {
+          isDragging = false;
+          modalImg.style.cursor = scale > 1 ? 'move' : 'default';
+        }
+      });
+
+      // Set appropriate cursor based on zoom level
+      function updateCursor() {
+        modalImg.style.cursor = scale > 1 ? 'move' : 'default';
+      }
+
+      // Update transform with current scale and translation
+      function updateTransform() {
+        modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        updateCursor();
+      }
     }
   </script>
 </body>
