@@ -58,7 +58,7 @@
       --link-color-install: #cc6600;
     }
 
-  .dark-mode {
+ .dark-mode {
       --bg-color: #222;
       --card-bg: #333;
       --text-color: #eee;
@@ -77,7 +77,7 @@
       transition: background-color 0.3s, color 0.3s;
     }
 
-  .controls-container {
+ .controls-container {
       position: fixed;
       top: 10px;
       right: 10px;
@@ -86,7 +86,7 @@
       z-index: 1000;
     }
 
-  .font-controls,.theme-control {
+ .font-controls,.theme-control {
       background: var(--card-bg);
       border-radius: 5px;
       box-shadow: 0 2px 5px var(--shadow-color);
@@ -96,7 +96,7 @@
       transition: background-color 0.3s, box-shadow 0.3s;
     }
 
-  .font-btn,.theme-btn {
+ .font-btn,.theme-btn {
       width: 24px;
       height: 24px;
       border: 1px solid var(--border-color);
@@ -112,16 +112,16 @@
       transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     }
 
-  .font-btn:hover,.theme-btn:hover {
+ .font-btn:hover,.theme-btn:hover {
       background: var(--border-color);
     }
-  .pump-list {
+ .pump-list {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
       justify-content: center;
     }
-  .pump-card {
+ .pump-card {
       background: var(--card-bg);
       border-radius: 10px;
       box-shadow: 0 2px 5px var(--shadow-color);
@@ -133,10 +133,10 @@
       flex-direction: column;
       margin-bottom: 20px;
     }
-  .pump-card:hover {
+ .pump-card:hover {
       transform: scale(1.02);
     }
-  .image-container {
+ .image-container {
       position: relative;
       height: 150px;
       overflow: hidden;
@@ -146,13 +146,13 @@
       background-color: var(--card-bg);
       transition: background-color 0.3s;
     }
-  .image-container img {
+ .image-container img {
       max-width: 100%;
       max-height: 100%;
       display: block;
       object-fit: contain;
     }
-  .eye-button {
+ .eye-button {
       position: absolute;
       bottom: 5px;
       right: 5px;
@@ -169,7 +169,7 @@
       color: var(--text-color);
       transition: color 0.3s;
     }
-  .manual-link {
+ .manual-link {
       margin-right: 6px;
       text-decoration: none;
       font-size: 16px;
@@ -177,15 +177,15 @@
       display: inline-block;
       line-height: 1;
     }
-  .user-manual {
+ .user-manual {
       color: var(--link-color);
       transition: color 0.3s;
     }
-  .install-manual {
+ .install-manual {
       color: var(--link-color-install);
       transition: color 0.3s;
     }
-  .manual-tag {
+ .manual-tag {
       font-size: 7px;
       position: absolute;
       bottom: -4px;
@@ -196,7 +196,7 @@
       padding: 0 2px;
       border-radius: 2px;
     }
-  .pump-card h3 {
+ .pump-card h3 {
       margin: 10px;
       padding: 0 5px;
       font-size: calc(1rem * var(--font-scale, 1));
@@ -207,38 +207,38 @@
       justify-content: center;
       line-height: 1.2;
     }
-  .pump-details {
+ .pump-details {
       padding: 0 15px 15px 15px;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
     /* Ensure consistent spacing */
-  .pump-details a {
+ .pump-details a {
       display: inline-block;
       margin-bottom: 2px;
     }
-  .pump-details p {
+ .pump-details p {
       font-size: calc(0.9rem * var(--font-scale, 1));
       margin: 10px 0;
     }
-  .pump-specs {
+ .pump-specs {
       flex-shrink: 0;
       margin-bottom: 5px;
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 5px;
       transition: border-color 0.3s;
     }
-  .part-list,.hardware-list {
+ .part-list,.hardware-list {
       font-size: calc(0.85rem * var(--font-scale, 1));
       padding-left: 15px;
       margin-top: 5px;
       margin-bottom: 10px;
     }
-  .part-list li,.hardware-list li {
+ .part-list li,.hardware-list li {
       margin-bottom: 6px;
     }
-  .hardware-title {
+ .hardware-title {
       font-weight: bold;
       margin-top: 10px;
     }
@@ -249,14 +249,14 @@
       top: -0.4em;
     }
 
-  .expandable-section {
+ .expandable-section {
       display: none;
       margin-top: 10px;
       border-top: 1px dashed var(--border-color);
       padding-top: 10px;
     }
 
-  .expand-btn {
+ .expand-btn {
       display: block;
       width: 100%;
       text-align: center;
@@ -270,12 +270,12 @@
       font-size: 0.9em;
     }
 
-  .expand-btn:hover {
+ .expand-btn:hover {
       background: var(--border-color);
     }
 
     /* Image Modal Styles */
-  .image-modal {
+ .image-modal {
       display: none;
       position: fixed;
       z-index: 2000;
@@ -287,7 +287,7 @@
       overflow: hidden;
     }
 
-  .modal-content {
+ .modal-content {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -298,7 +298,7 @@
       cursor: move;
     }
 
-  .modal-image {
+ .modal-image {
       display: block;
       width: 100%;
       height: auto;
@@ -306,12 +306,12 @@
       transition: transform 0.1s ease-out;
     }
 
-  .image-container img {
+ .image-container img {
       cursor: pointer;
     }
 
     /* Guide Navigation Styles */
-  .guide-nav {
+ .guide-nav {
       display: flex;
       align-items: center;
       background: var(--card-bg);
@@ -322,7 +322,7 @@
       transition: background-color 0.3s, box-shadow 0.3s;
     }
 
-  .guide-btn {
+ .guide-btn {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -335,11 +335,11 @@
       transition: background-color 0.2s;
     }
 
-  .guide-btn:hover {
+ .guide-btn:hover {
       background-color: var(--border-color);
     }
 
-  .guide-btn img {
+ .guide-btn img {
       height: 24px;
       width: auto;
     }
@@ -384,14 +384,14 @@
           <p><strong>Key Replacement Parts:</strong></p>
         </div>
         <ul class="part-list">
-          <li>Combination Gas Control Valve Kit </li>
-          <li>Gas Orifices (Natural Gas and Propane) </li>
-          <li>Air Blower Kit </li>
-          <li>Igniter/Igniter Gasket Kit </li>
-          <li>Tube Sheet Coil Assembly Kit </li>
-          <li>Manifold Kit </li>
-          <li>Water Pressure Switch </li>
-          <li>Ignition Control Module </li>
+          <li><strong>Combination Gas Control Valve Kit:</strong> 42001-0051S </li>
+          <li><strong>Gas Orifice Kit (Propane, Model 400):</strong> 77707-0441 </li>
+          <li><strong>Air Blower Kit:</strong> See manual Section 7 </li>
+          <li><strong>Igniter/Igniter Gasket Kit:</strong> 77707-0054 </li>
+          <li><strong>Tube Sheet Coil Assembly Kit (400NA/LP):</strong> 77707-0234 </li>
+          <li><strong>Manifold Kit (400NA/LP):</strong> 77707-0016 </li>
+          <li><strong>Water Pressure Switch:</strong> 42001-0060S </li>
+          <li><strong>Ignition Control Module:</strong> 42001-0052S </li>
         </ul>
       </div>
     </div>
@@ -410,12 +410,12 @@
           <p><strong>Key Replacement Parts:</strong></p>
         </div>
         <ul class="part-list">
-          <li>Burner </li>
-          <li>Gas Valve </li>
-          <li>Igniter </li>
-          <li>Heat Exchanger </li>
-          <li>Water Pressure Switch </li>
-          <li>Control Board </li>
+          <li><strong>Burner:</strong> See parts sheet </li>
+          <li><strong>Gas Valve:</strong> See parts sheet </li>
+          <li><strong>Igniter:</strong> See parts sheet </li>
+          <li><strong>Heat Exchanger:</strong> See parts sheet </li>
+          <li><strong>Water Pressure Switch:</strong> See parts sheet </li>
+          <li><strong>Control Board:</strong> See parts sheet </li>
         </ul>
       </div>
     </div>
@@ -434,13 +434,14 @@
           <p><strong>Key Replacement Parts:</strong></p>
         </div>
         <ul class="part-list">
-          <li>Compressor </li>
-          <li>Fan Motor </li>
-          <li>Control Board </li>
-          <li>Titanium Heat Exchanger </li>
-          <li>Water Pressure Switch </li>
-          <li>Low Pressure Switch </li>
-          <li>High Pressure Switch </li>
+          <li><strong>Probe Thermister Defrost Sensor:</strong> 473665 </li>
+          <li><strong>Compressor Scroll ZP83 (Model 120, 120hc):</strong> 473734Z </li>
+          <li><strong>Fan Blade (60 Hz):</strong> 473783Z </li>
+          <li><strong>Fan Guard Grill (24"):</strong> 473786 </li>
+          <li><strong>Capacitor (Model 70, 90, 110, 120, 120HC):</strong> 473731 </li>
+          <li><strong>Pump Contactor AutoHeat:</strong> 473603 </li>
+          <li><strong>Titanium Heat Exchanger:</strong> See parts list </li>
+          <li><strong>Water Pressure Switch:</strong> See parts list </li>
         </ul>
       </div>
     </div>
@@ -459,15 +460,15 @@
           <p><strong>Key Replacement Parts:</strong></p>
         </div>
         <ul class="part-list">
-          <li>Compressor </li>
-          <li>Fan Motor </li>
-          <li>Control Board </li>
-          <li>Titanium Heat Exchanger </li>
-          <li>Water Pressure Switch </li>
-          <li>Low Pressure Switch </li>
-          <li>High Pressure Switch </li>
-          <li>Gas Valve (Check User Manual)</li>
-          <li>Burner Components (Check User Manual)</li>
+          <li><strong>Scroll Compressor ZP70:</strong> 473735Z </li>
+          <li><strong>Fan Blade (60 Hz):</strong> 473783Z </li>
+          <li><strong>Fan Guard Grill (24"):</strong> 473786 </li>
+          <li><strong>Heat Pump Contactor:</strong> 473149 </li>
+          <li><strong>Water Pressure Switch Boot:</strong> 473606 </li>
+          <li><strong>Low Pressure Switch:</strong> 473656Z </li>
+          <li><strong>High Pressure Switch:</strong> 473744Z </li>
+          <li><strong>Gas Valve:</strong> Check User Manual </li>
+          <li><strong>Burner Components:</strong> Check User Manual </li>
         </ul>
       </div>
     </div>
