@@ -72,28 +72,44 @@
       background: var(--bg-color);
       color: var(--text-color);
       margin: 0;
-      padding: 20px;
+      padding: 0;
       font-size: var(--base-font-size);
       transition: background-color 0.3s, color 0.3s;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .page-content {
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     .controls-container {
-      position: fixed;
-      top: 10px;
-      right: 10px;
+      position: relative;
+      height: 50px;
       display: flex;
+      justify-content: flex-end;
+      align-items: center;
       gap: 10px;
-      z-index: 1000;
+      background: var(--card-bg);
+      box-shadow: 0 2px 5px var(--shadow-color);
+      padding: 0 20px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .font-controls, .theme-control {
-      background: var(--card-bg);
-      border-radius: 5px;
-      box-shadow: 0 2px 5px var(--shadow-color);
       padding: 5px;
       display: flex;
       align-items: center;
-      transition: background-color 0.3s, box-shadow 0.3s;
+      transition: background-color 0.3s;
     }
 
     .font-btn, .theme-btn {
@@ -321,12 +337,10 @@
     .guide-nav {
       display: flex;
       align-items: center;
-      background: var(--card-bg);
-      border-radius: 5px;
-      box-shadow: 0 2px 5px var(--shadow-color);
       padding: 5px;
-      margin-left: 10px;
-      transition: background-color 0.3s, box-shadow 0.3s;
+      margin-right: auto; /* Push to the left */
+      transition: background-color 0.3s;
+      flex: 1;
     }
 
     .guide-btn {
@@ -371,8 +385,9 @@
       <button class="font-btn" id="increase-font">+</button>
     </div>
   </div>
-  <h1>Jandy Residential Pool Pump Guide</h1>
-  <div class="pump-list">
+  <div class="page-content">
+    <h1>Jandy Residential Pool Pump Guide</h1>
+    <div class="pump-list">
 
     <!-- Jandy FloPro -->
     <div class="pump-card">
@@ -772,6 +787,7 @@
       </div>
     </div>
 
+  </div>
   </div>
 
   <script>

@@ -71,28 +71,38 @@
       background: var(--bg-color);
       color: var(--text-color);
       margin: 0;
-      padding: 20px;
+      padding: 0;
       font-size: var(--base-font-size);
       transition: background-color 0.3s, color 0.3s;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .page-content {
+      padding: 20px;
     }
 
 .controls-container {
-      position: fixed;
-      top: 10px;
-      right: 10px;
+      position: relative;
+      height: 50px;
       display: flex;
+      justify-content: flex-end;
+      align-items: center;
       gap: 10px;
-      z-index: 1000;
+      background: var(--card-bg);
+      box-shadow: 0 2px 5px var(--shadow-color);
+      padding: 0 20px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      width: 100%;
+      box-sizing: border-box;
     }
 
 .font-controls,.theme-control {
-      background: var(--card-bg);
-      border-radius: 5px;
-      box-shadow: 0 2px 5px var(--shadow-color);
       padding: 5px;
       display: flex;
       align-items: center;
-      transition: background-color 0.3s, box-shadow 0.3s;
+      transition: background-color 0.3s;
     }
 
 .font-btn,.theme-btn {
@@ -124,7 +134,7 @@
       background: var(--card-bg);
       border-radius: 10px;
       box-shadow: 0 2px 5px var(--shadow-color);
-      width: 300px;
+      width: 450px;
       height: auto;
       cursor: pointer;
       transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
@@ -248,6 +258,16 @@
       top: -0.4em;
     }
 
+.hidden {
+      display: none;
+    }
+
+h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
 .expandable-section {
       display: none;
       margin-top: 10px;
@@ -313,12 +333,10 @@
 .guide-nav {
       display: flex;
       align-items: center;
-      background: var(--card-bg);
-      border-radius: 5px;
-      box-shadow: 0 2px 5px var(--shadow-color);
       padding: 5px;
-      margin-left: 10px;
-      transition: background-color 0.3s, box-shadow 0.3s;
+      margin-right: auto; /* Push to the left */
+      transition: background-color 0.3s;
+      flex: 1;
     }
 
 .guide-btn {
@@ -366,15 +384,16 @@
       <button class="font-btn" id="increase-font">+</button>
     </div>
   </div>
-  <h1>Pentair Heaters Product Guide</h1>
-  <div class="pump-list">
+  <div class="page-content">
+    <h1>Pentair Heaters Product Guide</h1>
+    <div class="pump-list">
 
     <div class="pump-card">
       <div class="image-container">
         <img src="Pentair Heaters_Files/mastertemp-heater.jpg" alt="Pentair Mastertemp Heater">
         <a href="https://www.google.com/search?tbm=isch&q=Pentair+Mastertemp+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp/manual/mastertemp-heater-manual-english.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USR</span></a><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp/manual/mastertemp-heater-manual-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Mastertemp Heater</h3>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp/manual/mastertemp-heater-manual-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Mastertemp Heater</h3>
       <div class="pump-details">
         <div class="pump-specs">
           <p><strong>BTU Rating:</strong> 175,000 - 400,000 </p>
@@ -384,19 +403,20 @@
         </div>
         <ul class="part-list">
           <li><strong>High Limit Switch:</strong> 42001-0063S <a href="https://www.pool360.com/Search?query=42001-0063S" target="_blank">[🔍]</a></li>
-          <li><strong>Stack Flue Sensor:</strong> 42002-0024S <a href="https://www.pool360.com/Search?query=42002-0024S" target="_blank">[🔍]</a></li>
           <li><strong>Automatic Gas Shutoff Switch (AGS):</strong> 42002-0025S <a href="https://www.pool360.com/Search?query=42002-0025S" target="_blank">[🔍]</a></li>
+          <li><strong>Stack Flue Sensor:</strong> 42002-0024S <a href="https://www.pool360.com/Search?query=42002-0024S" target="_blank">[🔍]</a></li>
+          <li><strong>Thermal Regulator Kit:</strong> 77707-0010 <a href="https://www.pool360.com/Search?query=77707-0010" target="_blank">[🔍]</a></li>
           <li><strong>Thermistor (Water Temperature Sensor):</strong> 42001-0053S <a href="https://www.pool360.com/Search?query=42001-0053S" target="_blank">[🔍]</a></li>
           <li><strong>Air Flow Switch:</strong> 42001-0061S <a href="https://www.pool360.com/Search?query=42001-0061S" target="_blank">[🔍]</a></li>
-          <li><strong>Fireman's Switch Fuse (1.25A):</strong> 32850-0099 <a href="https://www.pool360.com/Search?query=32850-0099" target="_blank">[🔍]</a></li>
-          <li>Combination Gas Control Valve Kit: 42001-0051S <a href="https://www.pool360.com/Search?query=42001-0051S" target="_blank">[🔍]</a></li>
-          <li>Gas Orifice Kit (Propane, Model 400): 77707-0441 <a href="https://www.pool360.com/Search?query=77707-0441" target="_blank">[🔍]</a></li>
-          <li>Air Blower Kit: See manual Section 7</li>
-          <li>Igniter/Igniter Gasket Kit: 77707-0054 <a href="https://www.pool360.com/Search?query=77707-0054" target="_blank">[🔍]</a></li>
-          <li>Tube Sheet Coil Assembly Kit (400NA/LP): 77707-0234 <a href="https://www.pool360.com/Search?query=77707-0234" target="_blank">[🔍]</a></li>
-          <li>Manifold Kit (400NA/LP): 77707-0016 <a href="https://www.pool360.com/Search?query=77707-0016" target="_blank">[🔍]</a></li>
-          <li>Water Pressure Switch: 42001-0060S <a href="https://www.pool360.com/Search?query=42001-0060S" target="_blank">[🔍]</a></li>
-          <li>Ignition Control Module: 42001-0052S <a href="https://www.pool360.com/Search?query=42001-0052S" target="_blank">[🔍]</a></li>
+          <li><strong>Water Pressure Switch:</strong> 42001-0060S <a href="https://www.pool360.com/Search?query=42001-0060S" target="_blank">[🔍]</a></li>
+          <li><strong>Pressure Relief Valve:</strong> 38674-0719 <a href="https://www.pool360.com/Search?query=38674-0719" target="_blank">[🔍]</a></li>
+          <li><strong>Ignition Control Module:</strong> 476223 <a href="https://www.pool360.com/Search?query=476223" target="_blank">[🔍]</a></li>
+          <li><strong>Transformer, 120/240V:</strong> 42001-0107S <a href="https://www.pool360.com/Search?query=42001-0107S" target="_blank">[🔍]</a></li>
+          <li><strong>Combination Gas Control Valve Kit:</strong> 42001-0051S <a href="https://www.pool360.com/Search?query=42001-0051S" target="_blank">[🔍]</a></li>
+          <li><strong>Gas Orifice Kit (Propane, Model 400):</strong> 77707-0441 <a href="https://www.pool360.com/Search?query=77707-0441" target="_blank">[🔍]</a></li>
+          <li><strong>Air Blower Kit:</strong> See manual Section 7</li>
+          <li><strong>Igniter/Igniter Gasket Kit:</strong> 77707-0054 <a href="https://www.pool360.com/Search?query=77707-0054" target="_blank">[🔍]</a></li>
+          <li><strong>Manifold Kit (400NA/LP):</strong> 77707-0016 <a href="https://www.pool360.com/Search?query=77707-0016" target="_blank">[🔍]</a></li>
         </ul>
 
         <div class="expandable-section">
@@ -423,12 +443,12 @@
       </div>
     </div>
 
-    <div class="pump-card">
+    <div class="pump-card hidden">
       <div class="image-container">
         <img src="Pentair Heaters_Files/mastertemp-125-heater.jpg" alt="Pentair Mastertemp 125 Heater">
         <a href="https://www.google.com/search?tbm=isch&q=Pentair+Mastertemp+125+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp-125/manual/mastertemp125-pool-and-spa-heater-installation-and-users-guide-english.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USR</span></a><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp-125/manual/mastertemp125-pool-and-spa-heater-installation-and-users-guide-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Mastertemp 125 Heater</h3>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp-125/manual/mastertemp125-pool-and-spa-heater-installation-and-users-guide-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Mastertemp 125 Heater</h3>
       <div class="pump-details">
         <div class="pump-specs">
           <p><strong>BTU Rating:</strong> 125,000 </p>
@@ -443,11 +463,11 @@
           <li><strong>Thermistor:</strong> 42001-0053S <a href="https://www.pool360.com/Search?query=42001-0053S" target="_blank">[🔍]</a></li>
           <li><strong>Air Flow Switch:</strong> 42001-0061S <a href="https://www.pool360.com/Search?query=42001-0061S" target="_blank">[🔍]</a></li>
           <li><strong>Water Pressure Switch:</strong> 42001-0060S <a href="https://www.pool360.com/Search?query=42001-0060S" target="_blank">[🔍]</a></li>
-          <li>Burner: 42001-0036S <a href="https://www.pool360.com/Search?query=42001-0036S" target="_blank">[🔍]</a></li>
-          <li>Gas Valve: 42001-0051S <a href="https://www.pool360.com/Search?query=42001-0051S" target="_blank">[🔍]</a></li>
-          <li>Igniter: 77707-0054 <a href="https://www.pool360.com/Search?query=77707-0054" target="_blank">[🔍]</a></li>
-          <li>Heat Exchanger: 474971 <a href="https://www.pool360.com/Search?query=474971" target="_blank">[🔍]</a></li>
-          <li>Control Board: 42002-0007S <a href="https://www.pool360.com/Search?query=42002-0007S" target="_blank">[🔍]</a></li>
+          <li><strong>Burner:</strong> 42001-0036S <a href="https://www.pool360.com/Search?query=42001-0036S" target="_blank">[🔍]</a></li>
+          <li><strong>Gas Valve:</strong> 42001-0051S <a href="https://www.pool360.com/Search?query=42001-0051S" target="_blank">[🔍]</a></li>
+          <li><strong>Igniter:</strong> 77707-0054 <a href="https://www.pool360.com/Search?query=77707-0054" target="_blank">[🔍]</a></li>
+          <li><strong>Heat Exchanger:</strong> 474971 <a href="https://www.pool360.com/Search?query=474971" target="_blank">[🔍]</a></li>
+          <li><strong>Control Board:</strong> 42002-0007S <a href="https://www.pool360.com/Search?query=42002-0007S" target="_blank">[🔍]</a></li>
         </ul>
 
         <div class="expandable-section">
@@ -476,10 +496,10 @@
 
     <div class="pump-card">
       <div class="image-container">
-        <img src="Pentair Heaters_Files/Clipboard Image.jpg" alt="Pentair Ultratemp High Performance Heat Pump">
+        <img src="Pentair Heaters_Files/ultratemp_nobg.png" alt="Pentair Ultratemp High Performance Heat Pump">
         <a href="https://www.google.com/search?tbm=isch&q=Pentair+Ultratemp+High+Performance+Heat+Pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp/manuals/ultratemp-heat-pump-installation-and-users-guide-en-fr-sp.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USR</span></a><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp/manuals/ultratemp-heat-pump-installation-and-users-guide-en-fr-sp.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Ultratemp High Performance Heat Pump</h3>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp/manuals/ultratemp-heat-pump-installation-and-users-guide-en-fr-sp.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Ultratemp High Performance Heat Pump</h3>
       <div class="pump-details">
         <div class="pump-specs">
           <p><strong>Type:</strong> Heat Pump </p>
@@ -492,20 +512,22 @@
           <li><strong>Water Pressure Switch:</strong> 473605Z <a href="https://www.pool360.com/Search?query=473605Z" target="_blank">[🔍]</a></li>
           <li><strong>Low Pressure Switch:</strong> 473656Z <a href="https://www.pool360.com/Search?query=473656Z" target="_blank">[🔍]</a></li>
           <li><strong>High Pressure Switch:</strong> 473744Z <a href="https://www.pool360.com/Search?query=473744Z" target="_blank">[🔍]</a></li>
-          <li>Compressor: 473129Z <a href="https://www.pool360.com/Search?query=473129Z" target="_blank">[🔍]</a></li>
-          <li>Fan Motor: 473132Z <a href="https://www.pool360.com/Search?query=473132Z" target="_blank">[🔍]</a></li>
-          <li>Control Board: 473136Z <a href="https://www.pool360.com/Search?query=473136Z" target="_blank">[🔍]</a></li>
-          <li>Titanium Heat Exchanger: 473150Z <a href="https://www.pool360.com/Search?query=473150Z" target="_blank">[🔍]</a></li>
+          <li><strong>Fan Starting Capacitor:</strong> 473731Z <a href="https://www.pool360.com/Search?query=473731Z" target="_blank">[🔍]</a><br>
+            Rating: 80 / 7.5 MFD 440V (Dual Run Capacitor)
+          </li>
+          <li><strong>Compressor:</strong> 474009Z <a href="https://www.pool360.com/Search?query=474009Z" target="_blank">[🔍]</a></li>
+          <li><strong>Fan Motor:</strong> 474010Z <a href="https://www.pool360.com/Search?query=474010Z" target="_blank">[🔍]</a></li>
+          <li><strong>Control Board:</strong> 472734 <a href="https://www.pool360.com/Search?query=472734" target="_blank">[🔍]</a></li>
         </ul>
       </div>
     </div>
 
-    <div class="pump-card">
+    <div class="pump-card hidden">
       <div class="image-container">
-        <img src="Pentair Heaters_Files/Clipboard Image_original.jpg" alt="Pentair Ultratemp ETi Hybrid Heater">
+        <img src="Pentair Heaters_Files/ultratemp-eti.png" alt="Pentair Ultratemp ETi Hybrid Heater">
         <a href="https://www.google.com/search?tbm=isch&q=Pentair+Ultratemp+ETi+Hybrid+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp-eti/manual/ultratemp-eti-heater-manual.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USR</span></a><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp-eti/manual/ultratemp-eti-heater-manual.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Ultratemp ETi Hybrid Heater</h3>
+      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp-eti/manual/ultratemp-eti-heater-manual.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Ultratemp ETi Hybrid Heater</h3>
       <div class="pump-details">
         <div class="pump-specs">
           <p><strong>Type:</strong> Hybrid (Heat Pump + Gas) </p>
@@ -514,20 +536,23 @@
           <p><strong>Key Replacement Parts:</strong></p>
         </div>
         <ul class="part-list">
-          <li><strong>Probe Thermister Defrost Sensor:</strong> 473665Z <a href="https://www.pool360.com/Search?query=473665Z" target="_blank">[🔍]</a></li>
-          <li><strong>Water Pressure Switch:</strong> 473605Z <a href="https://www.pool360.com/Search?query=473605Z" target="_blank">[🔍]</a></li>
-          <li><strong>Low Pressure Switch:</strong> 473656Z <a href="https://www.pool360.com/Search?query=473656Z" target="_blank">[🔍]</a></li>
-          <li><strong>High Pressure Switch:</strong> 473744Z <a href="https://www.pool360.com/Search?query=473744Z" target="_blank">[🔍]</a></li>
-          <li>Scroll Compressor ZP70: 473735Z <a href="https://www.pool360.com/Search?query=473735Z" target="_blank">[🔍]</a></li>
-          <li>Fan Motor: 473785 <a href="https://www.pool360.com/Search?query=473785" target="_blank">[🔍]</a></li>
-          <li>Control Board: 476100Z <a href="https://www.pool360.com/Search?query=476100Z" target="_blank">[🔍]</a></li>
-          <li>Titanium Heat Exchanger: 476106Z <a href="https://www.pool360.com/Search?query=476106Z" target="_blank">[🔍]</a></li>
-          <li>Gas Valve: 476107Z <a href="https://www.pool360.com/Search?query=476107Z" target="_blank">[🔍]</a></li>
-          <li>Burner Components: 476108Z <a href="https://www.pool360.com/Search?query=476108Z" target="_blank">[🔍]</a></li>
+          <li><strong>Probe, Thermistor Water Temperature:</strong> 471566 <a href="https://www.pool360.com/Search?query=471566" target="_blank">[🔍]</a></li>
+          <li><strong>Stack Flue Sensor:</strong> 475601 <a href="https://www.pool360.com/Search?query=475601" target="_blank">[🔍]</a></li>
+          <li><strong>Water Pressure Switch:</strong> 475956Z <a href="https://www.pool360.com/Search?query=475956Z" target="_blank">[🔍]</a></li>
+          <li><strong>Switch, High Limit, 127° F:</strong> 475955Z <a href="https://www.pool360.com/Search?query=475955Z" target="_blank">[🔍]</a></li>
+          <li><strong>Switch, Automatic Gas Shutoff, 140° F:</strong> 475941 <a href="https://www.pool360.com/Search?query=475941" target="_blank">[🔍]</a></li>
+          <li><strong>Fan Starting Capacitor:</strong> 473731Z <a href="https://www.pool360.com/Search?query=473731Z" target="_blank">[🔍]</a><br>
+            Rating: 80 / 7.5 MFD 440V (Dual Run Capacitor)
+          </li>
+          <li>Fan Motor with Acorn Nut Kit: 473785 <a href="https://www.pool360.com/Search?query=473785" target="_blank">[🔍]</a></li>
+          <li>Ignition Control Module: 475933Z <a href="https://www.pool360.com/Search?query=475933Z" target="_blank">[🔍]</a></li>
+          <li>Control Board: 472734 <a href="https://www.pool360.com/Search?query=472734" target="_blank">[🔍]</a></li>
+          <li>Transformer: 473155 <a href="https://www.pool360.com/Search?query=473155" target="_blank">[🔍]</a></li>
         </ul>
       </div>
     </div>
 
+    </div>
   </div>
 
   <script>
