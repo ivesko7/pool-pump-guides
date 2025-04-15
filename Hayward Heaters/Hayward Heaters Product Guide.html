@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Hayward Heaters Product Guide</title>
+  <script>
+    // Cookie functions
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      // For local file, we need to use localStorage instead of cookies
+      try {
+        localStorage.setItem(name, value);
+      } catch (e) {
+        console.error("Local storage not available", e);
+        // Fallback to cookies
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+      }
+    }
+
+    function getCookie(name) {
+      // Try localStorage first
+      try {
+        const value = localStorage.getItem(name);
+        if (value !== null) {
+          return value;
+        }
+      } catch (e) {
+        console.error("Local storage not available", e);
+      }
+
+      // Fallback to cookies
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+  </script>
+  <style>
+    :root {
+      --base-font-size: 16px;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --text-color: #333;
+      --border-color: #eee;
+      --shadow-color: rgba(0,0,0,0.1);
+      --link-color: #0066cc;
+      --link-color-install: #cc6600;
+    }
+
+    .dark-mode {
+      --bg-color: #222;
+      --card-bg: #333;
+      --text-color: #eee;
+      --border-color: #444;
+      --shadow-color: rgba(0,0,0,0.3);
+      --link-color: #4d9fff;
+      --link-color-install: #ff9d4d;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      font-size: var(--base-font-size);
+      transition: background-color 0.3s, color 0.3s;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .page-content {
+      padding: 20px;
+    }
+
+    .controls-container {
+      position: relative;
+      min-height: 40px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      background: var(--card-bg);
+      box-shadow: 0 2px 5px var(--shadow-color);
+      padding: 6px 20px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      width: 100%;
+      box-sizing: border-box;
+      flex-wrap: wrap;
+    }
+
+    .font-controls, .theme-control {
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
+    .font-btn, .theme-btn {
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 2px;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    .font-btn:hover, .theme-btn:hover {
+      background: var(--border-color);
+    }
+    .pump-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .pump-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      width: 300px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+    .pump-card:hover {
+      transform: scale(1.02);
+    }
+    .image-container {
+      position: relative;
+      height: 150px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--card-bg);
+      transition: background-color 0.3s;
+    }
+    .image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .eye-button {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 30px;
+      font-size: 16px;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: color 0.3s;
+    }
+    .manual-link {
+      margin-right: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      position: relative;
+      display: inline-block;
+      line-height: 1;
+    }
+    .user-manual {
+      color: var(--link-color);
+      transition: color 0.3s;
+    }
+    .install-manual {
+      color: var(--link-color-install);
+      transition: color 0.3s;
+    }
+    .manual-tag {
+      font-size: 7px;
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+      background-color: rgba(255,255,255,0.7);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+    .pump-card h3 {
+      margin: 10px;
+      padding: 0 5px;
+      font-size: calc(1rem * var(--font-scale, 1));
+      text-align: center;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+    }
+    .pump-details {
+      padding: 0 15px 15px 15px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Ensure consistent spacing */
+    .pump-details a {
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+    .pump-details p {
+      font-size: calc(0.9rem * var(--font-scale, 1));
+      margin: 10px 0;
+    }
+    .pump-specs {
+      flex-shrink: 0;
+      margin-bottom: 5px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      transition: border-color 0.3s;
+    }
+    .part-list, .hardware-list {
+      font-size: calc(0.85rem * var(--font-scale, 1));
+      padding-left: 15px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+    .part-list li, .hardware-list li {
+      margin-bottom: 6px;
+    }
+    .hardware-title {
+      font-size: calc(0.9rem * var(--font-scale, 1));
+      margin: 10px 0 5px 0;
+      font-weight: bold;
+    }
+
+    .hidden-parts {
+      display: none;
+    }
+
+    .expand-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+
+    .expand-btn:hover {
+      background-color: var(--secondary-color);
+    }
+
+    /* Image Modal Styles */
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      max-height: 90%;
+      transform-origin: center center;
+      cursor: move;
+    }
+
+    .modal-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      transform-origin: 0 0;
+      transition: transform 0.1s ease-out;
+    }
+
+    .image-container img {
+      cursor: pointer;
+    }
+
+    /* Guide Navigation Styles */
+    .guide-nav {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      margin-right: auto; /* Push to the left */
+      transition: background-color 0.3s;
+      flex: 1;
+      gap: 15px;
+    }
+
+    .guide-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 6px 12px;
+      background-color: rgba(255, 255, 255, 0.05);
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    .dark-mode .guide-section {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .guide-section-title {
+      margin-right: 10px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .guide-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .guide-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      margin: 0 5px;
+      border-radius: 5px;
+      background-color: white;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .guide-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .guide-btn img {
+      max-width: 25px;
+      max-height: 25px;
+    }
+
+    @media (max-width: 768px) {
+      .pump-list {
+        grid-template-columns: 1fr;
+      }
+
+      .controls-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .font-controls, .theme-control {
+        margin-top: 10px;
+        margin-left: 0;
+      }
+
+      .guide-nav {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .guide-section {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls-container">
+    <div class="guide-nav">
+      <div class="guide-section">
+        <div class="guide-section-title">Pumps</div>
+        <div class="guide-buttons">
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
+          </a>
+        </div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-section-title">Heaters</div>
+        <div class="guide-buttons">
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="theme-control">
+      <button class="theme-btn" id="toggle-theme">🌓</button>
+    </div>
+    <div class="font-controls">
+      <button class="font-btn" id="decrease-font">-</button>
+      <button class="font-btn" id="reset-font" title="Reset font size">R</button>
+      <button class="font-btn" id="increase-font">+</button>
+    </div>
+  </div>
+  <div class="page-content">
+    <h1>Hayward Heaters Product Guide</h1>
+    <div class="pump-list">
+      <!-- H Series Gas Heater -->
+      <div class="pump-card">
+        <div class="image-container">
+          <img src="Hayward H Series Gas Heaters_files/h400.png" alt="Hayward H Series Gas Heater">
+          <a href="https://www.google.com/search?tbm=isch&q=Hayward+H+Series+Gas+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+        </div>
+        <h3><a href="https://hayward.com/media/akeneo_connector/asset_files/U/n/Universal_H_Series_Install_Manual_Bilingual_1f1f.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Hayward H Series Gas Heater</h3>
+        <div class="pump-details">
+          <div class="pump-specs">
+            <p><strong>BTU Rating:</strong> 150,000 - 400,000</p>
+            <p><strong>Fuel Type:</strong> Natural Gas or Propane</p>
+            <p><strong>Efficiency:</strong> Up to 84%</p>
+            <p><strong>Replacement Parts:</strong></p>
+          </div>
+          <ul class="part-list">
+            <!-- Sensors and Switches -->
+            <li>
+              <strong>High Limit Switch:</strong><br>
+              FDXLHLI1930 <a href="https://www.pool360.com/Search?query=FDXLHLI1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Thermistor (Water Temperature Sensor):</strong><br>
+              FDXLTER1930 <a href="https://www.pool360.com/Search?query=FDXLTER1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Flame Sensor:</strong><br>
+              IDXLFLS1930 <a href="https://www.pool360.com/Search?query=IDXLFLS1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Water Pressure Switch:</strong><br>
+              FDXLWPS1930 <a href="https://www.pool360.com/Search?query=FDXLWPS1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Blower Vacuum Switch:</strong><br>
+              FDXLBVS1930 <a href="https://www.pool360.com/Search?query=FDXLBVS1930" target="_blank">[🔍]</a>
+            </li>
+
+            <!-- Safety Devices -->
+            <li>
+              <strong>Gas Valve (Natural Gas):</strong><br>
+              FDXLGSV0001 <a href="https://www.pool360.com/Search?query=FDXLGSV0001" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Gas Valve (Propane):</strong><br>
+              FDXLGSV0002 <a href="https://www.pool360.com/Search?query=FDXLGSV0002" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Pressure Relief Valve:</strong><br>
+              FDXLPRV1930 <a href="https://www.pool360.com/Search?query=FDXLPRV1930" target="_blank">[🔍]</a>
+            </li>
+
+            <!-- Electronic Parts -->
+            <li>
+              <strong>Integrated Control Board:</strong><br>
+              FDXLICB1930 <a href="https://www.pool360.com/Search?query=FDXLICB1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Display Board:</strong><br>
+              IDXL2DB1930 <a href="https://www.pool360.com/Search?query=IDXL2DB1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Transformer:</strong><br>
+              IDXL2TRF1930 <a href="https://www.pool360.com/Search?query=IDXL2TRF1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Ignitor:</strong><br>
+              FDXLIGN1930 <a href="https://www.pool360.com/Search?query=FDXLIGN1930" target="_blank">[🔍]</a>
+            </li>
+          </ul>
+          <p class="hardware-title">Additional Hardware:</p>
+          <ul class="hardware-list">
+            <!-- Other Parts -->
+            <li>
+              <strong>Combustion Blower:</strong><br>
+              FDXLBWR1930 <a href="https://www.pool360.com/Search?query=FDXLBWR1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Bezel and Keypad Assembly:</strong><br>
+              FDXLBKP1930 <a href="https://www.pool360.com/Search?query=FDXLBKP1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Header Assembly:</strong><br>
+              FDXLFHA1930 <a href="https://www.pool360.com/Search?query=FDXLFHA1930" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Wire Harness Assembly:</strong><br>
+              FDXLWHA1931 <a href="https://www.pool360.com/Search?query=FDXLWHA1931" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Field Wiring Panel:</strong><br>
+              FDXLFWP1930 <a href="https://www.pool360.com/Search?query=FDXLFWP1930" target="_blank">[🔍]</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize all controls
+    function initControls() {
+      // Initialize theme toggle
+      const themeToggle = document.getElementById('toggle-theme');
+      const storedTheme = getCookie('theme');
+
+      if (storedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+      }
+
+      themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        setCookie('theme', isDarkMode ? 'dark' : 'light', 365);
+      });
+
+      // Initialize font size controls
+      const decreaseBtn = document.getElementById('decrease-font');
+      const increaseBtn = document.getElementById('increase-font');
+      const resetBtn = document.getElementById('reset-font');
+
+      // Get stored font scale or default to 1
+      const storedFontScale = getCookie('fontScale');
+      const fontScale = storedFontScale ? parseFloat(storedFontScale) : 1;
+
+      // Apply stored font scale
+      if (storedFontScale) {
+        updateFontSize(fontScale);
+      }
+
+      // Add event listeners to font buttons
+      decreaseBtn.addEventListener('click', function() {
+        const currentScale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--font-scale') || '1');
+        if (currentScale > 0.7) {
+          updateFontSize(currentScale - 0.1);
+        }
+      });
+
+      increaseBtn.addEventListener('click', function() {
+        const currentScale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--font-scale') || '1');
+        if (currentScale < 1.5) {
+          updateFontSize(currentScale + 0.1);
+        }
+      });
+
+      resetBtn.addEventListener('click', function() {
+        updateFontSize(1);
+      });
+
+      // Update font size and save to localStorage
+      function updateFontSize(scale) {
+        console.log('Updating font size to:', scale);
+        document.documentElement.style.setProperty('--font-scale', scale);
+        setCookie('fontScale', scale.toString(), 365); // Save for 1 year
+        console.log('Saved font scale:', scale.toString());
+      }
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        initControls();
+        initImageModal();
+      });
+    } else {
+      // DOM already loaded
+      initControls();
+      initImageModal();
+    }
+
+    // Image Modal Functionality
+    function initImageModal() {
+      // Create modal element
+      const modal = document.createElement('div');
+      modal.className = 'image-modal';
+      modal.innerHTML = '<div class="modal-content"><img class="modal-image" src="" alt="Enlarged heater image"></div>';
+      document.body.appendChild(modal);
+
+      const modalContent = modal.querySelector('.modal-content');
+      const modalImg = modal.querySelector('.modal-image');
+
+      // Variables for zoom and pan
+      let scale = 1;
+      let isDragging = false;
+      let startX, startY, translateX = 0, translateY = 0;
+      let lastX, lastY;
+
+      // Add click event to all pump images
+      const pumpImages = document.querySelectorAll('.image-container img');
+      pumpImages.forEach(img => {
+        img.addEventListener('click', function() {
+          modalImg.src = this.src;
+          modal.style.display = 'block';
+          // Reset zoom and position
+          scale = 1;
+          translateX = 0;
+          translateY = 0;
+          updateTransform();
+        });
+      });
+
+      // Track if we're dragging to prevent accidental dismissal
+      let hasDragged = false;
+
+      // Close modal with click, Esc key, or space bar
+      modal.addEventListener('mousedown', function(e) {
+        hasDragged = false;
+      });
+
+      modal.addEventListener('mousemove', function(e) {
+        if (e.buttons > 0) {
+          hasDragged = true;
+        }
+      });
+
+      modal.addEventListener('click', function(e) {
+        if (!hasDragged && (e.target === modal || e.target === modalContent || e.target === modalImg)) {
+          modal.style.display = 'none';
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (modal.style.display === 'block' && (e.key === 'Escape' || e.key === ' ')) {
+          modal.style.display = 'none';
+        }
+      });
+
+      // Mouse wheel zoom functionality
+      modal.addEventListener('wheel', function(e) {
+        e.preventDefault();
+
+        if (modal.style.display === 'block') {
+          const rect = modalImg.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          const mouseY = e.clientY - rect.top;
+
+          // Calculate mouse position relative to image
+          const x = mouseX / rect.width;
+          const y = mouseY / rect.height;
+
+          // Determine zoom direction
+          const delta = -Math.sign(e.deltaY);
+          const scaleFactor = delta > 0 ? 1.1 : 0.9;
+
+          // Calculate new scale with limits (0.25x to 4x)
+          const newScale = Math.min(Math.max(scale * scaleFactor, 0.25), 4);
+
+          // Calculate new translate values to zoom toward mouse position
+          // For both zooming in and out, we want to keep the point under the mouse in the same position
+          const zoomPointX = rect.width * x;
+          const zoomPointY = rect.height * y;
+
+          // Calculate how much the point would move due to scaling
+          const scaleDiffX = zoomPointX * (newScale - scale) / scale;
+          const scaleDiffY = zoomPointY * (newScale - scale) / scale;
+
+          // Adjust translation to compensate
+          translateX -= scaleDiffX;
+          translateY -= scaleDiffY;
+
+          // Update scale
+          scale = newScale;
+
+          // Apply transform
+          updateTransform();
+        }
+      });
+
+      // Pan functionality
+      modal.addEventListener('mousedown', function(e) {
+        if (e.target === modalImg && scale > 1) {
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          lastX = translateX;
+          lastY = translateY;
+          e.preventDefault();
+          modalImg.style.cursor = 'grabbing';
+        }
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          translateX = lastX + dx;
+          translateY = lastY + dy;
+          updateTransform();
+          e.preventDefault();
+        }
+      });
+
+      document.addEventListener('mouseup', function() {
+        if (isDragging) {
+          isDragging = false;
+          modalImg.style.cursor = 'grab';
+        }
+      });
+
+      // Helper function to update transform
+      function updateTransform() {
+        modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      }
+    }
+  </script>
+</body>
+</html>

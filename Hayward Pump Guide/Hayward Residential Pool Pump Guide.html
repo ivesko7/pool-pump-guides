@@ -345,6 +345,33 @@
       margin-right: auto; /* Push to the left */
       transition: background-color 0.3s;
       flex: 1;
+      gap: 15px;
+    }
+
+    .guide-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 6px 12px;
+      background-color: rgba(255, 255, 255, 0.05);
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    .dark-mode .guide-section {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .guide-section-title {
+      margin-right: 10px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .guide-buttons {
+      display: flex;
+      align-items: center;
     }
 
     .guide-btn {
@@ -373,12 +400,34 @@
 <body>
   <div class="controls-container">
     <div class="guide-nav">
-      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residentia%20_Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide">
-        <img src="./Hayward Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo" style="height: 24px;">
-      </a>
-      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide">
-        <img src="./Hayward Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
-      </a>
+      <div class="guide-section">
+        <div class="guide-section-title">Pumps</div>
+        <div class="guide-buttons">
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide">
+            <img src="./Hayward Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide">
+            <img src="./Hayward Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide">
+            <img src="./Hayward Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
+          </a>
+        </div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-section-title">Heaters</div>
+        <div class="guide-buttons">
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide">
+            <img src="./Hayward Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide">
+            <img src="./Hayward Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide">
+            <img src="./Hayward Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
+          </a>
+        </div>
+      </div>
     </div>
     <div class="theme-control">
       <button class="theme-btn" id="toggle-theme">🌓</button>
@@ -396,7 +445,7 @@
     <!-- Super Pump -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="./Hayward Residential Pool Pump Guide_files/super-pump.jpg" alt="Super Pump">
+        <img src="./Hayward Residential Pool Pump Guide_files/super-pump_nobg.png" alt="Super Pump">
         <a href="https://www.google.com/search?tbm=isch&q=Hayward+Super+Pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
       <h3><a href="https://www.pooltek.com/wp-content/uploads/2017/02/Pump-HaywardSuperpump.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>Super Pump</h3>
@@ -460,7 +509,7 @@
     <!-- Super II -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="./Hayward Residential Pool Pump Guide_files/super-ii.jpg" alt="Super II">
+        <img src="./Hayward Residential Pool Pump Guide_files/super-ii_nobg.png" alt="Super II">
         <a href="https://www.google.com/search?tbm=isch&q=Hayward+Super+II" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
       <h3><a href="https://au.hayward.com/media/akeneo_connector/asset_files/S/u/Super_II_ECO_Single_Speed_71ba.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>Super II</h3>
@@ -524,7 +573,7 @@
     <!-- NorthStar -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="./Hayward Residential Pool Pump Guide_files/northstar.jpg" alt="NorthStar">
+        <img src="./Hayward Residential Pool Pump Guide_files/northstar_nobg.png" alt="NorthStar">
         <a href="https://www.google.com/search?tbm=isch&q=Hayward+NorthStar" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
       <h3><a href="https://mag.pioneerfamilypools.ca/media/mageworx/downloads/attachment/file/n/o/northstarmanual.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>NorthStar</h3>
@@ -593,7 +642,7 @@
     <!-- MaxFlo XL -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="./Hayward Residential Pool Pump Guide_files/maxflo-xl.jpg" alt="MaxFlo XL">
+        <img src="./Hayward Residential Pool Pump Guide_files/maxflo-xl.png" alt="MaxFlo XL">
         <a href="https://www.google.com/search?tbm=isch&q=Hayward+MaxFlo+XL" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
       <h3><a href="https://ca.hayward.com/media/akeneo_connector/asset_files/M/a/MaxFlo_IS2800X5_a611.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>MaxFlo XL</h3>
@@ -652,7 +701,7 @@
     <!-- TriStar VS -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="./Hayward Residential Pool Pump Guide_files/tristar-vs.jpg" alt="TriStar VS">
+        <img src="./Hayward Residential Pool Pump Guide_files/tristar-vs_nobg.png" alt="TriStar VS">
         <a href="https://www.google.com/search?tbm=isch&q=Hayward+TriStar+VS" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
       <h3><a href="https://hayward.com/media/akeneo_connector/asset_files/I/S/IS3400VSPTS_RevA_e6c5.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>TriStar VS</h3>
@@ -714,7 +763,7 @@
     <!-- TriStar VS 950 -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="./Hayward Residential Pool Pump Guide_files/tristar-vs-950.jpg" alt="TriStar VS 950">
+        <img src="./Hayward Residential Pool Pump Guide_files/tristar-vs-950_nobg.png" alt="TriStar VS 950">
         <a href="https://www.google.com/search?tbm=isch&q=Hayward+TriStar+VS+950" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
       <h3><a href="https://hayward.com/media/akeneo_connector/asset_files/t/r/tristarvs_IS32950VS_2caf.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>TriStar VS 950</h3>
@@ -776,7 +825,7 @@
     <!-- Super Pump XE -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="./Hayward Residential Pool Pump Guide_files/super-pump-xe.jpg" alt="Super Pump XE">
+        <img src="./Hayward Residential Pool Pump Guide_files/super-pump-xe_nobg.png" alt="Super Pump XE">
         <a href="https://www.google.com/search?tbm=isch&q=Hayward+Super+Pump+XE" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
       <h3><a href="https://hayward.com/media/akeneo_connector/asset_files/I/S/IS3200XE_REV_B_8d8c.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>Super Pump XE</h3>
@@ -837,7 +886,7 @@
     <!-- Super Pump VS 700 -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="./Hayward Residential Pool Pump Guide_files/super-pump-vs-700.jpg" alt="Super Pump VS 700">
+        <img src="./Hayward Residential Pool Pump Guide_files/super-pump-vs-700_nobg.png" alt="Super Pump VS 700">
         <a href="https://www.google.com/search?tbm=isch&q=Hayward+Super+Pump+VS+700" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
       <h3><a href="https://hayward.com/media/akeneo_connector/asset_files/1/0/1011784_RevB_8c65.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>Super Pump VS 700</h3>
@@ -895,10 +944,89 @@
       </div>
     </div>
 
+    <!-- MaxFlo -->
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="./Hayward Residential Pool Pump Guide_files/maxflo.png" alt="MaxFlo">
+        <a href="https://www.google.com/search?tbm=isch&q=Hayward+MaxFlo" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3><a href="https://www.hayward-pool.com/shop/en/pools/maxflo-i-c-sp1800x-series" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>MaxFlo</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Horsepower:</strong> 0.5 - 2.0 HP</p>
+          <p><strong>Plumbing Size:</strong> 1.5"</p>
+          <p><strong>Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Sensors First -->
+          <li>
+            <strong>Water Slinger:</strong><br>
+            SPX0125F&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX0125F" target="_blank">[🔍]</a></sub></sub>
+          </li>
+
+          <!-- Switches Second -->
+          <!-- No switches listed in parts list -->
+
+          <!-- Safety Parts/Bypasses Third -->
+          <li>
+            <strong>Pressure Relief Valve:</strong><br>
+            SPX1700FG&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX1700FG" target="_blank">[🔍]</a></sub></sub>
+          </li>
+
+          <!-- Rest of Parts -->
+          <li>
+            <strong>Impeller:</strong><br>
+            SPX2600C (0.5 HP)&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2600C" target="_blank">[🔍]</a></sub></sub><br>
+            SPX2605C (0.75 HP)&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2605C" target="_blank">[🔍]</a></sub></sub><br>
+            SPX2607C (1 HP)&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2607C" target="_blank">[🔍]</a></sub></sub><br>
+            SPX2610C (1.5 HP)&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2610C" target="_blank">[🔍]</a></sub></sub><br>
+            SPX2615C (2 HP)&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2615C" target="_blank">[🔍]</a></sub></sub>
+          </li>
+          <li>
+            <strong>Diffuser:</strong><br>
+            SPX2800B (covers 0.5–2 HP)&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2800B" target="_blank">[🔍]</a></sub></sub>
+          </li>
+          <li>
+            <strong>Shaft Seal:</strong><br>
+            SPX2700SA&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2700SA" target="_blank">[🔍]</a></sub></sub><br>
+            PS-201&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=PS-201" target="_blank">[🔍]</a></sub></sub>
+          </li>
+          <li>
+            <strong>Seal Plate:</strong><br>
+            SPX1600E5&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX1600E5" target="_blank">[🔍]</a></sub></sub>
+          </li>
+          <li>
+            <strong>Seal Plate O‑Ring:</strong><br>
+            SPX1600T&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX1600T" target="_blank">[🔍]</a></sub></sub>
+          </li>
+          <li>
+            <strong>Diffuser O‑Ring:</strong><br>
+            SPX1600R&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX1600R" target="_blank">[🔍]</a></sub></sub>
+          </li>
+          <li>
+            <strong>Pump Lid O‑Ring:</strong><br>
+            SPX1600S&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX1600S" target="_blank">[🔍]</a></sub></sub>
+          </li>
+          <li>
+            <strong>Housing Gasket:</strong><br>
+            G-95&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=G-95" target="_blank">[🔍]</a></sub></sub>
+          </li>
+        </ul>
+        <p class="hardware-title">Additional Hardware:</p>
+        <ul class="hardware-list">
+          <li><strong>Pump Basket:</strong> SPX2800M&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2800M" target="_blank">[🔍]</a></sub></sub></li>
+          <li><strong>Pump Housing:</strong> SPX2800AA&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2800AA" target="_blank">[🔍]</a></sub></sub></li>
+          <li><strong>Strainer Cover:</strong> SPX1250LA&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX1250LA" target="_blank">[🔍]</a></sub></sub></li>
+          <li><strong>Hand Knob Kit:</strong> SPX1600PN&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX1600PN" target="_blank">[🔍]</a></sub></sub></li>
+          <li><strong>Motor Mounting Feet:</strong> SPX2600G1&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX2600G1" target="_blank">[🔍]</a></sub></sub></li>
+        </ul>
+      </div>
+    </div>
+
     <!-- MaxFlo VS -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="./Hayward Residential Pool Pump Guide_files/maxflo-vs.jpg" alt="MaxFlo VS">
+        <img src="./Hayward Residential Pool Pump Guide_files/maxflo-vs_nobg.png" alt="MaxFlo VS">
         <a href="https://www.google.com/search?tbm=isch&q=Hayward+MaxFlo+VS" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
       <h3><a href="https://au.hayward.com/media/akeneo_connector/asset_files/m/a/maxflo_vs_30_LITINSB006_db34.pdf" target="_blank" class="manual-link user-manual" title="Download User Manual">📄<span class="manual-tag">USER</span></a>MaxFlo VS</h3>

@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Jandy Heaters Product Guide</title>
+  <script>
+    // Cookie functions
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      // For local file, we need to use localStorage instead of cookies
+      try {
+        localStorage.setItem(name, value);
+      } catch (e) {
+        console.error("Local storage not available", e);
+        // Fallback to cookies
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+      }
+    }
+
+    function getCookie(name) {
+      // Try localStorage first
+      try {
+        const value = localStorage.getItem(name);
+        if (value !== null) {
+          return value;
+        }
+      } catch (e) {
+        console.error("Local storage not available", e);
+      }
+
+      // Fallback to cookies
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+  </script>
+  <style>
+    :root {
+      --base-font-size: 16px;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --text-color: #333;
+      --border-color: #eee;
+      --shadow-color: rgba(0,0,0,0.1);
+      --link-color: #0066cc;
+      --link-color-install: #cc6600;
+      --font-scale: 1;
+    }
+
+    .dark-mode {
+      --bg-color: #222;
+      --card-bg: #333;
+      --text-color: #eee;
+      --border-color: #444;
+      --shadow-color: rgba(0,0,0,0.3);
+      --link-color: #4d9fff;
+      --link-color-install: #ff9d4d;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      font-size: var(--base-font-size);
+      transition: background-color 0.3s, color 0.3s;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .page-content {
+      padding: 20px;
+    }
+
+    h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .controls-container {
+      position: relative;
+      min-height: 40px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      background: var(--card-bg);
+      box-shadow: 0 2px 5px var(--shadow-color);
+      padding: 6px 20px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      width: 100%;
+      box-sizing: border-box;
+      flex-wrap: wrap;
+    }
+
+    .font-controls, .theme-control {
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
+    .font-btn, .theme-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+      margin: 0 2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .font-btn:hover, .theme-btn:hover {
+      background-color: var(--border-color);
+    }
+
+    .pump-list {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 40px;
+    }
+
+    .pump-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.3s, background-color 0.3s;
+      width: 320px;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .pump-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px var(--shadow-color);
+    }
+
+    .image-container {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+    }
+
+    .dark-mode .image-container {
+      background: #2a2a2a;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .eye-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      transition: background-color 0.2s;
+    }
+
+    .eye-button:hover {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .dark-mode .eye-button {
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+    }
+
+    .dark-mode .eye-button:hover {
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    h3 {
+      padding: 15px 15px 5px;
+      margin: 0;
+      font-size: calc(1.1rem * var(--font-scale, 1));
+      display: flex;
+      align-items: center;
+    }
+
+    .pump-details {
+      padding: 0 15px 15px;
+    }
+
+    .pump-specs {
+      flex-shrink: 0;
+      margin-bottom: 5px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      transition: border-color 0.3s;
+    }
+
+    .part-list, .hardware-list {
+      font-size: calc(0.85rem * var(--font-scale, 1));
+      padding-left: 15px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+
+    .part-list li, .hardware-list li {
+      margin-bottom: 6px;
+    }
+
+    .hardware-title {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    a {
+      color: var(--link-color);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .manual-link {
+      margin-right: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      position: relative;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    .manual-tag {
+      position: absolute;
+      font-size: 7px;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+
+    .install-manual {
+      color: var(--link-color-install);
+    }
+
+    .expandable-section {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .expand-btn {
+      background: none;
+      border: none;
+      color: var(--link-color);
+      cursor: pointer;
+      padding: 5px 0;
+      font-size: calc(0.8rem * var(--font-scale, 1));
+      text-align: left;
+      margin-top: 5px;
+      transition: color 0.3s;
+    }
+
+    .expand-btn:hover {
+      text-decoration: underline;
+    }
+
+    /* Modal styles for image zoom */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+    }
+
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      max-height: 90%;
+      transform-origin: center center;
+      cursor: move;
+    }
+
+    .modal-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      transform-origin: 0 0;
+      transition: transform 0.1s ease-out;
+    }
+
+    .image-container img {
+      cursor: pointer;
+    }
+
+    /* Guide Navigation Styles */
+    .guide-nav {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      margin-right: auto; /* Push to the left */
+      transition: background-color 0.3s;
+      flex: 1;
+      gap: 15px;
+    }
+
+    .guide-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 6px 12px;
+      background-color: rgba(255, 255, 255, 0.05);
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    .dark-mode .guide-section {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .guide-section-title {
+      margin-right: 10px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .guide-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .guide-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 3px;
+      margin: 0 3px;
+      border-radius: 3px;
+      transition: background-color 0.2s;
+    }
+
+    .guide-btn:hover {
+      background-color: var(--border-color);
+    }
+
+    .guide-btn img {
+      height: 24px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls-container">
+    <div class="guide-nav">
+      <div class="guide-section">
+        <div class="guide-section-title">Pumps</div>
+        <div class="guide-buttons">
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
+          </a>
+        </div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-section-title">Heaters</div>
+        <div class="guide-buttons">
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
+          </a>
+          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide">
+            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="theme-control">
+      <button class="theme-btn" id="toggle-theme">🌓</button>
+    </div>
+    <div class="font-controls">
+      <button class="font-btn" id="decrease-font">-</button>
+      <button class="font-btn" id="reset-font" title="Reset font size">R</button>
+      <button class="font-btn" id="increase-font">+</button>
+    </div>
+  </div>
+  <div class="page-content">
+    <h1>Jandy Heaters Product Guide</h1>
+    <div class="pump-list">
+      <!-- Jandy JXi Series Gas Heater Card -->
+      <div class="pump-card">
+        <div class="image-container">
+          <img src="./Jandy Heaters_files/jxi.png" alt="Jandy JXi Series Gas Heater">
+          <a href="https://www.google.com/search?tbm=isch&q=Jandy+JXi+Series+Gas+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+        </div>
+        <h3>
+          <a href="https://www.pooltek.com/wp-content/uploads/2017/02/Heater-JandyJXi.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>
+          Jandy JXi Series Gas Heater
+        </h3>
+        <div class="pump-details">
+          <div class="pump-specs">
+            <p><strong>BTU Rating:</strong> 200,000 - 400,000 </p>
+            <p><strong>Fuel Type:</strong> Natural Gas or Propane </p>
+            <p><strong>Models:</strong> JXi200N, JXi200P, JXi260N, JXi260P, JXi400N, JXi400P </p>
+            <p><strong>Key Replacement Parts:</strong></p>
+          </div>
+          <ul class="part-list">
+            <!-- Sensors First -->
+            <li><strong>Temperature Sensor Kit:</strong> R0456500 <a href="https://www.pool360.com/Search?query=R0456500" target="_blank">[🔍]</a></li>
+
+            <!-- Switches Second -->
+            <li><strong>Water Pressure Switch w/ Siphon Loop Kit:</strong> R0457001 <a href="https://www.pool360.com/Search?query=R0457001" target="_blank">[🔍]</a></li>
+            <li><strong>Air Pressure Switch:</strong> R0456400 <a href="https://www.pool360.com/Search?query=R0456400" target="_blank">[🔍]</a></li>
+
+            <!-- Safety Parts/Bypasses Third -->
+            <li><strong>Thermal Regulator Valve Kit:</strong> R0589700 <a href="https://www.pool360.com/Search?query=R0589700" target="_blank">[🔍]</a></li>
+            <li><strong>Pressure Relief Valve:</strong> R0336101 <a href="https://www.pool360.com/Search?query=R0336101" target="_blank">[🔍]</a></li>
+
+            <!-- Rest of Parts -->
+            <li><strong>Ignition Control:</strong> R0456900 <a href="https://www.pool360.com/Search?query=R0456900" target="_blank">[🔍]</a></li>
+            <li><strong>User Interface Kit:</strong> R0591900 <a href="https://www.pool360.com/Search?query=R0591900" target="_blank">[🔍]</a></li>
+            <li><strong>Drain Plug (Set of 2):</strong> R0446000 <a href="https://www.pool360.com/Search?query=R0446000" target="_blank">[🔍]</a></li>
+          </ul>
+
+          <!-- Expandable section for additional parts -->
+          <div class="expandable-section">
+            <p class="hardware-title">Additional Replacement Parts:</p>
+            <ul class="hardware-list">
+              <!-- Sensors First -->
+              <li><strong>High Limit Temp Sensors:</strong> R0592300 <a href="https://www.pool360.com/Search?query=R0592300" target="_blank">[🔍]</a></li>
+              <li><strong>Sweep Elbow Aqualink Temp:</strong> SEAQL1001 <a href="https://www.pool360.com/Search?query=SEAQL1001" target="_blank">[🔍]</a></li>
+
+              <!-- Switches Second -->
+              <li><strong>Vent Limit Switch:</strong> R0524300 <a href="https://www.pool360.com/Search?query=R0524300" target="_blank">[🔍]</a></li>
+
+              <!-- Safety Parts/Bypasses Third -->
+              <li><strong>Heater Bypass Kit:</strong> R0589800 <a href="https://www.pool360.com/Search?query=R0589800" target="_blank">[🔍]</a></li>
+
+              <!-- Rest of Parts -->
+              <li><strong>Igniter Kit:</strong> R0457502 <a href="https://www.pool360.com/Search?query=R0457502" target="_blank">[🔍]</a></li>
+              <li><strong>Power Distribution Board (PDB):</strong> R0458100 <a href="https://www.pool360.com/Search?query=R0458100" target="_blank">[🔍]</a></li>
+              <li><strong>Universal Half Unions:</strong> R0522900 <a href="https://www.pool360.com/Search?query=R0522900" target="_blank">[🔍]</a></li>
+              <li><strong>Drain Cap Assembly:</strong> R0523000 <a href="https://www.pool360.com/Search?query=R0523000" target="_blank">[🔍]</a></li>
+              <li><strong>Access Door Kit:</strong> R0589600 <a href="https://www.pool360.com/Search?query=R0589600" target="_blank">[🔍]</a></li>
+              <li><strong>3 Port Manifold:</strong> R0590100 <a href="https://www.pool360.com/Search?query=R0590100" target="_blank">[🔍]</a></li>
+            </ul>
+          </div>
+          <button class="expand-btn">Show More Parts ▼</button>
+        </div>
+      </div>
+      <!-- End Jandy JXi Series Gas Heater Card -->
+
+      <!-- Jandy JE Series Heat Pump Card -->
+      <div class="pump-card">
+        <div class="image-container">
+          <img src="./Jandy Heaters_Files/je-hp.png" alt="Jandy Pro Series JE Heat Pump">
+          <a href="https://www.google.com/search?tbm=isch&q=Jandy+Pro+Series+JE+Heat+Pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+        </div>
+        <h3>
+          <a href="https://images.inyopools.com/cloud/documents/jandy-je-series-om.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>
+          Jandy Pro Series JE Heat Pump
+        </h3>
+        <div class="pump-details">
+          <div class="pump-specs">
+            <p><strong>Models:</strong> JE1500T, JE2000T, JE2500T, JE3000T</p>
+            <p><strong>Key Replacement Parts:</strong></p>
+          </div>
+          <ul class="part-list">
+            <li><strong>Fan Grille:</strong> R0571800 <a href="https://www.pool360.com/Search?query=R0571800" target="_blank">[🔍]</a></li>
+            <li><strong>Control Cover (Smoked):</strong> R3008700 <a href="https://www.pool360.com/Search?query=R3008700" target="_blank">[🔍]</a></li>
+            <li><strong>Power Interface PCB:</strong> R3009200 <a href="https://www.pool360.com/Search?query=R3009200" target="_blank">[🔍]</a></li>
+            <li><strong>Universal Union & Buttress Set:</strong> R0472700 <a href="https://www.pool360.com/Search?query=R0472700" target="_blank">[🔍]</a></li>
+          </ul>
+          <!-- Expandable section for additional parts (if more are found, add here) -->
+        </div>
+      </div>
+      <!-- End Jandy JE Series Heat Pump Card -->
+
+      <!-- Jandy VersaTemp Heat/Chill Pump Card -->
+      <div class="pump-card">
+        <div class="image-container">
+          <img src="./Jandy Heaters_Files/versatemp.png" alt="Jandy VersaTemp Heat/Chill Pump">
+          <a href="https://www.google.com/search?tbm=isch&q=Jandy+VersaTemp+Heat+Chill+Pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+        </div>
+        <h3>
+          <a href="https://clarksonpools.com/wp-content/uploads/2024/06/Jandy-VersaTemp-JRTxxxR-Heatpump-Chiller-Installation-and-Operation-Manual.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>
+          Jandy VersaTemp Heat/Chill Pump
+        </h3>
+        <div class="pump-details">
+          <div class="pump-specs">
+            <p><strong>Models:</strong> VersaTemp (Heat/Chill) Series</p>
+            <p><strong>Key Replacement Parts:</strong></p>
+          </div>
+          <ul class="part-list">
+            <!-- Sensors -->
+            <li><strong>Temperature Sensor Kit:</strong> R0935700 <a href="https://www.pool360.com/Search?query=R0935700" target="_blank">[🔍]</a></li>
+            <!-- Switches -->
+            <li><strong>High Pressure Switch:</strong> R0936200 <a href="https://www.pool360.com/Search?query=R0936200" target="_blank">[🔍]</a></li>
+            <li><strong>Low Pressure Switch:</strong> R0936100 <a href="https://www.pool360.com/Search?query=R0936100" target="_blank">[🔍]</a></li>
+            <li><strong>Water Pressure Switch:</strong> R0936000 <a href="https://www.pool360.com/Search?query=R0936000" target="_blank">[🔍]</a></li>
+            <!-- Electrical Parts -->
+            <li><strong>User Interface Kit:</strong> R0591900 <a href="https://www.pool360.com/Search?query=R0591900" target="_blank">[🔍]</a></li>
+            <li><strong>User Interface Lid Kit:</strong> R0592000 <a href="https://www.pool360.com/Search?query=R0592000" target="_blank">[🔍]</a></li>
+            <li><strong>Transformer:</strong> R0936300 <a href="https://www.pool360.com/Search?query=R0936300" target="_blank">[🔍]</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- End Jandy VersaTemp Heat/Chill Pump Card -->
+    </div>
+  </div>
+
+  <script>
+    // Initialize controls
+    function initControls() {
+      console.log('Initializing controls');
+      initThemeToggle();
+      initFontSize();
+      initExpandButtons();
+      initImageZoom();
+    }
+
+    // Initialize expand buttons
+    function initExpandButtons() {
+      const expandButtons = document.querySelectorAll('.expand-btn');
+      expandButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const section = this.previousElementSibling;
+          if (section.style.display === 'block') {
+            section.style.display = 'none';
+            this.textContent = 'Show More Parts ▼';
+          } else {
+            section.style.display = 'block';
+            this.textContent = 'Show Less ▲';
+          }
+        });
+      });
+    }
+
+    // Initialize image zoom functionality
+    function initImageZoom() {
+      // Create modal element
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      document.body.appendChild(modal);
+
+      // Create modal content
+      const modalContent = document.createElement('div');
+      modalContent.className = 'modal-content';
+      modal.appendChild(modalContent);
+
+      // Create modal image
+      const modalImg = document.createElement('img');
+      modalImg.className = 'modal-image';
+      modalContent.appendChild(modalImg);
+
+      // Add click event to all product images
+      const images = document.querySelectorAll('.image-container img');
+      images.forEach(img => {
+        if (!img.classList.contains('eye-button')) {
+          img.addEventListener('click', function() {
+            modal.style.display = 'block';
+            modalImg.src = this.src;
+          });
+        }
+      });
+
+      // Close modal when clicking outside the image
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    // Initialize theme toggle
+    function initThemeToggle() {
+      console.log('Initializing theme toggle');
+
+      // Check for saved theme preference
+      const savedTheme = getCookie('darkMode');
+      console.log('Saved theme preference:', savedTheme);
+
+      if (savedTheme === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('toggle-theme').textContent = '☀️';
+      } else {
+        document.getElementById('toggle-theme').textContent = '🌓';
+      }
+
+      // Add event listener for theme toggle
+      document.getElementById('toggle-theme').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+
+        // Update button icon
+        this.textContent = isDarkMode ? '☀️' : '🌓';
+
+        // Save preference
+        setCookie('darkMode', isDarkMode.toString(), 365);
+        console.log('Saved theme preference:', isDarkMode);
+      });
+    }
+
+    // Initialize font size controls
+    function initFontSize() {
+      console.log('Initializing font size controls');
+
+      // Check for saved font size preference
+      let fontScale = parseFloat(getCookie('fontScale')) || 1.0;
+      console.log('Saved font scale:', fontScale);
+
+      // Apply saved font size
+      updateFontSize(fontScale);
+
+      // Increase font size
+      document.getElementById('increase-font').addEventListener('click', function() {
+        fontScale += 0.1;
+        if (fontScale > 1.5) fontScale = 1.5; // Maximum scale
+        updateFontSize(fontScale);
+      });
+
+      // Decrease font size
+      document.getElementById('decrease-font').addEventListener('click', function() {
+        fontScale -= 0.1;
+        if (fontScale < 0.7) fontScale = 0.7; // Minimum scale
+        updateFontSize(fontScale);
+      });
+
+      // Reset font size
+      document.getElementById('reset-font').addEventListener('click', function() {
+        fontScale = 1.0; // Reset to default
+        updateFontSize(fontScale);
+      });
+
+      // Update font size and save to localStorage
+      function updateFontSize(scale) {
+        console.log('Updating font size to:', scale);
+        document.documentElement.style.setProperty('--font-scale', scale);
+        setCookie('fontScale', scale.toString(), 365); // Save for 1 year
+        console.log('Saved font scale:', scale.toString());
+      }
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', initControls);
+  </script>
+</body>
+</html>
