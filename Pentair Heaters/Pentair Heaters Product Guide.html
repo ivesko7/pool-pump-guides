@@ -82,20 +82,57 @@
       padding: 20px;
     }
 
-.controls-container {
-      position: relative;
-      height: 50px;
+    .toolbar {
       display: flex;
-      justify-content: flex-end;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
       background: var(--card-bg);
       box-shadow: 0 2px 5px var(--shadow-color);
-      padding: 0 20px;
+      padding: 4px;
       margin-bottom: 20px;
       transition: background-color 0.3s, box-shadow 0.3s;
       width: 100%;
       box-sizing: border-box;
+      white-space: nowrap;
+      height: 50px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      position: relative;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .toolbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .guide-links {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0 10px;
+      min-width: max-content;
+      cursor: grab;
+    }
+
+    .ui-controls {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: auto;
+      padding: 0 10px;
+      background: var(--card-bg);
+      position: sticky;
+      right: 0;
+      z-index: 10;
+    }
+
+    .toolbar span {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin: 0 5px;
+      white-space: nowrap;
     }
 
 .font-controls,.theme-control {
@@ -105,24 +142,27 @@
       transition: background-color 0.3s;
     }
 
-.font-btn,.theme-btn {
-      width: 24px;
-      height: 24px;
+    .font-btn, .theme-btn {
+      width: 30px;
+      height: 30px;
       border: 1px solid var(--border-color);
       background: var(--card-bg);
       color: var(--text-color);
-      border-radius: 3px;
+      border-radius: 4px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 2px;
       font-weight: bold;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      font-size: 0.9rem;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.2s;
     }
 
 .font-btn:hover,.theme-btn:hover {
-      background: var(--border-color);
+      background-color: var(--border-color);
+      transform: translateY(-2px);
     }
 .pump-list {
       display: flex;
@@ -161,12 +201,12 @@
       display: block;
       object-fit: contain;
     }
-.eye-button {
+    .eye-button {
       position: absolute;
       bottom: 5px;
       right: 5px;
-      background-color: rgba(255, 255, 255, 0.8);
-      border: none;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.2);
       border-radius: 50%;
       width: 30px;
       height: 30px;
@@ -175,8 +215,20 @@
       line-height: 30px;
       font-size: 16px;
       text-decoration: none;
-      color: var(--text-color);
-      transition: color 0.3s;
+      color: #000;
+      transition: all 0.3s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .dark-mode .eye-button {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 1px 4px rgba(255, 255, 255, 0.3);
+    }
+
+    .eye-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
 .manual-link {
       margin-right: 6px;
@@ -205,10 +257,10 @@
       padding: 0 2px;
       border-radius: 2px;
     }
-.pump-card h3 {
+    .pump-card h3 {
       margin: 10px;
       padding: 0 5px;
-      font-size: calc(1rem * var(--font-scale, 1));
+      font-size: 1rem;
       text-align: center;
       height: 40px;
       display: flex;
@@ -227,8 +279,8 @@
       display: inline-block;
       margin-bottom: 2px;
     }
-.pump-details p {
-      font-size: calc(0.9rem * var(--font-scale, 1));
+    .pump-details p {
+      font-size: 0.9rem;
       margin: 10px 0;
     }
 .pump-specs {
@@ -238,8 +290,8 @@
       padding-bottom: 5px;
       transition: border-color 0.3s;
     }
-.part-list,.hardware-list {
-      font-size: calc(0.85rem * var(--font-scale, 1));
+    .part-list,.hardware-list {
+      font-size: 0.85rem;
       padding-left: 15px;
       margin-top: 5px;
       margin-bottom: 10px;
@@ -366,65 +418,43 @@ h1 {
       align-items: center;
     }
 
-.guide-btn {
-      display: flex;
+    .guide-btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 3px;
-      margin: 0 3px;
-      border-radius: 3px;
-      transition: background-color 0.2s;
+      width: 30px;
+      height: 30px;
+      padding: 2px;
+      border-radius: 4px;
+      background-color: white;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
-.guide-btn:hover {
-      background-color: var(--border-color);
+    .guide-btn:hover {
+      transform: translateY(-1px);
     }
 
-.guide-btn img {
-      height: 24px;
-      width: auto;
+    .guide-btn img {
+      max-width: 26px;
+      max-height: 26px;
     }
   </style>
 </head>
 <body>
-  <div class="controls-container">
-    <div class="guide-nav">
-      <div class="guide-section">
-        <div class="guide-section-title">Pumps</div>
-        <div class="guide-buttons">
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
-          </a>
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
-          </a>
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
-          </a>
-        </div>
-      </div>
-      <div class="guide-section">
-        <div class="guide-section-title">Heaters</div>
-        <div class="guide-buttons">
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
-          </a>
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
-          </a>
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
-          </a>
-        </div>
-      </div>
+  <div class="toolbar">
+    <div class="guide-links">
+      <span>Pumps</span>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
+      <span>Heaters</span>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
     </div>
-    <div class="theme-control">
+    <div class="ui-controls">
       <button class="theme-btn" id="toggle-theme">🌓</button>
-    </div>
-    <div class="font-controls">
       <button class="font-btn" id="decrease-font">-</button>
       <button class="font-btn" id="reset-font" title="Reset font size">R</button>
       <button class="font-btn" id="increase-font">+</button>
@@ -452,6 +482,7 @@ h1 {
           <li><strong>Automatic Gas Shutoff Switch (AGS):</strong> 42002-0025S <a href="https://www.pool360.com/Search?query=42002-0025S" target="_blank">[🔍]</a></li>
           <li><strong>Stack Flue Sensor:</strong> 42002-0024S <a href="https://www.pool360.com/Search?query=42002-0024S" target="_blank">[🔍]</a></li>
           <li><strong>Thermal Regulator Kit:</strong> 77707-0010 <a href="https://www.pool360.com/Search?query=77707-0010" target="_blank">[🔍]</a></li>
+          <li><strong>Internal Bypass:</strong> 77707-0001 <a href="https://www.pool360.com/Search?query=77707-0001" target="_blank">[🔍]</a></li>
           <li><strong>Thermistor (Water Temperature Sensor):</strong> 42001-0053S <a href="https://www.pool360.com/Search?query=42001-0053S" target="_blank">[🔍]</a></li>
           <li><strong>Air Flow Switch:</strong> 42001-0061S <a href="https://www.pool360.com/Search?query=42001-0061S" target="_blank">[🔍]</a></li>
           <li><strong>Water Pressure Switch:</strong> 42001-0060S <a href="https://www.pool360.com/Search?query=42001-0060S" target="_blank">[🔍]</a></li>
@@ -506,6 +537,7 @@ h1 {
           <li><strong>High Limit Switch:</strong> 42001-0063S <a href="https://www.pool360.com/Search?query=42001-0063S" target="_blank">[🔍]</a></li>
           <li><strong>Stack Flue Sensor:</strong> 42002-0024S <a href="https://www.pool360.com/Search?query=42002-0024S" target="_blank">[🔍]</a></li>
           <li><strong>Automatic Gas Shutoff Switch (AGS):</strong> 42002-0025S <a href="https://www.pool360.com/Search?query=42002-0025S" target="_blank">[🔍]</a></li>
+          <li><strong>Internal Bypass:</strong> 77707-0001 <a href="https://www.pool360.com/Search?query=77707-0001" target="_blank">[🔍]</a></li>
           <li><strong>Thermistor:</strong> 42001-0053S <a href="https://www.pool360.com/Search?query=42001-0053S" target="_blank">[🔍]</a></li>
           <li><strong>Air Flow Switch:</strong> 42001-0061S <a href="https://www.pool360.com/Search?query=42001-0061S" target="_blank">[🔍]</a></li>
           <li><strong>Water Pressure Switch:</strong> 42001-0060S <a href="https://www.pool360.com/Search?query=42001-0060S" target="_blank">[🔍]</a></li>
@@ -608,6 +640,97 @@ h1 {
       initThemeToggle();
       initFontSize();
       initExpandButtons();
+      initToolbarScroll();
+    }
+
+    // Initialize toolbar horizontal scrolling
+    function initToolbarScroll() {
+      const toolbar = document.querySelector('.toolbar');
+      const guideLinks = document.querySelector('.guide-links');
+
+      // Variables for drag scrolling
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      // Mouse events for desktop
+      toolbar.addEventListener('mousedown', (e) => {
+        // Only handle clicks on the guide-links or its children
+        if (!e.target.closest('.guide-links') && e.target !== guideLinks) return;
+
+        isDown = true;
+        toolbar.style.cursor = 'grabbing';
+        startX = e.pageX - toolbar.offsetLeft;
+        scrollLeft = toolbar.scrollLeft;
+        e.preventDefault();
+      });
+
+      toolbar.addEventListener('mouseleave', () => {
+        isDown = false;
+        toolbar.style.cursor = '';
+      });
+
+      toolbar.addEventListener('mouseup', () => {
+        isDown = false;
+        toolbar.style.cursor = '';
+      });
+
+      toolbar.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - toolbar.offsetLeft;
+        const walk = (x - startX) * 2; // Scroll speed multiplier
+        toolbar.scrollLeft = scrollLeft - walk;
+      });
+
+      // Touch events for mobile
+      toolbar.addEventListener('touchstart', (e) => {
+        // Only handle touches on the guide-links or its children
+        if (!e.target.closest('.guide-links') && e.target !== guideLinks) return;
+
+        isDown = true;
+        startX = e.touches[0].pageX - toolbar.offsetLeft;
+        scrollLeft = toolbar.scrollLeft;
+      }, { passive: false });
+
+      toolbar.addEventListener('touchend', () => {
+        isDown = false;
+      });
+
+      toolbar.addEventListener('touchcancel', () => {
+        isDown = false;
+      });
+
+      toolbar.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - toolbar.offsetLeft;
+        const walk = (x - startX) * 2;
+        toolbar.scrollLeft = scrollLeft - walk;
+      }, { passive: false });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+          return; // Don't interfere with input fields
+        }
+
+        if (e.key === 'ArrowLeft') {
+          toolbar.scrollLeft -= 50;
+          e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+          toolbar.scrollLeft += 50;
+          e.preventDefault();
+        }
+      });
+
+      // Mouse wheel horizontal scrolling
+      toolbar.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          toolbar.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
     }
 
     // Initialize expand buttons
@@ -657,45 +780,48 @@ h1 {
       });
     }
 
-    // Font size control
+    // Initialize zoom controls
     function initFontSize() {
-      console.log('Initializing font size controls');
+      console.log('Initializing zoom controls');
 
-      // Set initial font scale from localStorage or default to 1
-      let savedScale = getCookie('fontScale');
-      console.log('Retrieved saved font scale:', savedScale);
+      const decreaseBtn = document.getElementById('decrease-font');
+      const increaseBtn = document.getElementById('increase-font');
+      const resetBtn = document.getElementById('reset-font');
 
-      let fontScale = savedScale? parseFloat(savedScale) : 1;
-      console.log('Using font scale:', fontScale);
+      // Get stored zoom level or default to 100%
+      const storedZoom = getCookie('zoomLevel');
+      const zoomLevel = storedZoom ? parseInt(storedZoom) : 100;
 
-      document.documentElement.style.setProperty('--font-scale', fontScale);
+      // Apply stored zoom level
+      if (storedZoom) {
+        updateZoom(zoomLevel);
+      }
 
-      // Increase font size
-      document.getElementById('increase-font').addEventListener('click', function() {
-        fontScale += 0.1;
-        if (fontScale > 1.5) fontScale = 1.5; // Maximum scale
-        updateFontSize(fontScale);
+      // Add event listeners to zoom buttons
+      decreaseBtn.addEventListener('click', function() {
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom > 70) {
+          updateZoom(currentZoom - 10);
+        }
       });
 
-      // Decrease font size
-      document.getElementById('decrease-font').addEventListener('click', function() {
-        fontScale -= 0.1;
-        if (fontScale < 0.7) fontScale = 0.7; // Minimum scale
-        updateFontSize(fontScale);
+      increaseBtn.addEventListener('click', function() {
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom < 150) {
+          updateZoom(currentZoom + 10);
+        }
       });
 
-      // Reset font size
-      document.getElementById('reset-font').addEventListener('click', function() {
-        fontScale = 1.0; // Reset to default
-        updateFontSize(fontScale);
+      resetBtn.addEventListener('click', function() {
+        updateZoom(100);
       });
 
-      // Update font size and save to localStorage
-      function updateFontSize(scale) {
-        console.log('Updating font size to:', scale);
-        document.documentElement.style.setProperty('--font-scale', scale);
-        setCookie('fontScale', scale.toString(), 365); // Save for 1 year
-        console.log('Saved font scale:', scale.toString());
+      // Update zoom level and save to localStorage
+      function updateZoom(zoomPercent) {
+        console.log('Updating zoom to:', zoomPercent + '%');
+        document.body.style.zoom = zoomPercent + '%';
+        setCookie('zoomLevel', zoomPercent.toString(), 365); // Save for 1 year
+        console.log('Saved zoom level:', zoomPercent.toString());
       }
     }
 

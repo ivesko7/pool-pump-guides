@@ -82,48 +82,80 @@
       padding: 20px;
     }
 
-    .controls-container {
-      position: relative;
-      min-height: 40px;
+    .toolbar {
       display: flex;
-      justify-content: flex-end;
       align-items: center;
-      gap: 10px;
+      justify-content: space-between;
       background: var(--card-bg);
       box-shadow: 0 2px 5px var(--shadow-color);
-      padding: 6px 20px;
+      padding: 4px;
       margin-bottom: 20px;
       transition: background-color 0.3s, box-shadow 0.3s;
       width: 100%;
       box-sizing: border-box;
-      flex-wrap: wrap;
+      white-space: nowrap;
+      height: 50px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      position: relative;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
     }
 
-    .font-controls, .theme-control {
-      padding: 5px;
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .toolbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .guide-links {
       display: flex;
       align-items: center;
-      transition: background-color 0.3s;
+      gap: 5px;
+      padding: 0 10px;
+      min-width: max-content;
+      cursor: grab;
+    }
+
+    .ui-controls {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: auto;
+      padding: 0 10px;
+      background: var(--card-bg);
+      position: sticky;
+      right: 0;
+      z-index: 10;
+    }
+
+    .toolbar span {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin: 0 5px;
+      white-space: nowrap;
     }
 
     .font-btn, .theme-btn {
-      width: 24px;
-      height: 24px;
+      width: 30px;
+      height: 30px;
       border: 1px solid var(--border-color);
       background: var(--card-bg);
       color: var(--text-color);
-      border-radius: 3px;
+      border-radius: 4px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 2px;
       font-weight: bold;
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      font-size: 0.9rem;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.2s;
     }
 
     .font-btn:hover, .theme-btn:hover {
-      background: var(--border-color);
+      background-color: var(--border-color);
+      transform: translateY(-2px);
     }
     .pump-list {
       display: flex;
@@ -167,8 +199,8 @@
       position: absolute;
       bottom: 5px;
       right: 5px;
-      background-color: rgba(255, 255, 255, 0.8);
-      border: none;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.2);
       border-radius: 50%;
       width: 30px;
       height: 30px;
@@ -177,8 +209,20 @@
       line-height: 30px;
       font-size: 16px;
       text-decoration: none;
-      color: var(--text-color);
-      transition: color 0.3s;
+      color: #000;
+      transition: all 0.3s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .dark-mode .eye-button {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 1px 4px rgba(255, 255, 255, 0.3);
+    }
+
+    .eye-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
     .manual-link {
       margin-right: 6px;
@@ -210,7 +254,7 @@
     .pump-card h3 {
       margin: 10px;
       padding: 0 5px;
-      font-size: calc(1rem * var(--font-scale, 1));
+      font-size: 1rem;
       text-align: center;
       height: 40px;
       display: flex;
@@ -230,7 +274,7 @@
       margin-bottom: 2px;
     }
     .pump-details p {
-      font-size: calc(0.9rem * var(--font-scale, 1));
+      font-size: 0.9rem;
       margin: 10px 0;
     }
     .pump-specs {
@@ -241,7 +285,7 @@
       transition: border-color 0.3s;
     }
     .part-list, .hardware-list {
-      font-size: calc(0.85rem * var(--font-scale, 1));
+      font-size: 0.85rem;
       padding-left: 15px;
       margin-top: 5px;
       margin-bottom: 10px;
@@ -250,7 +294,7 @@
       margin-bottom: 6px;
     }
     .hardware-title {
-      font-size: calc(0.9rem * var(--font-scale, 1));
+      font-size: 0.9rem;
       margin: 10px 0 5px 0;
       font-weight: bold;
     }
@@ -319,7 +363,7 @@
       margin-right: auto; /* Push to the left */
       transition: background-color 0.3s;
       flex: 1;
-      gap: 15px;
+      gap: 8px;
     }
 
     .guide-section {
@@ -328,7 +372,7 @@
       align-items: center;
       border: 1px solid var(--border-color);
       border-radius: 5px;
-      padding: 6px 12px;
+      padding: 4px 8px;
       background-color: rgba(255, 255, 255, 0.05);
       transition: border-color 0.3s, background-color 0.3s;
     }
@@ -338,7 +382,7 @@
     }
 
     .guide-section-title {
-      margin-right: 10px;
+      margin-right: 6px;
       font-weight: bold;
       font-size: 0.9rem;
     }
@@ -346,28 +390,29 @@
     .guide-buttons {
       display: flex;
       align-items: center;
+      gap: 2px;
     }
 
     .guide-btn {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 30px;
       height: 30px;
-      margin: 0 5px;
-      border-radius: 5px;
+      padding: 2px;
+      border-radius: 4px;
       background-color: white;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .guide-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transform: translateY(-1px);
     }
 
     .guide-btn img {
-      max-width: 25px;
-      max-height: 25px;
+      max-width: 26px;
+      max-height: 26px;
     }
 
     @media (max-width: 768px) {
@@ -375,63 +420,31 @@
         grid-template-columns: 1fr;
       }
 
-      .controls-container {
-        flex-direction: column;
-        align-items: flex-start;
+      .toolbar {
+        overflow-x: auto;
+        justify-content: flex-start;
       }
 
-      .font-controls, .theme-control {
-        margin-top: 10px;
-        margin-left: 0;
-      }
-
-      .guide-nav {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .guide-section {
-        width: 100%;
+      .ui-controls {
+        margin-left: 10px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="controls-container">
-    <div class="guide-nav">
-      <div class="guide-section">
-        <div class="guide-section-title">Pumps</div>
-        <div class="guide-buttons">
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
-          </a>
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
-          </a>
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
-          </a>
-        </div>
-      </div>
-      <div class="guide-section">
-        <div class="guide-section-title">Heaters</div>
-        <div class="guide-buttons">
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Logo">
-          </a>
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Logo">
-          </a>
-          <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide">
-            <img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Logo">
-          </a>
-        </div>
-      </div>
+  <div class="toolbar">
+    <div class="guide-links">
+      <span>Pumps</span>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
+      <span>Heaters</span>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
     </div>
-    <div class="theme-control">
+    <div class="ui-controls">
       <button class="theme-btn" id="toggle-theme">🌓</button>
-    </div>
-    <div class="font-controls">
       <button class="font-btn" id="decrease-font">-</button>
       <button class="font-btn" id="reset-font" title="Reset font size">R</button>
       <button class="font-btn" id="increase-font">+</button>
@@ -443,15 +456,16 @@
       <!-- H Series Gas Heater -->
       <div class="pump-card">
         <div class="image-container">
-          <img src="Hayward H Series Gas Heaters_files/h400.png" alt="Hayward H Series Gas Heater">
+          <img src="Hayward Heaters_files/h400.png" alt="Hayward H Series Gas Heater">
           <a href="https://www.google.com/search?tbm=isch&q=Hayward+H+Series+Gas+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
         </div>
         <h3><a href="https://hayward.com/media/akeneo_connector/asset_files/U/n/Universal_H_Series_Install_Manual_Bilingual_1f1f.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Hayward H Series Gas Heater</h3>
         <div class="pump-details">
           <div class="pump-specs">
-            <p><strong>BTU Rating:</strong> 150,000 - 400,000</p>
+            <p><strong>BTU Rating:</strong> 250,000 - 500,000</p>
             <p><strong>Fuel Type:</strong> Natural Gas or Propane</p>
             <p><strong>Efficiency:</strong> Up to 84%</p>
+            <p><strong>Models:</strong> <span title="Universal H-Series Natural Gas, 250,000 BTU Low NOx">H250FDN</span>, <span title="Universal H-Series Natural Gas, 400,000 BTU Low NOx">H400FDN</span>, <span title="Universal H-Series Propane Gas, 400,000 BTU Low NOx">H400FDP</span>, <span title="Universal H-Series Propane Gas, 500,000 BTU Low NOx">H500FDP</span></p>
             <p><strong>Replacement Parts:</strong></p>
           </div>
           <ul class="part-list">
@@ -535,6 +549,83 @@
           </ul>
         </div>
       </div>
+
+      <!-- Hayward HeatPro Heat Pump -->
+      <div class="pump-card">
+        <div class="image-container">
+          <img src="Hayward Heaters_files/heatpro.png" alt="Hayward HeatPro Heat Pump">
+          <a href="https://www.google.com/search?tbm=isch&q=Hayward+HeatPro+Heat+Pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+        </div>
+        <h3><a href="https://hayward.com/media/akeneo_connector/asset_files/5/1/51300056501_RevG_7a0e.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Hayward HeatPro Heat Pump</h3>
+        <div class="pump-details">
+          <div class="pump-specs">
+            <p><strong>Type:</strong> Heat Pump</p>
+            <p><strong>BTU Rating:</strong> 90,000 - 140,000</p>
+            <p><strong>Heat Exchanger:</strong> Titanium</p>
+            <p><strong>Models:</strong> <span title="90,000 BTU Standard Heat-Only MicroChannel">HP21004T</span>, <span title="110,000 BTU Standard Heat-Only MicroChannel">HP21105T</span>, <span title="120,000 BTU Standard Heat-Only MicroChannel">HP21205T</span>, <span title="125,000 BTU Standard Heat-Only MicroChannel">HP21254T</span>, <span title="140,000 BTU Square Platform">HP21405T</span>, <span title="140,000 BTU Integrated Platform">HP21404T</span>, <span title="100,000 BTU Round Heat-Cool">HP31005T</span>, <span title="120,000 BTU Heat-Cool">HP31204T</span>, <span title="120,000 BTU Heat+Chill">HP31205T</span>, <span title="95,000 BTU Variable-Speed Heat-Cool">HP50952T</span>, <span title="120,000 BTU Variable-Speed Heat-Cool, Omni Compatible">HP51202T</span></p>
+            <p><strong>Replacement Parts:</strong></p>
+          </div>
+          <ul class="part-list">
+            <!-- Switches -->
+            <li>
+              <strong>Water Pressure Switch:</strong><br>
+              HPX2181 <a href="https://www.pool360.com/Search?query=HPX2181" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>LP Switch:</strong><br>
+              HPX11024259 <a href="https://www.pool360.com/Search?query=HPX11024259" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>HP Switch:</strong><br>
+              HPX11024258 <a href="https://www.pool360.com/Search?query=HPX11024258" target="_blank">[🔍]</a>
+            </li>
+
+            <!-- Sensors -->
+            <li>
+              <strong>Defrost Coil Sensor:</strong><br>
+              SMX306000023 <a href="https://www.pool360.com/Search?query=SMX306000023" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Water Sensor:</strong><br>
+              SMX306000024 <a href="https://www.pool360.com/Search?query=SMX306000024" target="_blank">[🔍]</a>
+            </li>
+
+            <!-- Electrical Parts -->
+            <li>
+              <strong>Fan Run Capacitor (5 MFD/370VAC):</strong><br>
+              SMX306088001 <a href="https://www.pool360.com/Search?query=SMX306088001" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Compressor Capacitor (50 MFD/370VAC):</strong><br>
+              SMX306150002 <a href="https://www.pool360.com/Search?query=SMX306150002" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Transformer:</strong><br>
+              HPX11023693 <a href="https://www.pool360.com/Search?query=HPX11023693" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Control Board Assembly:</strong><br>
+              SMX306000016 <a href="https://www.pool360.com/Search?query=SMX306000016" target="_blank">[🔍]</a>
+            </li>
+          </ul>
+          <p class="hardware-title">Additional Hardware:</p>
+          <ul class="hardware-list">
+            <!-- Other Parts -->
+            <li>
+              <strong>Coupling Kit:</strong><br>
+              5112-200 (Mfg# SPX3200UNKIT) <a href="https://www.pool360.com/Search?query=5112-200" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Front Panel:</strong><br>
+              SMX309077013 <a href="https://www.pool360.com/Search?query=SMX309077013" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Contactor:</strong><br>
+              HPX1985 <a href="https://www.pool360.com/Search?query=HPX1985" target="_blank">[🔍]</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -555,46 +646,139 @@
         setCookie('theme', isDarkMode ? 'dark' : 'light', 365);
       });
 
-      // Initialize font size controls
+      // Initialize zoom controls
       const decreaseBtn = document.getElementById('decrease-font');
       const increaseBtn = document.getElementById('increase-font');
       const resetBtn = document.getElementById('reset-font');
 
-      // Get stored font scale or default to 1
-      const storedFontScale = getCookie('fontScale');
-      const fontScale = storedFontScale ? parseFloat(storedFontScale) : 1;
+      // Get stored zoom level or default to 100%
+      const storedZoom = getCookie('zoomLevel');
+      const zoomLevel = storedZoom ? parseInt(storedZoom) : 100;
 
-      // Apply stored font scale
-      if (storedFontScale) {
-        updateFontSize(fontScale);
+      // Apply stored zoom level
+      if (storedZoom) {
+        updateZoom(zoomLevel);
       }
 
-      // Add event listeners to font buttons
+      // Add event listeners to zoom buttons
       decreaseBtn.addEventListener('click', function() {
-        const currentScale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--font-scale') || '1');
-        if (currentScale > 0.7) {
-          updateFontSize(currentScale - 0.1);
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom > 70) {
+          updateZoom(currentZoom - 10);
         }
       });
 
       increaseBtn.addEventListener('click', function() {
-        const currentScale = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--font-scale') || '1');
-        if (currentScale < 1.5) {
-          updateFontSize(currentScale + 0.1);
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom < 150) {
+          updateZoom(currentZoom + 10);
         }
       });
 
       resetBtn.addEventListener('click', function() {
-        updateFontSize(1);
+        updateZoom(100);
       });
 
-      // Update font size and save to localStorage
-      function updateFontSize(scale) {
-        console.log('Updating font size to:', scale);
-        document.documentElement.style.setProperty('--font-scale', scale);
-        setCookie('fontScale', scale.toString(), 365); // Save for 1 year
-        console.log('Saved font scale:', scale.toString());
+      // Update zoom level and save to localStorage
+      function updateZoom(zoomPercent) {
+        console.log('Updating zoom to:', zoomPercent + '%');
+        document.body.style.zoom = zoomPercent + '%';
+        setCookie('zoomLevel', zoomPercent.toString(), 365); // Save for 1 year
+        console.log('Saved zoom level:', zoomPercent.toString());
       }
+
+      // Initialize toolbar scrolling
+      initToolbarScroll();
+    }
+
+    // Initialize toolbar horizontal scrolling
+    function initToolbarScroll() {
+      const toolbar = document.querySelector('.toolbar');
+      const guideLinks = document.querySelector('.guide-links');
+
+      // Variables for drag scrolling
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      // Mouse events for desktop
+      toolbar.addEventListener('mousedown', (e) => {
+        // Only handle clicks on the guide-links or its children
+        if (!e.target.closest('.guide-links') && e.target !== guideLinks) return;
+
+        isDown = true;
+        toolbar.style.cursor = 'grabbing';
+        startX = e.pageX - toolbar.offsetLeft;
+        scrollLeft = toolbar.scrollLeft;
+        e.preventDefault();
+      });
+
+      toolbar.addEventListener('mouseleave', () => {
+        isDown = false;
+        toolbar.style.cursor = '';
+      });
+
+      toolbar.addEventListener('mouseup', () => {
+        isDown = false;
+        toolbar.style.cursor = '';
+      });
+
+      toolbar.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - toolbar.offsetLeft;
+        const walk = (x - startX) * 2; // Scroll speed multiplier
+        toolbar.scrollLeft = scrollLeft - walk;
+      });
+
+      // Touch events for mobile
+      toolbar.addEventListener('touchstart', (e) => {
+        // Only handle touches on the guide-links or its children
+        if (!e.target.closest('.guide-links') && e.target !== guideLinks) return;
+
+        isDown = true;
+        startX = e.touches[0].pageX - toolbar.offsetLeft;
+        scrollLeft = toolbar.scrollLeft;
+      }, { passive: false });
+
+      toolbar.addEventListener('touchend', () => {
+        isDown = false;
+      });
+
+      toolbar.addEventListener('touchcancel', () => {
+        isDown = false;
+      });
+
+      toolbar.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - toolbar.offsetLeft;
+        const walk = (x - startX) * 2;
+        toolbar.scrollLeft = scrollLeft - walk;
+      }, { passive: false });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+          return; // Don't interfere with input fields
+        }
+
+        if (e.key === 'ArrowLeft') {
+          toolbar.scrollLeft -= 50;
+          e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+          toolbar.scrollLeft += 50;
+          e.preventDefault();
+        }
+      });
+
+      // Mouse wheel horizontal scrolling
+      toolbar.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          toolbar.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
     }
 
     // Initialize when DOM is loaded
