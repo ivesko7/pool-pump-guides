@@ -194,6 +194,8 @@
       justify-content: center;
       background-color: var(--card-bg);
       transition: background-color 0.3s;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
     }
 .image-container img {
       max-width: 100%;
@@ -256,6 +258,18 @@
       background-color: rgba(255,255,255,0.7);
       padding: 0 2px;
       border-radius: 2px;
+    }
+    .ai-link {
+      margin-right: 6px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+    }
+    .icon-no-zoom {
+      pointer-events: none;
     }
     .pump-card h3 {
       margin: 10px;
@@ -452,6 +466,10 @@ h1 {
       <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
       <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
       <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
+      <span>Automation</span>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Automation%20Guide/Pentair%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Pentair Automation Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Automation%20Guide/Hayward%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Hayward Automation Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Automation%20Guide/Jandy%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Jandy Automation Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
     </div>
     <div class="ui-controls">
       <button class="theme-btn" id="toggle-theme">🌓</button>
@@ -466,10 +484,16 @@ h1 {
 
     <div class="pump-card">
       <div class="image-container">
+        <a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp/manual/mastertemp-heater-manual-english.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Pentair Heaters_Files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp/manual/mastertemp-heater-manual-english.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Pentair Heaters_Files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
         <img src="Pentair Heaters_Files/mastertemp-heater.jpg" alt="Pentair Mastertemp Heater">
         <a href="https://www.google.com/search?tbm=isch&q=Pentair+Mastertemp+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp/manual/mastertemp-heater-manual-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Mastertemp Heater</h3>
+      <h3>Pentair Mastertemp Heater</h3>
       <div class="pump-details">
         <div class="pump-specs">
           <p><strong>BTU Rating:</strong> 175,000 - 400,000 </p>
@@ -522,10 +546,16 @@ h1 {
 
     <div class="pump-card hidden">
       <div class="image-container">
+        <a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp-125/manual/mastertemp125-pool-and-spa-heater-installation-and-users-guide-english.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Pentair Heaters_Files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp-125/manual/mastertemp125-pool-and-spa-heater-installation-and-users-guide-english.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Pentair Heaters_Files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
         <img src="Pentair Heaters_Files/mastertemp-125-heater.jpg" alt="Pentair Mastertemp 125 Heater">
         <a href="https://www.google.com/search?tbm=isch&q=Pentair+Mastertemp+125+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/mastertemp-125/manual/mastertemp125-pool-and-spa-heater-installation-and-users-guide-english.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Mastertemp 125 Heater</h3>
+      <h3>Pentair Mastertemp 125 Heater</h3>
       <div class="pump-details">
         <div class="pump-specs">
           <p><strong>BTU Rating:</strong> 125,000 </p>
@@ -574,10 +604,16 @@ h1 {
 
     <div class="pump-card">
       <div class="image-container">
+        <a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp/manuals/ultratemp-heat-pump-installation-and-users-guide-en-fr-sp.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Pentair Heaters_Files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp/manuals/ultratemp-heat-pump-installation-and-users-guide-en-fr-sp.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Pentair Heaters_Files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
         <img src="Pentair Heaters_Files/ultratemp_nobg.png" alt="Pentair Ultratemp High Performance Heat Pump">
         <a href="https://www.google.com/search?tbm=isch&q=Pentair+Ultratemp+High+Performance+Heat+Pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp/manuals/ultratemp-heat-pump-installation-and-users-guide-en-fr-sp.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Ultratemp High Performance Heat Pump</h3>
+      <h3>Pentair Ultratemp High Performance Heat Pump</h3>
       <div class="pump-details">
         <div class="pump-specs">
           <p><strong>Type:</strong> Heat Pump </p>
@@ -602,10 +638,16 @@ h1 {
 
     <div class="pump-card hidden">
       <div class="image-container">
+        <a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp-eti/manual/ultratemp-eti-heater-manual.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Pentair Heaters_Files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp-eti/manual/ultratemp-eti-heater-manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Pentair Heaters_Files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
         <img src="Pentair Heaters_Files/ultratemp-eti.png" alt="Pentair Ultratemp ETi Hybrid Heater">
         <a href="https://www.google.com/search?tbm=isch&q=Pentair+Ultratemp+ETi+Hybrid+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/heaters/ultratemp-eti/manual/ultratemp-eti-heater-manual.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair Ultratemp ETi Hybrid Heater</h3>
+      <h3>Pentair Ultratemp ETi Hybrid Heater</h3>
       <div class="pump-details">
         <div class="pump-specs">
           <p><strong>Type:</strong> Hybrid (Heat Pump + Gas) </p>
@@ -854,17 +896,62 @@ h1 {
       let startX, startY, translateX = 0, translateY = 0;
       let lastX, lastY;
 
-      // Add click event to all pump images
-      const pumpImages = document.querySelectorAll('.image-container img');
+      // Variables for double tap detection
+      let lastTap = 0;
+      let touchTimeout;
+
+      // Variables for pinch-to-zoom
+      let initialDistance = 0;
+      let initialScale = 1;
+      let lastTouchCount = 0;
+
+      // Add click event to all pump images (excluding icons)
+      const pumpImages = document.querySelectorAll('.image-container img:not(.icon-no-zoom)');
       pumpImages.forEach(img => {
         img.addEventListener('click', function() {
           modalImg.src = this.src;
           modal.style.display = 'block';
-          // Reset zoom and position
+
+          // Initial scale will be calculated when image loads
           scale = 1;
           translateX = 0;
           translateY = 0;
           updateTransform();
+
+          // We need to wait for the image to load to properly size and center it
+          modalImg.onload = function() {
+            // Get modal and image dimensions
+            const modalRect = modal.getBoundingClientRect();
+            const imgRect = modalImg.getBoundingClientRect();
+
+            // Calculate available space (with 20px margin)
+            const availableWidth = modalRect.width - 40;
+            const availableHeight = modalRect.height - 40;
+
+            // Calculate scale needed to fit image within available space
+            const widthScale = availableWidth / imgRect.width;
+            const heightScale = availableHeight / imgRect.height;
+
+            // Use the smaller scale to ensure image fits in both dimensions
+            let fitScale = Math.min(widthScale, heightScale);
+
+            // On mobile, use 1.5x zoom as requested
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+              scale = 1.5;
+            } else {
+              // On desktop, use the fit scale, but cap it at 1.5x
+              scale = Math.min(fitScale, 1.5);
+            }
+
+            // Center the image
+            const scaledWidth = imgRect.width * scale;
+            const scaledHeight = imgRect.height * scale;
+            translateX = (modalRect.width - scaledWidth) / 2 - imgRect.left;
+            translateY = (modalRect.height - scaledHeight) / 2 - imgRect.top;
+
+            updateTransform();
+          };
         });
       });
 
@@ -959,6 +1046,194 @@ h1 {
           isDragging = false;
           modalImg.style.cursor = scale > 1? 'move' : 'default';
         }
+      });
+
+      // Touch events for mobile devices
+
+      // Double tap to zoom - attach to the entire modal
+      modal.addEventListener('touchstart', function(e) {
+        // Reset drag tracking
+        hasDragged = false;
+        const now = new Date().getTime();
+        const timeSince = now - lastTap;
+
+        // Only handle double-tap if we have a single touch point
+        if (e.touches.length === 1 && timeSince < 300 && timeSince > 0) {
+          // Double tap detected
+          e.preventDefault();
+
+          // Clear any existing timeout to prevent both zoom and pan
+          if (touchTimeout) {
+            clearTimeout(touchTimeout);
+            touchTimeout = null;
+          }
+
+          // Get touch position
+          const touch = e.touches[0];
+          const rect = modalImg.getBoundingClientRect();
+          const touchX = touch.clientX - rect.left;
+          const touchY = touch.clientY - rect.top;
+
+          // Calculate touch position relative to image
+          const x = touchX / rect.width;
+          const y = touchY / rect.height;
+
+          // Toggle between normal and zoomed state
+          const newScale = scale === 1 ? 2 : 1;
+
+          if (newScale > scale) {
+            // Zooming in - center on touch point
+            const zoomPointX = rect.width * x;
+            const zoomPointY = rect.height * y;
+
+            // Calculate how much the point would move due to scaling
+            const scaleDiffX = zoomPointX * (newScale - scale) / scale;
+            const scaleDiffY = zoomPointY * (newScale - scale) / scale;
+
+            // Adjust translation to center on touch point
+            translateX = translateX - scaleDiffX;
+            translateY = translateY - scaleDiffY;
+          } else {
+            // Zooming out - reset position
+            translateX = 0;
+            translateY = 0;
+          }
+
+          scale = newScale;
+          updateTransform();
+        }
+
+        lastTap = now;
+
+        // Handle pinch-to-zoom with two fingers
+        if (e.touches.length === 2) {
+          e.preventDefault();
+
+          // Calculate initial distance between touch points
+          const touch1 = e.touches[0];
+          const touch2 = e.touches[1];
+          initialDistance = Math.hypot(
+            touch2.clientX - touch1.clientX,
+            touch2.clientY - touch1.clientY
+          );
+
+          // Store the current scale as our reference point
+          initialScale = scale;
+
+          // Calculate the midpoint between the two touches
+          const midX = (touch1.clientX + touch2.clientX) / 2;
+          const midY = (touch1.clientY + touch2.clientY) / 2;
+
+          // Get the position relative to the image
+          const rect = modalImg.getBoundingClientRect();
+
+          // Store the midpoint for reference in touchmove
+          startX = midX;
+          startY = midY;
+
+          isDragging = false; // Disable single-finger dragging during pinch
+        }
+
+        // Handle single-finger dragging (always, not just when zoomed)
+        if (e.touches.length === 1) {
+          const touch = e.touches[0];
+          isDragging = true;
+          startX = touch.clientX - translateX;
+          startY = touch.clientY - translateY;
+
+          // Set a timeout to distinguish between tap and drag
+          touchTimeout = setTimeout(() => {
+            touchTimeout = null;
+          }, 100);
+        }
+
+        lastTouchCount = e.touches.length;
+      }, { passive: false });
+
+      modal.addEventListener('touchmove', function(e) {
+        e.preventDefault(); // Always prevent default to avoid page scrolling
+
+        // Handle pinch-to-zoom
+        if (e.touches.length === 2) {
+          // Calculate current distance between touch points
+          const touch1 = e.touches[0];
+          const touch2 = e.touches[1];
+          const currentDistance = Math.hypot(
+            touch2.clientX - touch1.clientX,
+            touch2.clientY - touch1.clientY
+          );
+
+          // Calculate new scale based on the change in distance
+          // The ratio of current to initial distance gives us our scale multiplier
+          const pinchRatio = currentDistance / initialDistance;
+          let newScale = initialScale * pinchRatio;
+
+          // Limit scale to reasonable bounds (0.5x to 10x)
+          newScale = Math.min(Math.max(newScale, 0.5), 10);
+
+          // Calculate the midpoint between the two touches
+          const midX = (touch1.clientX + touch2.clientX) / 2;
+          const midY = (touch1.clientY + touch2.clientY) / 2;
+
+          // Get the position relative to the image
+          const rect = modalImg.getBoundingClientRect();
+
+          // Calculate the point on the image where the midpoint of the fingers is
+          const zoomPointX = midX - rect.left;
+          const zoomPointY = midY - rect.top;
+
+          // Calculate how much the point would move due to scaling
+          const scaleDiffX = zoomPointX * (newScale - scale) / scale;
+          const scaleDiffY = zoomPointY * (newScale - scale) / scale;
+
+          // Adjust translation to keep the midpoint fixed
+          translateX = translateX - scaleDiffX;
+          translateY = translateY - scaleDiffY;
+
+          scale = newScale;
+          updateTransform();
+          hasDragged = true;
+        }
+        // Handle single-finger dragging
+        else if (e.touches.length === 1 && isDragging) {
+          const touch = e.touches[0];
+
+          // Only start moving after a small threshold to distinguish from taps
+          if (touchTimeout === null || lastTouchCount === 2) {
+            translateX = touch.clientX - startX;
+            translateY = touch.clientY - startY;
+            updateTransform();
+            hasDragged = true;
+          }
+        }
+
+        lastTouchCount = e.touches.length;
+      }, { passive: false });
+
+      modal.addEventListener('touchend', function(e) {
+        // If we're ending a pinch (going from 2 fingers to 1)
+        if (lastTouchCount === 2 && e.touches.length === 1) {
+          // Reset for single-finger dragging
+          const touch = e.touches[0];
+          startX = touch.clientX - translateX;
+          startY = touch.clientY - translateY;
+          isDragging = true;
+        }
+        // If we're ending all touches
+        else if (e.touches.length === 0) {
+          isDragging = false;
+          if (touchTimeout) {
+            clearTimeout(touchTimeout);
+            touchTimeout = null;
+          }
+
+          // Close modal if tapping on the background (not the image) and not dragging
+          if (!hasDragged && e.target === modal) {
+            modal.style.display = 'none';
+          }
+        }
+
+        lastTouchCount = e.touches.length;
       });
 
       // Set appropriate cursor based on zoom level

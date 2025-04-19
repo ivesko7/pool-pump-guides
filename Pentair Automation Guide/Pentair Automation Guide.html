@@ -27,7 +27,7 @@
       // Try localStorage first
       try {
         const value = localStorage.getItem(name);
-        if (value !== null) {
+        if (value!== null) {
           return value;
         }
       } catch (e) {
@@ -57,7 +57,7 @@
       --link-color-install: #cc6600;
     }
 
-    .dark-mode {
+.dark-mode {
       --bg-color: #222;
       --card-bg: #333;
       --text-color: #eee;
@@ -135,6 +135,13 @@
       white-space: nowrap;
     }
 
+.font-controls,.theme-control {
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
     .font-btn, .theme-btn {
       width: 30px;
       height: 30px;
@@ -153,21 +160,21 @@
       transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.2s;
     }
 
-    .font-btn:hover, .theme-btn:hover {
+.font-btn:hover,.theme-btn:hover {
       background-color: var(--border-color);
       transform: translateY(-2px);
     }
-    .pump-list {
+.pump-list {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
       justify-content: center;
     }
-    .pump-card {
+.pump-card {
       background: var(--card-bg);
       border-radius: 10px;
       box-shadow: 0 2px 5px var(--shadow-color);
-      width: 300px;
+      width: 450px;
       height: auto;
       cursor: pointer;
       transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
@@ -175,10 +182,10 @@
       flex-direction: column;
       margin-bottom: 20px;
     }
-    .pump-card:hover {
+.pump-card:hover {
       transform: scale(1.02);
     }
-    .image-container {
+.image-container {
       position: relative;
       height: 150px;
       overflow: hidden;
@@ -187,8 +194,10 @@
       justify-content: center;
       background-color: var(--card-bg);
       transition: background-color 0.3s;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
     }
-    .image-container img {
+.image-container img {
       max-width: 100%;
       max-height: 100%;
       display: block;
@@ -223,7 +232,7 @@
       transform: scale(1.1);
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
-    .manual-link {
+.manual-link {
       margin-right: 6px;
       text-decoration: none;
       font-size: 16px;
@@ -231,15 +240,15 @@
       display: inline-block;
       line-height: 1;
     }
-    .user-manual {
+.user-manual {
       color: var(--link-color);
       transition: color 0.3s;
     }
-    .install-manual {
+.install-manual {
       color: var(--link-color-install);
       transition: color 0.3s;
     }
-    .manual-tag {
+.manual-tag {
       font-size: 7px;
       position: absolute;
       bottom: -4px;
@@ -249,6 +258,18 @@
       background-color: rgba(255,255,255,0.7);
       padding: 0 2px;
       border-radius: 2px;
+    }
+    .ai-link {
+      margin-right: 6px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+    }
+    .icon-no-zoom {
+      pointer-events: none;
     }
     .pump-card h3 {
       margin: 10px;
@@ -261,14 +282,14 @@
       justify-content: center;
       line-height: 1.2;
     }
-    .pump-details {
+.pump-details {
       padding: 0 15px 15px 15px;
       flex: 1;
       display: flex;
       flex-direction: column;
     }
     /* Ensure consistent spacing */
-    .pump-details a {
+.pump-details a {
       display: inline-block;
       margin-bottom: 2px;
     }
@@ -276,23 +297,23 @@
       font-size: 0.9rem;
       margin: 10px 0;
     }
-    .pump-specs {
+.pump-specs {
       flex-shrink: 0;
       margin-bottom: 5px;
       border-bottom: 1px solid var(--border-color);
       padding-bottom: 5px;
       transition: border-color 0.3s;
     }
-    .part-list, .hardware-list {
+    .part-list,.hardware-list {
       font-size: 0.85rem;
       padding-left: 15px;
       margin-top: 5px;
       margin-bottom: 10px;
     }
-    .part-list li, .hardware-list li {
+.part-list li,.hardware-list li {
       margin-bottom: 6px;
     }
-    .hardware-title {
+.hardware-title {
       font-weight: bold;
       margin-top: 10px;
     }
@@ -303,20 +324,24 @@
       top: -0.4em;
     }
 
-    h1 {
+.hidden {
+      display: none;
+    }
+
+h1 {
       margin-top: 0;
       margin-bottom: 20px;
       text-align: center;
     }
 
-    .expandable-section {
+.expandable-section {
       display: none;
       margin-top: 10px;
       border-top: 1px dashed var(--border-color);
       padding-top: 10px;
     }
 
-    .expand-btn {
+.expand-btn {
       display: block;
       width: 100%;
       text-align: center;
@@ -330,12 +355,12 @@
       font-size: 0.9em;
     }
 
-    .expand-btn:hover {
+.expand-btn:hover {
       background: var(--border-color);
     }
 
     /* Image Modal Styles */
-    .image-modal {
+.image-modal {
       display: none;
       position: fixed;
       z-index: 2000;
@@ -347,7 +372,7 @@
       overflow: hidden;
     }
 
-    .modal-content {
+.modal-content {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -355,23 +380,23 @@
       max-width: 90%;
       max-height: 90%;
       transform-origin: center center;
+      cursor: move;
     }
 
-    .modal-image {
+.modal-image {
       display: block;
       width: 100%;
       height: auto;
       transform-origin: 0 0;
       transition: transform 0.1s ease-out;
-      cursor: move;
     }
 
-    .image-container img:not(.eye-button) {
+.image-container img {
       cursor: pointer;
     }
 
     /* Guide Navigation Styles */
-    .guide-nav {
+.guide-nav {
       display: flex;
       align-items: center;
       padding: 5px;
@@ -381,7 +406,7 @@
       gap: 15px;
     }
 
-    .guide-section {
+.guide-section {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -392,22 +417,19 @@
       transition: border-color 0.3s, background-color 0.3s;
     }
 
-    .dark-mode .guide-section {
+.dark-mode .guide-section {
       background-color: rgba(0, 0, 0, 0.2);
     }
 
-    .guide-section-title {
-      font-size: 12px;
+.guide-section-title {
+      margin-right: 10px;
       font-weight: bold;
-      margin-right: 12px;
-      color: var(--text-color);
-      opacity: 0.8;
-      white-space: nowrap;
+      font-size: 0.9rem;
     }
 
-    .guide-buttons {
+.guide-buttons {
       display: flex;
-      gap: 8px;
+      align-items: center;
     }
 
     .guide-btn {
@@ -437,15 +459,17 @@
   <div class="toolbar">
     <div class="guide-links">
       <span>Pumps</span>
-      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide"><img src="./Pentair Automation Guide_files/pentair-logo.png" alt="Pentair"></a>
-      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide"><img src="./Pentair Automation Guide_files/hayward-logo.png" alt="Hayward"></a>
-      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide"><img src="./Pentair Automation Guide_files/jandy-logo.png" alt="Jandy"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
       <span>Heaters</span>
-      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide"><img src="./Pentair Automation Guide_files/pentair-logo.png" alt="Pentair"></a>
-      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide"><img src="./Pentair Automation Guide_files/hayward-logo.png" alt="Hayward"></a>
-      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide"><img src="./Pentair Automation Guide_files/jandy-logo.png" alt="Jandy"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
       <span>Automation</span>
-      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Automation%20Guide/Pentair%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Pentair Automation Guide"><img src="./Pentair Automation Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Automation%20Guide/Pentair%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Pentair Automation Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Automation%20Guide/Hayward%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Hayward Automation Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Automation%20Guide/Jandy%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Jandy Automation Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
     </div>
     <div class="ui-controls">
       <button class="theme-btn" id="toggle-theme">🌓</button>
@@ -458,247 +482,368 @@
     <h1>Pentair Automation Guide</h1>
     <div class="pump-list">
 
-    <!-- Pentair EasyTouch Automation Panel -->
     <div class="pump-card">
       <div class="image-container">
-        <img src="Pentair Automation Guide_files/easytouch_panel.png" alt="Pentair EasyTouch Automation Panel">
-        <a href="https://www.google.com/search?tbm=isch&q=Pentair+EasyTouch+Automation+Panel" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+        <a href="https://images.inyopools.com/cloud/documents/pentair-controls-easytouch-intellichlor.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Pentair Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://images.inyopools.com/cloud/documents/pentair-controls-easytouch-intellichlor.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Pentair Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/automation/easytouch/manual/easytouch-control-system-8-and-4-users-guide.pdf" target="_blank" rel="noopener" class="manual-link user-manual" title="Open User Manual" style="position: absolute; top: 80px; left: 10px; z-index: 2;">
+          <img src="Pentair Automation Guide_files/pdf-blue.png" alt="User Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/automation/easytouch/manual/easytouch-control-system-8-and-4-users-guide.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 115px; left: 10px; z-index: 2;">
+          <img src="Pentair Automation Guide_files/ai-blue.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Pentair Automation Guide_files/easytouch-panel.jpg" alt="Pentair Easy Touch Automation Panel">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+Easy+Touch+Automation+Panel" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <h3><a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/automation/easytouch/manual/easytouch-control-system-8-and-4-users-guide.pdf" target="_blank" class="manual-link install-manual" title="Download Installation Manual">📄<span class="manual-tag">INST</span></a>Pentair EasyTouch Automation Panel</h3>
+      <h3>Pentair Easy Touch Automation Panel</h3>
       <div class="pump-details">
         <div class="pump-specs">
-          <p><strong>Model:</strong> EasyTouch 8 and 4 Circuit Systems</p>
-          <p><strong>Features:</strong> Pool & Spa Control, Equipment Automation</p>
-          <p><strong>Replacement Parts:</strong></p>
+          <p><strong>Type:</strong> Pool & Spa Automation System </p>
+          <p><strong>Models:</strong> 4 and 8 Auxiliary Systems </p>
+          <p><strong>Features:</strong> Programmable schedules, remote control options </p>
+          <p><strong>Key Replacement Parts:</strong></p>
         </div>
         <ul class="part-list">
-          <li>
-            <strong>Antenna for MobileTouch Transceiver:</strong><br>
-            520217 <a href="https://www.pool360.com/Search?query=520217" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>PCB, MobileTouch Transceiver with Antenna:</strong><br>
-            520341 <a href="https://www.pool360.com/Search?query=520341" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>IntelliChlor Replacement Unions:</strong><br>
-            520595 <a href="https://www.pool360.com/Search?query=520595" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>Control Panel Replacement, Outdoor EasyTouch:</strong><br>
-            520656 <a href="https://www.pool360.com/Search?query=520656" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>Remote 4 Function 100':</strong><br>
-            520092 <a href="https://www.pool360.com/Search?query=520092" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>Expansion COM Port:</strong><br>
-            520818 <a href="https://www.pool360.com/Search?query=520818" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>EasyTouch Wireless Remote 8 AUX:</strong><br>
-            520692 <a href="https://www.pool360.com/Search?query=520692" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>3HP Relay, 2SPD IntelliTouch:</strong><br>
-            520198 <a href="https://www.pool360.com/Search?query=520198" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>Sensor Temp Replacement:</strong><br>
-            520272 <a href="https://www.pool360.com/Search?query=520272" target="_blank">[🔍]</a>
-          </li>
-        </ul>
-        <p class="hardware-title">Additional Hardware:</p>
-        <ul class="hardware-list">
-          <li>
-            <strong>EasyTouch Remote 4 AUX:</strong><br>
-            520691 <a href="https://www.pool360.com/Search?query=520691" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>Flow Switch Assembly IntelliChlor:</strong><br>
-            520736 <a href="https://www.pool360.com/Search?query=520736" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>IntelliChlor Acid Cleaning Kit:</strong><br>
-            520670 <a href="https://www.pool360.com/Search?query=520670" target="_blank">[🔍]</a>
-          </li>
-          <li>
-            <strong>3HP Relay, IntelliTouch:</strong><br>
-            520106 <a href="https://www.pool360.com/Search?query=520106" target="_blank">[🔍]</a>
-          </li>
+          <!-- Electrical Components First -->
+          <li><strong>Temperature Sensor:</strong> 520272 <a href="https://www.pool360.com/Search?query=520272" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch Assembly:</strong> 520736 <a href="https://www.pool360.com/Search?query=520736" target="_blank">[🔍]</a></li>
+          <li><strong>3HP Relay:</strong> 520106 <a href="https://www.pool360.com/Search?query=520106" target="_blank">[🔍]</a></li>
+          <li><strong>3HP 2-Speed Relay:</strong> 520198 <a href="https://www.pool360.com/Search?query=520198" target="_blank">[🔍]</a></li>
+          <li><strong>Transformer Assembly:</strong> 520653 <a href="https://www.pool360.com/Search?query=520653" target="_blank">[🔍]</a></li>
+          <li><strong>Control Panel Replacement:</strong> 520656 <a href="https://www.pool360.com/Search?query=520656" target="_blank">[🔍]</a></li>
+          <li><strong>UOC Motherboard 4 Aux Single:</strong> 520712 <a href="https://www.pool360.com/Search?query=520712" target="_blank">[🔍]</a></li>
+          <li><strong>UOC Motherboard 8 Aux Single:</strong> 520711 <a href="https://www.pool360.com/Search?query=520711" target="_blank">[🔍]</a></li>
+          <li><strong>UOC Motherboard 4 Aux Pool & Spa:</strong> 520659 <a href="https://www.pool360.com/Search?query=520659" target="_blank">[🔍]</a></li>
+          <li><strong>UOC Motherboard 8 Aux Pool & Spa:</strong> 520657 <a href="https://www.pool360.com/Search?query=520657" target="_blank">[🔍]</a></li>
+          <li><strong>Expansion COM Port:</strong> 520818 <a href="https://www.pool360.com/Search?query=520818" target="_blank">[🔍]</a></li>
+          <li><strong>Valve Actuator:</strong> 263045 <a href="https://www.pool360.com/Search?query=263045" target="_blank">[🔍]</a></li>
+
+          <!-- Salt Cell Parts -->
+          <li><strong>IntelliChlor Cell/PCB Connection Cable:</strong> 520724 <a href="https://www.pool360.com/Search?query=520724" target="_blank">[🔍]</a></li>
+          <li><strong>IntelliChlor Replacement Unions:</strong> 520595 <a href="https://www.pool360.com/Search?query=520595" target="_blank">[🔍]</a></li>
+          <li><strong>IntelliChlor Acid Cleaning Kit:</strong> 520670 <a href="https://www.pool360.com/Search?query=520670" target="_blank">[🔍]</a></li>
+          <li><strong>SCG Replacement PCB:</strong> 520723 <a href="https://www.pool360.com/Search?query=520723" target="_blank">[🔍]</a></li>
+          <li><strong>SCG Replacement Transformer:</strong> 520722 <a href="https://www.pool360.com/Search?query=520722" target="_blank">[🔍]</a></li>
         </ul>
 
         <div class="expandable-section">
-          <p class="hardware-title">Complete Parts List:</p>
+          <p class="hardware-title">Remote Control Options:</p>
           <ul class="hardware-list">
             <li>
-              <strong>IntelliChlor Cell/PCBA Connection Cable:</strong><br>
-              520724 <a href="https://www.pool360.com/Search?query=520724" target="_blank">[🔍]</a>
+              <strong>Wireless Remote 4 Aux:</strong> 520691 <a href="https://www.pool360.com/Search?query=520691" target="_blank">[🔍]</a>
             </li>
             <li>
-              <strong>PCBA Replacement for EasyTouch SCG:</strong><br>
-              520723 <a href="https://www.pool360.com/Search?query=520723" target="_blank">[🔍]</a>
+              <strong>Wireless Remote 8 Aux:</strong> 520692 <a href="https://www.pool360.com/Search?query=520692" target="_blank">[🔍]</a>
             </li>
             <li>
-              <strong>Transformer SCG Replacement IntelliChlor:</strong><br>
-              520722 <a href="https://www.pool360.com/Search?query=520722" target="_blank">[🔍]</a>
+              <strong>Remote 4 Function 100':</strong> 520092 <a href="https://www.pool360.com/Search?query=520092" target="_blank">[🔍]</a>
             </li>
             <li>
-              <strong>UOC Motherboard 4AUX Single Replacement:</strong><br>
-              520712 <a href="https://www.pool360.com/Search?query=520712" target="_blank">[🔍]</a>
+              <strong>MobileTouch Transceiver with Antenna:</strong> 520341 <a href="https://www.pool360.com/Search?query=520341" target="_blank">[🔍]</a>
             </li>
             <li>
-              <strong>UOC Motherboard 4AUX P&S Replacement:</strong><br>
-              520659 <a href="https://www.pool360.com/Search?query=520659" target="_blank">[🔍]</a>
-            </li>
-            <li>
-              <strong>Valve Actuator 3Port:</strong><br>
-              263045 <a href="https://www.pool360.com/Search?query=263045" target="_blank">[🔍]</a>
-            </li>
-            <li>
-              <strong>Transformer Assembly Replacement:</strong><br>
-              520653 <a href="https://www.pool360.com/Search?query=520653" target="_blank">[🔍]</a>
-            </li>
-            <li>
-              <strong>Laptop Trainer, EasyTouch:</strong><br>
-              520660 <a href="https://www.pool360.com/Search?query=520660" target="_blank">[🔍]</a>
-            </li>
-            <li>
-              <strong>Backplate Assembly ICP EasyTouch:</strong><br>
-              520652 <a href="https://www.pool360.com/Search?query=520652" target="_blank">[🔍]</a>
-            </li>
-            <li>
-              <strong>High Voltage Cover Panel, EasyTouch:</strong><br>
-              520651 <a href="https://www.pool360.com/Search?query=520651" target="_blank">[🔍]</a>
-            </li>
-            <li>
-              <strong>Label Set, Features ICP EasyTouch:</strong><br>
-              520658 <a href="https://www.pool360.com/Search?query=520658" target="_blank">[🔍]</a>
-            </li>
-            <li>
-              <strong>Door, Load Center EasyTouch:</strong><br>
-              520655 <a href="https://www.pool360.com/Search?query=520655" target="_blank">[🔍]</a>
-            </li>
-            <li>
-              <strong>UOC Motherboard 8AUX P&S Replacement:</strong><br>
-              520657 <a href="https://www.pool360.com/Search?query=520657" target="_blank">[🔍]</a>
-            </li>
-            <li>
-              <strong>PCB, UOC Motherboard, 8 Aux, Single Body:</strong><br>
-              520711 <a href="https://www.pool360.com/Search?query=520711" target="_blank">[🔍]</a>
+              <strong>Antenna for MobileTouch Transceiver:</strong> 520217 <a href="https://www.pool360.com/Search?query=520217" target="_blank">[🔍]</a>
             </li>
           </ul>
         </div>
-        <button class="expand-btn">Show More Parts ▼</button>
+        <button class="expand-btn">Show Remote Control Options ▼</button>
       </div>
     </div>
 
-    </div>
-  </div>
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/automation/intellicenter/manuals---user-docs/intellicenter-installation-guide.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Pentair Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/automation/intellicenter/manuals---user-docs/intellicenter-installation-guide.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Pentair Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/automation/intellicenter/manuals---user-docs/intellicenter-users-guide.pdf" target="_blank" rel="noopener" class="manual-link user-manual" title="Open User Manual" style="position: absolute; top: 80px; left: 10px; z-index: 2;">
+          <img src="Pentair Automation Guide_files/pdf-blue.png" alt="User Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://www.pentair.com/content/dam/extranet/nam/pentair-pool/residential/automation/intellicenter/manuals---user-docs/intellicenter-users-guide.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 115px; left: 10px; z-index: 2;">
+          <img src="Pentair Automation Guide_files/ai-blue.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Pentair Automation Guide_files/intellicenter-panel.jpg" alt="Pentair IntelliCenter Control System">
+        <a href="https://www.google.com/search?tbm=isch&q=Pentair+IntelliCenter+Control+System" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Pentair IntelliCenter Control System</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Type:</strong> Advanced Pool & Spa Automation System </p>
+          <p><strong>Models:</strong> i5+3, i5+3S, i8+3, i8+3S, i10+3D </p>
+          <p><strong>Features:</strong> Touchscreen interface, mobile app control, voice control compatibility </p>
+          <p><strong>Key Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Electrical Components First -->
+          <li><strong>Indoor Control Panel (ICP):</strong> 522036 <a href="https://www.pool360.com/Search?query=522036" target="_blank">[🔍]</a></li>
+          <li><strong>Outdoor Control Panel (OCP):</strong> 522037 <a href="https://www.pool360.com/Search?query=522037" target="_blank">[🔍]</a></li>
+          <li><strong>i5P Replacement OCP Circuit Board:</strong> 522104 <a href="https://www.pool360.com/Search?query=522104" target="_blank">[🔍]</a></li>
+          <li><strong>i8P Replacement OCP Circuit Board:</strong> 522105 <a href="https://www.pool360.com/Search?query=522105" target="_blank">[🔍]</a></li>
+          <li><strong>i10P Replacement OCP Circuit Board:</strong> 522106 <a href="https://www.pool360.com/Search?query=522106" target="_blank">[🔍]</a></li>
+          <li><strong>Personality Board:</strong> 522107 <a href="https://www.pool360.com/Search?query=522107" target="_blank">[🔍]</a></li>
+          <li><strong>Power Interface Board:</strong> 522108 <a href="https://www.pool360.com/Search?query=522108" target="_blank">[🔍]</a></li>
+          <li><strong>Expansion Power Interface Board:</strong> 522109 <a href="https://www.pool360.com/Search?query=522109" target="_blank">[🔍]</a></li>
+          <li><strong>Expansion Personality Board:</strong> 522110 <a href="https://www.pool360.com/Search?query=522110" target="_blank">[🔍]</a></li>
+          <li><strong>Temperature Sensor:</strong> 520272 <a href="https://www.pool360.com/Search?query=520272" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Sensor:</strong> 520736 <a href="https://www.pool360.com/Search?query=520736" target="_blank">[🔍]</a></li>
+          <li><strong>Battery for ICP & OCP:</strong> 522978Z <a href="https://www.pool360.com/Search?query=522978Z" target="_blank">[🔍]</a></li>
+          <li><strong>Valve Actuator:</strong> 263045 <a href="https://www.pool360.com/Search?query=263045" target="_blank">[🔍]</a></li>
 
-  <!-- Image Modal -->
-  <div id="imageModal" class="image-modal">
-    <div class="modal-content">
-      <img class="modal-image" id="modalImage">
+          <!-- Salt Cell Parts -->
+          <li><strong>IntelliChlor Power Center:</strong> 520556 <a href="https://www.pool360.com/Search?query=520556" target="_blank">[🔍]</a></li>
+          <li><strong>IntelliChlor IC20 Cell:</strong> 520554 <a href="https://www.pool360.com/Search?query=520554" target="_blank">[🔍]</a></li>
+          <li><strong>IntelliChlor IC40 Cell:</strong> 520555 <a href="https://www.pool360.com/Search?query=520555" target="_blank">[🔍]</a></li>
+          <li><strong>IntelliChlor IC60 Cell:</strong> 521105 <a href="https://www.pool360.com/Search?query=521105" target="_blank">[🔍]</a></li>
+          <li><strong>IntelliChlor Acid Cleaning Kit:</strong> 520670 <a href="https://www.pool360.com/Search?query=520670" target="_blank">[🔍]</a></li>
+        </ul>
+
+        <div class="expandable-section">
+          <p class="hardware-title">Remote Control Options:</p>
+          <ul class="hardware-list">
+            <li>
+              <strong>IntelliCenter Wireless Remote:</strong> 522051 <a href="https://www.pool360.com/Search?query=522051" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Wireless Expansion Kit:</strong> 522052 <a href="https://www.pool360.com/Search?query=522052" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Wireless Transceiver:</strong> 522053 <a href="https://www.pool360.com/Search?query=522053" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Wireless Antenna:</strong> 522054 <a href="https://www.pool360.com/Search?query=522054" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Ethernet to WiFi Kit:</strong> 522055 <a href="https://www.pool360.com/Search?query=522055" target="_blank">[🔍]</a>
+            </li>
+          </ul>
+        </div>
+        <button class="expand-btn">Show Remote Control Options ▼</button>
+      </div>
+    </div>
+
     </div>
   </div>
 
   <script>
-    // Initialize all controls and functionality
+    // Initialize controls
     function initControls() {
-      // Apply saved theme
-      const savedTheme = getCookie('theme');
-      if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-      }
+      console.log('Initializing controls');
+      initThemeToggle();
+      initFontSize();
+      initExpandButtons();
+      initToolbarScroll();
+    }
 
-      // Apply saved font size
-      const savedFontSize = getCookie('fontSize');
-      if (savedFontSize) {
-        document.documentElement.style.setProperty('--base-font-size', savedFontSize);
-      }
-
-      // Theme toggle
-      document.getElementById('toggle-theme').addEventListener('click', function() {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-        setCookie('theme', isDarkMode ? 'dark' : 'light', 365);
-      });
-
-      // Font size controls
-      document.getElementById('increase-font').addEventListener('click', function() {
-        const currentSize = getComputedStyle(document.documentElement).getPropertyValue('--base-font-size');
-        const newSize = parseFloat(currentSize) + 1 + 'px';
-        document.documentElement.style.setProperty('--base-font-size', newSize);
-        setCookie('fontSize', newSize, 365);
-      });
-
-      document.getElementById('decrease-font').addEventListener('click', function() {
-        const currentSize = getComputedStyle(document.documentElement).getPropertyValue('--base-font-size');
-        const newSize = Math.max(parseFloat(currentSize) - 1, 10) + 'px';
-        document.documentElement.style.setProperty('--base-font-size', newSize);
-        setCookie('fontSize', newSize, 365);
-      });
-
-      document.getElementById('reset-font').addEventListener('click', function() {
-        const defaultSize = '16px';
-        document.documentElement.style.setProperty('--base-font-size', defaultSize);
-        setCookie('fontSize', defaultSize, 365);
-      });
-
-      // Expand buttons
-      const expandButtons = document.querySelectorAll('.expand-btn');
-      expandButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const section = this.previousElementSibling;
-          if (section.style.display === 'block') {
-            section.style.display = 'none';
-            this.textContent = 'Show More Parts ▼';
-          } else {
-            section.style.display = 'block';
-            this.textContent = 'Show Less Parts ▲';
-          }
-        });
-      });
-
-      // Horizontal scrolling for toolbar with mouse drag
+    // Initialize toolbar horizontal scrolling
+    function initToolbarScroll() {
       const toolbar = document.querySelector('.toolbar');
+      const guideLinks = document.querySelector('.guide-links');
+
+      // Variables for drag scrolling
       let isDown = false;
       let startX;
       let scrollLeft;
 
+      // Mouse events for desktop
       toolbar.addEventListener('mousedown', (e) => {
+        // Only handle clicks on the guide-links or its children
+        if (!e.target.closest('.guide-links') && e.target !== guideLinks) return;
+
         isDown = true;
         toolbar.style.cursor = 'grabbing';
         startX = e.pageX - toolbar.offsetLeft;
         scrollLeft = toolbar.scrollLeft;
+        e.preventDefault();
       });
 
       toolbar.addEventListener('mouseleave', () => {
         isDown = false;
-        toolbar.style.cursor = 'grab';
+        toolbar.style.cursor = '';
       });
 
       toolbar.addEventListener('mouseup', () => {
         isDown = false;
-        toolbar.style.cursor = 'grab';
+        toolbar.style.cursor = '';
       });
 
       toolbar.addEventListener('mousemove', (e) => {
         if (!isDown) return;
         e.preventDefault();
         const x = e.pageX - toolbar.offsetLeft;
-        const walk = (x - startX) * 2; // Scroll speed
+        const walk = (x - startX) * 2; // Scroll speed multiplier
         toolbar.scrollLeft = scrollLeft - walk;
       });
+
+      // Touch events for mobile
+      toolbar.addEventListener('touchstart', (e) => {
+        // Only handle touches on the guide-links or its children
+        if (!e.target.closest('.guide-links') && e.target !== guideLinks) return;
+
+        isDown = true;
+        startX = e.touches[0].pageX - toolbar.offsetLeft;
+        scrollLeft = toolbar.scrollLeft;
+      }, { passive: false });
+
+      toolbar.addEventListener('touchend', () => {
+        isDown = false;
+      });
+
+      toolbar.addEventListener('touchcancel', () => {
+        isDown = false;
+      });
+
+      toolbar.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - toolbar.offsetLeft;
+        const walk = (x - startX) * 2;
+        toolbar.scrollLeft = scrollLeft - walk;
+      }, { passive: false });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+          return; // Don't interfere with input fields
+        }
+
+        if (e.key === 'ArrowLeft') {
+          toolbar.scrollLeft -= 50;
+          e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+          toolbar.scrollLeft += 50;
+          e.preventDefault();
+        }
+      });
+
+      // Mouse wheel horizontal scrolling
+      toolbar.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          toolbar.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    }
+
+    // Initialize expand buttons
+    function initExpandButtons() {
+      const expandButtons = document.querySelectorAll('.expand-btn');
+      expandButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const section = this.previousElementSibling;
+          if (section.style.display === 'block') {
+            section.style.display = 'none';
+            this.textContent = 'Show Remote Control Options ▼';
+          } else {
+            section.style.display = 'block';
+            this.textContent = 'Show Less ▲';
+          }
+        });
+      });
+    }
+
+    // Dark mode toggle
+    function initThemeToggle() {
+      console.log('Initializing theme toggle');
+
+      // Check for saved theme preference
+      const savedTheme = getCookie('darkMode');
+      console.log('Retrieved saved theme:', savedTheme);
+
+      // Apply saved theme or default to light
+      if (savedTheme === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('toggle-theme').textContent = '☀️';
+      } else {
+        document.getElementById('toggle-theme').textContent = '🌓';
+      }
+
+      // Add event listener for theme toggle
+      document.getElementById('toggle-theme').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+
+        // Update button icon
+        this.textContent = isDarkMode? '☀️' : '🌓';
+
+        // Save preference
+        setCookie('darkMode', isDarkMode.toString(), 365);
+        console.log('Saved theme preference:', isDarkMode);
+      });
+    }
+
+    // Initialize zoom controls
+    function initFontSize() {
+      console.log('Initializing zoom controls');
+
+      const decreaseBtn = document.getElementById('decrease-font');
+      const increaseBtn = document.getElementById('increase-font');
+      const resetBtn = document.getElementById('reset-font');
+
+      // Get stored zoom level or default to 100%
+      const storedZoom = getCookie('zoomLevel');
+      const zoomLevel = storedZoom ? parseInt(storedZoom) : 100;
+
+      // Apply stored zoom level
+      if (storedZoom) {
+        updateZoom(zoomLevel);
+      }
+
+      // Add event listeners to zoom buttons
+      decreaseBtn.addEventListener('click', function() {
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom > 70) {
+          updateZoom(currentZoom - 10);
+        }
+      });
+
+      increaseBtn.addEventListener('click', function() {
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom < 150) {
+          updateZoom(currentZoom + 10);
+        }
+      });
+
+      resetBtn.addEventListener('click', function() {
+        updateZoom(100);
+      });
+
+      // Update zoom level and save to localStorage
+      function updateZoom(zoomPercent) {
+        console.log('Updating zoom to:', zoomPercent + '%');
+        document.body.style.zoom = zoomPercent + '%';
+        setCookie('zoomLevel', zoomPercent.toString(), 365); // Save for 1 year
+        console.log('Saved zoom level:', zoomPercent.toString());
+      }
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        initControls();
+        initImageModal();
+      });
+    } else {
+      // DOM already loaded
+      initControls();
+      initImageModal();
     }
 
     // Image Modal Functionality
     function initImageModal() {
-      const modal = document.getElementById('imageModal');
+      // Create modal element
+      const modal = document.createElement('div');
+      modal.className = 'image-modal';
+      modal.innerHTML = '<div class="modal-content"><img class="modal-image" src="" alt="Enlarged pump image"></div>';
+      document.body.appendChild(modal);
+
       const modalContent = modal.querySelector('.modal-content');
-      const modalImg = document.getElementById('modalImage');
+      const modalImg = modal.querySelector('.modal-image');
 
       // Variables for zoom and pan
       let scale = 1;
@@ -706,17 +851,57 @@
       let startX, startY, translateX = 0, translateY = 0;
       let lastX, lastY;
 
-      // Add click event to all pump images
-      const pumpImages = document.querySelectorAll('.image-container img:not(.eye-button)');
+      // Variables for double tap detection
+      let lastTap = 0;
+      let touchTimeout;
+
+      // Add click event to all pump images (excluding icons)
+      const pumpImages = document.querySelectorAll('.image-container img:not(.icon-no-zoom)');
       pumpImages.forEach(img => {
         img.addEventListener('click', function() {
           modalImg.src = this.src;
           modal.style.display = 'block';
-          // Reset zoom and position
+
+          // Initial scale will be calculated when image loads
           scale = 1;
           translateX = 0;
           translateY = 0;
           updateTransform();
+
+          // We need to wait for the image to load to properly size and center it
+          modalImg.onload = function() {
+            // Get modal and image dimensions
+            const modalRect = modal.getBoundingClientRect();
+            const imgRect = modalImg.getBoundingClientRect();
+
+            // Calculate available space (with 20px margin)
+            const availableWidth = modalRect.width - 40;
+            const availableHeight = modalRect.height - 40;
+
+            // Calculate scale needed to fit image within available space
+            const widthScale = availableWidth / imgRect.width;
+            const heightScale = availableHeight / imgRect.height;
+
+            // Use the smaller scale to ensure image fits in both dimensions
+            let fitScale = Math.min(widthScale, heightScale);
+
+            // On mobile, use 1.5x zoom as requested
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+              scale = 1.5;
+            } else {
+              // On desktop, use the fit scale, but cap it at 1.5x
+              scale = Math.min(fitScale, 1.5);
+            }
+
+            // Center the image
+            const scaledWidth = imgRect.width * scale;
+            const scaledHeight = imgRect.height * scale;
+            translateX = (modalRect.width - scaledWidth) / 2 - imgRect.left;
+            translateY = (modalRect.height - scaledHeight) / 2 - imgRect.top;
+
+            updateTransform();
+          };
         });
       });
 
@@ -809,13 +994,209 @@
       document.addEventListener('mouseup', function() {
         if (isDragging) {
           isDragging = false;
-          modalImg.style.cursor = scale > 1 ? 'move' : 'default';
+          modalImg.style.cursor = scale > 1? 'move' : 'default';
         }
       });
 
+      // Touch events for mobile devices
+
+      // Variables for pinch-to-zoom
+      let initialDistance = 0;
+      let initialScale = 1;
+      let lastTouchCount = 0;
+
+      // Double tap to zoom - attach to the entire modal
+      modal.addEventListener('touchstart', function(e) {
+        // Reset drag tracking
+        hasDragged = false;
+        const now = new Date().getTime();
+        const timeSince = now - lastTap;
+
+        // Only handle double-tap if we have a single touch point
+        if (e.touches.length === 1 && timeSince < 300 && timeSince > 0) {
+          // Double tap detected
+          e.preventDefault();
+
+          // Clear any existing timeout to prevent both zoom and pan
+          if (touchTimeout) {
+            clearTimeout(touchTimeout);
+            touchTimeout = null;
+          }
+
+          // Get touch position
+          const touch = e.touches[0];
+          const rect = modalImg.getBoundingClientRect();
+          const touchX = touch.clientX - rect.left;
+          const touchY = touch.clientY - rect.top;
+
+          // Calculate touch position relative to image
+          const x = touchX / rect.width;
+          const y = touchY / rect.height;
+
+          // Toggle between normal and zoomed state
+          const newScale = scale === 1 ? 2 : 1;
+
+          if (newScale > scale) {
+            // Zooming in - center on touch point
+            const zoomPointX = rect.width * x;
+            const zoomPointY = rect.height * y;
+
+            // Calculate how much the point would move due to scaling
+            const scaleDiffX = zoomPointX * (newScale - scale) / scale;
+            const scaleDiffY = zoomPointY * (newScale - scale) / scale;
+
+            // Adjust translation to center on touch point
+            translateX = translateX - scaleDiffX;
+            translateY = translateY - scaleDiffY;
+          } else {
+            // Zooming out - reset position
+            translateX = 0;
+            translateY = 0;
+          }
+
+          scale = newScale;
+          updateTransform();
+        }
+
+        lastTap = now;
+
+        // Handle pinch-to-zoom with two fingers
+        if (e.touches.length === 2) {
+          e.preventDefault();
+
+          // Calculate initial distance between touch points
+          const touch1 = e.touches[0];
+          const touch2 = e.touches[1];
+          initialDistance = Math.hypot(
+            touch2.clientX - touch1.clientX,
+            touch2.clientY - touch1.clientY
+          );
+
+          // Store the current scale as our reference point
+          initialScale = scale;
+
+          // Calculate the midpoint between the two touches
+          const midX = (touch1.clientX + touch2.clientX) / 2;
+          const midY = (touch1.clientY + touch2.clientY) / 2;
+
+          // Get the position relative to the image
+          const rect = modalImg.getBoundingClientRect();
+
+          // Store the midpoint for reference in touchmove
+          startX = midX;
+          startY = midY;
+
+          isDragging = false; // Disable single-finger dragging during pinch
+        }
+
+        // Handle single-finger dragging (always, not just when zoomed)
+        if (e.touches.length === 1) {
+          const touch = e.touches[0];
+          isDragging = true;
+          startX = touch.clientX - translateX;
+          startY = touch.clientY - translateY;
+
+          // Set a timeout to distinguish between tap and drag
+          touchTimeout = setTimeout(() => {
+            touchTimeout = null;
+          }, 100);
+        }
+
+        lastTouchCount = e.touches.length;
+      }, { passive: false });
+
+      modal.addEventListener('touchmove', function(e) {
+        e.preventDefault(); // Always prevent default to avoid page scrolling
+
+        // Handle pinch-to-zoom
+        if (e.touches.length === 2) {
+          // Calculate current distance between touch points
+          const touch1 = e.touches[0];
+          const touch2 = e.touches[1];
+          const currentDistance = Math.hypot(
+            touch2.clientX - touch1.clientX,
+            touch2.clientY - touch1.clientY
+          );
+
+          // Calculate new scale based on the change in distance
+          // The ratio of current to initial distance gives us our scale multiplier
+          const pinchRatio = currentDistance / initialDistance;
+          let newScale = initialScale * pinchRatio;
+
+          // Limit scale to reasonable bounds (0.5x to 10x)
+          newScale = Math.min(Math.max(newScale, 0.5), 10);
+
+          // Calculate the midpoint between the two touches
+          const midX = (touch1.clientX + touch2.clientX) / 2;
+          const midY = (touch1.clientY + touch2.clientY) / 2;
+
+          // Get the position relative to the image
+          const rect = modalImg.getBoundingClientRect();
+
+          // Calculate the point on the image where the midpoint of the fingers is
+          const zoomPointX = midX - rect.left;
+          const zoomPointY = midY - rect.top;
+
+          // Calculate how much the point would move due to scaling
+          const scaleDiffX = zoomPointX * (newScale - scale) / scale;
+          const scaleDiffY = zoomPointY * (newScale - scale) / scale;
+
+          // Adjust translation to keep the midpoint fixed
+          translateX = translateX - scaleDiffX;
+          translateY = translateY - scaleDiffY;
+
+          scale = newScale;
+          updateTransform();
+          hasDragged = true;
+        }
+        // Handle single-finger dragging
+        else if (e.touches.length === 1 && isDragging) {
+          const touch = e.touches[0];
+
+          // Only start moving after a small threshold to distinguish from taps
+          if (touchTimeout === null || lastTouchCount === 2) {
+            translateX = touch.clientX - startX;
+            translateY = touch.clientY - startY;
+            updateTransform();
+            hasDragged = true;
+          }
+        }
+
+        lastTouchCount = e.touches.length;
+      }, { passive: false });
+
+      modal.addEventListener('touchend', function(e) {
+        // If we're ending a pinch (going from 2 fingers to 1)
+        if (lastTouchCount === 2 && e.touches.length === 1) {
+          // Reset for single-finger dragging
+          const touch = e.touches[0];
+          startX = touch.clientX - translateX;
+          startY = touch.clientY - translateY;
+          isDragging = true;
+        }
+        // If we're ending all touches
+        else if (e.touches.length === 0) {
+          isDragging = false;
+          if (touchTimeout) {
+            clearTimeout(touchTimeout);
+            touchTimeout = null;
+          }
+
+          // Close modal if tapping on the background (not the image) and not dragging
+          if (!hasDragged && e.target === modal) {
+            modal.style.display = 'none';
+          }
+        }
+
+        lastTouchCount = e.touches.length;
+      });
+
+      // Add code to close modal on tap when not dragged
+      // This is now handled in the main touchend handler above
+
       // Set appropriate cursor based on zoom level
       function updateCursor() {
-        modalImg.style.cursor = scale > 1 ? 'move' : 'default';
+        modalImg.style.cursor = scale > 1? 'move' : 'default';
       }
 
       // Update transform with current scale and translation
@@ -824,18 +1205,7 @@
         updateCursor();
       }
     }
-
-    // Initialize when DOM is loaded
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
-        initControls();
-        initImageModal();
-      });
-    } else {
-      // DOM already loaded
-      initControls();
-      initImageModal();
-    }
   </script>
+
 </body>
 </html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pool Equipment Guides</title>
+  <style>
+    :root {
+      --primary-color: #0078d7;
+      --secondary-color: #005a9e;
+      --text-color: #333;
+      --background-color: #f5f5f5;
+      --card-bg: #ffffff;
+      --border-color: #e0e0e0;
+      --shadow-color: rgba(0, 0, 0, 0.1);
+      --link-color: #0078d7;
+    }
+
+    .dark-mode {
+      --primary-color: #0078d7;
+      --secondary-color: #2b88d8;
+      --text-color: #f0f0f0;
+      --background-color: #121212;
+      --card-bg: #1e1e1e;
+      --border-color: #333;
+      --shadow-color: rgba(0, 0, 0, 0.4);
+      --link-color: #4db8ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+      padding-bottom: 30px;
+    }
+
+    .header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .category {
+      margin-bottom: 40px;
+    }
+
+    .category-title {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .guide-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px var(--shadow-color);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .guide-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px var(--shadow-color);
+    }
+
+    .guide-card a {
+      text-decoration: none;
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card-image {
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-color: white;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .dark-mode .card-image {
+      background-color: #2a2a2a;
+    }
+
+    .card-image img {
+      max-width: 80%;
+      max-height: 80%;
+      object-fit: contain;
+    }
+
+    .card-content {
+      padding: 15px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .card-description {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .dark-mode .card-description {
+      color: #aaa;
+    }
+
+    @media (max-width: 768px) {
+      .guides-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+
+      .card-image {
+        height: 120px;
+      }
+
+      .card-title {
+        font-size: 1rem;
+      }
+
+      .card-description {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .theme-toggle {
+        top: 15px;
+        right: 15px;
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Pool Equipment Guides</h1>
+    <p class="subtitle">Comprehensive guides for pool pumps, heaters, and automation systems</p>
+    <button class="theme-toggle" id="theme-toggle">🌓</button>
+  </div>
+
+  <div class="container">
+    <!-- Pumps Category -->
+    <section class="category">
+      <h2 class="category-title">Pumps</h2>
+      <div class="guides-grid">
+        <!-- Pentair Pumps -->
+        <div class="guide-card">
+          <a href="./Pentair Pump Guide/Pentair Residential Pool Pump Guide.html">
+            <div class="card-image">
+              <img src="./Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Pumps">
+            </div>
+            <div class="card-content">
+              <div class="card-title">Pentair Pumps</div>
+              <div class="card-description">WhisperFlo, SuperFlo, and more</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Hayward Pumps -->
+        <div class="guide-card">
+          <a href="./Hayward Pump Guide/Hayward Residential Pool Pump Guide.html">
+            <div class="card-image">
+              <img src="./Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Pumps">
+            </div>
+            <div class="card-content">
+              <div class="card-title">Hayward Pumps</div>
+              <div class="card-description">Super Pump, MaxFlo, and more</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Jandy Pumps -->
+        <div class="guide-card">
+          <a href="./Jandy Pump Guide/Jandy Residential Pool Pump Guide.html">
+            <div class="card-image">
+              <img src="./Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Pumps">
+            </div>
+            <div class="card-content">
+              <div class="card-title">Jandy Pumps</div>
+              <div class="card-description">FloPro, ePump, and more</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Heaters Category -->
+    <section class="category">
+      <h2 class="category-title">Heaters</h2>
+      <div class="guides-grid">
+        <!-- Pentair Heaters -->
+        <div class="guide-card">
+          <a href="./Pentair Heaters/Pentair Heaters Product Guide.html">
+            <div class="card-image">
+              <img src="./Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Heaters">
+            </div>
+            <div class="card-content">
+              <div class="card-title">Pentair Heaters</div>
+              <div class="card-description">MasterTemp, ETi, and more</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Hayward Heaters -->
+        <div class="guide-card">
+          <a href="./Hayward Heaters/Hayward Heaters Product Guide.html">
+            <div class="card-image">
+              <img src="./Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Heaters">
+            </div>
+            <div class="card-content">
+              <div class="card-title">Hayward Heaters</div>
+              <div class="card-description">H-Series, HeatPro, and more</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Jandy Heaters -->
+        <div class="guide-card">
+          <a href="./Jandy Heaters/Jandy Heaters Product Guide.html">
+            <div class="card-image">
+              <img src="./Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Heaters">
+            </div>
+            <div class="card-content">
+              <div class="card-title">Jandy Heaters</div>
+              <div class="card-description">JXi, VersaTemp, and more</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Automation Category -->
+    <section class="category">
+      <h2 class="category-title">Automation</h2>
+      <div class="guides-grid">
+        <!-- Pentair Automation -->
+        <div class="guide-card">
+          <a href="./Pentair Automation Guide/Pentair Automation Guide.html">
+            <div class="card-image">
+              <img src="./Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair Automation">
+            </div>
+            <div class="card-content">
+              <div class="card-title">Pentair Automation</div>
+              <div class="card-description">IntelliCenter, EasyTouch, and more</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Hayward Automation -->
+        <div class="guide-card">
+          <a href="./Hayward Automation Guide/Hayward Automation Guide.html">
+            <div class="card-image">
+              <img src="./Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward Automation">
+            </div>
+            <div class="card-content">
+              <div class="card-title">Hayward Automation</div>
+              <div class="card-description">OmniLogic, ProLogic, and more</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Jandy Automation -->
+        <div class="guide-card">
+          <a href="./Jandy Automation Guide/Jandy Automation Guide.html">
+            <div class="card-image">
+              <img src="./Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy Automation">
+            </div>
+            <div class="card-content">
+              <div class="card-title">Jandy Automation</div>
+              <div class="card-description">iAquaLink, AquaLink, and more</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeToggle = document.getElementById('theme-toggle');
+      
+      // Check for saved theme preference
+      const savedTheme = getCookie('darkMode');
+      
+      if (savedTheme === 'true') {
+        document.body.classList.add('dark-mode');
+        themeToggle.textContent = '☀️';
+      }
+      
+      // Add event listener for theme toggle
+      themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        
+        // Update button icon
+        this.textContent = isDarkMode ? '☀️' : '🌓';
+        
+        // Save preference
+        setCookie('darkMode', isDarkMode.toString(), 365);
+      });
+    });
+    
+    // Cookie functions
+    function setCookie(name, value, days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      const expires = "expires=" + date.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+    
+    function getCookie(name) {
+      const cookieName = name + "=";
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.indexOf(cookieName) === 0) {
+          return cookie.substring(cookieName.length, cookie.length);
+        }
+      }
+      return "";
+    }
+  </script>
+</body>
+</html>
