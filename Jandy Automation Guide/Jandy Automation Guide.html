@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Jandy Heaters Product Guide</title>
+  <title>Jandy Automation Guide</title>
   <script>
     // Cookie functions
     function setCookie(name, value, days) {
@@ -27,7 +27,7 @@
       // Try localStorage first
       try {
         const value = localStorage.getItem(name);
-        if (value !== null) {
+        if (value!== null) {
           return value;
         }
       } catch (e) {
@@ -55,10 +55,9 @@
       --shadow-color: rgba(0,0,0,0.1);
       --link-color: #0066cc;
       --link-color-install: #cc6600;
-      --font-scale: 1;
     }
 
-    .dark-mode {
+.dark-mode {
       --bg-color: #222;
       --card-bg: #333;
       --text-color: #eee;
@@ -67,7 +66,6 @@
       --link-color: #4d9fff;
       --link-color-install: #ff9d4d;
     }
-
     body {
       font-family: Arial, sans-serif;
       background: var(--bg-color);
@@ -82,12 +80,6 @@
 
     .page-content {
       padding: 20px;
-    }
-
-    h1 {
-      margin-top: 0;
-      margin-bottom: 20px;
-      text-align: center;
     }
 
     .toolbar {
@@ -143,6 +135,13 @@
       white-space: nowrap;
     }
 
+.font-controls,.theme-control {
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
     .font-btn, .theme-btn {
       width: 30px;
       height: 30px;
@@ -161,41 +160,34 @@
       transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.2s;
     }
 
-    .font-btn:hover, .theme-btn:hover {
+.font-btn:hover,.theme-btn:hover {
       background-color: var(--border-color);
       transform: translateY(-2px);
     }
-
-    .pump-list {
+.pump-list {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       gap: 20px;
-      margin-bottom: 40px;
+      justify-content: center;
     }
-
-    .pump-card {
+.pump-card {
       background: var(--card-bg);
-      border-radius: 8px;
+      border-radius: 10px;
       box-shadow: 0 2px 5px var(--shadow-color);
-      overflow: hidden;
-      transition: transform 0.2s, box-shadow 0.3s, background-color 0.3s;
       width: 450px;
-      margin: 0;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      position: relative;
+      margin-bottom: 20px;
     }
-
-    .pump-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px var(--shadow-color);
+.pump-card:hover {
+      transform: scale(1.02);
     }
-
-    .image-container {
+.image-container {
       position: relative;
-      height: 200px;
+      height: 150px;
       overflow: hidden;
       display: flex;
       align-items: center;
@@ -205,13 +197,12 @@
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }
-
-    .image-container img {
+.image-container img {
       max-width: 100%;
       max-height: 100%;
+      display: block;
       object-fit: contain;
     }
-
     .eye-button {
       position: absolute;
       bottom: 5px;
@@ -241,50 +232,7 @@
       transform: scale(1.1);
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
-
-    h3 {
-      padding: 15px 15px 5px;
-      margin: 0;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-    }
-
-    .pump-details {
-      padding: 0 15px 15px;
-    }
-
-    .pump-specs {
-      flex-shrink: 0;
-      margin-bottom: 5px;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 5px;
-      transition: border-color 0.3s;
-    }
-
-    .part-list, .hardware-list {
-      font-size: 0.85rem;
-      padding-left: 15px;
-      margin-top: 5px;
-      margin-bottom: 10px;
-    }
-
-    .part-list li, .hardware-list li {
-      margin-bottom: 6px;
-    }
-
-    .hardware-title {
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    a {
-      color: var(--link-color);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .manual-link {
+.manual-link {
       margin-right: 6px;
       text-decoration: none;
       font-size: 16px;
@@ -292,16 +240,24 @@
       display: inline-block;
       line-height: 1;
     }
-
-    .manual-tag {
-      position: absolute;
+.user-manual {
+      color: var(--link-color);
+      transition: color 0.3s;
+    }
+.install-manual {
+      color: var(--link-color-install);
+      transition: color 0.3s;
+    }
+.manual-tag {
       font-size: 7px;
-      bottom: -8px;
+      position: absolute;
+      bottom: -4px;
       left: 50%;
       transform: translateX(-50%);
-      white-space: nowrap;
-      color: var(--text-color);
-      opacity: 0.7;
+      font-weight: bold;
+      background-color: rgba(255,255,255,0.7);
+      padding: 0 2px;
+      border-radius: 2px;
     }
     .ai-link {
       margin-right: 6px;
@@ -315,34 +271,110 @@
     .icon-no-zoom {
       pointer-events: none;
     }
-
-    .install-manual {
-      color: var(--link-color-install);
+    .pump-card h3 {
+      margin: 10px;
+      padding: 0 5px;
+      font-size: 1rem;
+      text-align: center;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
     }
-
-    .expandable-section {
-      display: none;
+.pump-details {
+      padding: 0 15px 15px 15px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Ensure consistent spacing */
+.pump-details a {
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+    .pump-details p {
+      font-size: 0.9rem;
+      margin: 10px 0;
+    }
+.pump-specs {
+      flex-shrink: 0;
+      margin-bottom: 5px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      transition: border-color 0.3s;
+    }
+    .part-list,.hardware-list {
+      font-size: 0.85rem;
+      padding-left: 15px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+.part-list li,.hardware-list li {
+      margin-bottom: 6px;
+    }
+.hardware-title {
+      font-weight: bold;
       margin-top: 10px;
     }
 
-    .expand-btn {
-      background: none;
-      border: none;
-      color: var(--link-color);
+.category-header {
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: #0066cc;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 3px;
+    }
+
+.dark-mode .category-header {
+      color: #4d9fff;
+      border-bottom-color: #444;
+    }
+    sub {
+      font-size: 0.75em;
+      vertical-align: baseline;
+      position: relative;
+      top: -0.4em;
+    }
+
+.hidden {
+      display: none;
+    }
+
+h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+.expandable-section {
+      display: none;
+      margin-top: 10px;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 10px;
+    }
+
+.expand-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 10px 0 0;
+      padding: 5px;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      color: var(--text-color);
       cursor: pointer;
-      padding: 5px 0;
-      font-size: 0.8rem;
-      text-align: left;
-      margin-top: 5px;
-      transition: color 0.3s;
+      font-size: 0.9em;
     }
 
-    .expand-btn:hover {
-      text-decoration: underline;
+.expand-btn:hover {
+      background: var(--border-color);
     }
 
-    /* Modal styles for image zoom */
-    .image-modal {
+    /* Image Modal Styles */
+.image-modal {
       display: none;
       position: fixed;
       z-index: 2000;
@@ -354,7 +386,7 @@
       overflow: hidden;
     }
 
-    .modal-content {
+.modal-content {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -365,7 +397,7 @@
       cursor: move;
     }
 
-    .modal-image {
+.modal-image {
       display: block;
       width: 100%;
       height: auto;
@@ -373,12 +405,12 @@
       transition: transform 0.1s ease-out;
     }
 
-    .image-container img {
+.image-container img {
       cursor: pointer;
     }
 
     /* Guide Navigation Styles */
-    .guide-nav {
+.guide-nav {
       display: flex;
       align-items: center;
       padding: 5px;
@@ -388,7 +420,7 @@
       gap: 15px;
     }
 
-    .guide-section {
+.guide-section {
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -399,17 +431,17 @@
       transition: border-color 0.3s, background-color 0.3s;
     }
 
-    .dark-mode .guide-section {
+.dark-mode .guide-section {
       background-color: rgba(0, 0, 0, 0.2);
     }
 
-    .guide-section-title {
+.guide-section-title {
       margin-right: 10px;
       font-weight: bold;
       font-size: 0.9rem;
     }
 
-    .guide-buttons {
+.guide-buttons {
       display: flex;
       align-items: center;
     }
@@ -461,142 +493,151 @@
     </div>
   </div>
   <div class="page-content">
-    <h1>Jandy Heaters Product Guide</h1>
+    <h1>Jandy Automation Guide</h1>
     <div class="pump-list">
-      <!-- Jandy JXi Series Gas Heater Card -->
-      <div class="pump-card">
-        <a href="https://www.pooltek.com/wp-content/uploads/2017/02/Heater-JandyJXi.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
-          <img src="Jandy Heaters_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+
+    <!-- Card 1: AquaLink RS All Button -->
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://images.inyopools.com/cloud/documents/jandy-rs8-pool-spa-installation-manual.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Jandy Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
         </a>
-        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://www.pooltek.com/wp-content/uploads/2017/02/Heater-JandyJXi.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
-          <img src="Jandy Heaters_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        <a href="https://chat.openai.com/share/https://images.inyopools.com/cloud/documents/jandy-rs8-pool-spa-installation-manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Jandy Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
         </a>
-        <div class="image-container">
-          <img src="./Jandy Heaters_files/jxi.png" alt="Jandy JXi Series Gas Heater">
-          <a href="https://www.google.com/search?tbm=isch&q=Jandy+JXi+Series+Gas+Heater" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
-        </div>
-        <h3>
-          Jandy JXi Series Gas Heater
-        </h3>
-        <div class="pump-details">
-          <div class="pump-specs">
-            <p><strong>BTU Rating:</strong> 200,000 - 400,000 </p>
-            <p><strong>Fuel Type:</strong> Natural Gas or Propane </p>
-            <p><strong>Models:</strong> JXi200N, JXi200P, JXi260N, JXi260P, JXi400N, JXi400P </p>
-            <p><strong>Key Replacement Parts:</strong></p>
-          </div>
-          <ul class="part-list">
-            <!-- Sensors First -->
-            <li><strong>Temperature Sensor Kit:</strong> R0456500 <a href="https://www.pool360.com/Search?query=R0456500" target="_blank">[🔍]</a></li>
-
-            <!-- Switches Second -->
-            <li><strong>Water Pressure Switch w/ Siphon Loop Kit:</strong> R0457001 <a href="https://www.pool360.com/Search?query=R0457001" target="_blank">[🔍]</a></li>
-            <li><strong>Air Pressure Switch:</strong> R0456400 <a href="https://www.pool360.com/Search?query=R0456400" target="_blank">[🔍]</a></li>
-
-            <!-- Safety Parts/Bypasses Third -->
-            <li><strong>Thermal Regulator Valve Kit:</strong> R0589700 <a href="https://www.pool360.com/Search?query=R0589700" target="_blank">[🔍]</a></li>
-            <li><strong>Pressure Relief Valve:</strong> R0336101 <a href="https://www.pool360.com/Search?query=R0336101" target="_blank">[🔍]</a></li>
-
-            <!-- Rest of Parts -->
-            <li><strong>Ignition Control:</strong> R0456900 <a href="https://www.pool360.com/Search?query=R0456900" target="_blank">[🔍]</a></li>
-            <li><strong>User Interface Kit:</strong> R0591900 <a href="https://www.pool360.com/Search?query=R0591900" target="_blank">[🔍]</a></li>
-            <li><strong>Drain Plug (Set of 2):</strong> R0446000 <a href="https://www.pool360.com/Search?query=R0446000" target="_blank">[🔍]</a></li>
-          </ul>
-
-          <!-- Expandable section for additional parts -->
-          <div class="expandable-section">
-            <p class="hardware-title">Additional Replacement Parts:</p>
-            <ul class="hardware-list">
-              <!-- Sensors First -->
-              <li><strong>High Limit Temp Sensors:</strong> R0592300 <a href="https://www.pool360.com/Search?query=R0592300" target="_blank">[🔍]</a></li>
-              <li><strong>Sweep Elbow Aqualink Temp:</strong> SEAQL1001 <a href="https://www.pool360.com/Search?query=SEAQL1001" target="_blank">[🔍]</a></li>
-
-              <!-- Switches Second -->
-              <li><strong>Vent Limit Switch:</strong> R0524300 <a href="https://www.pool360.com/Search?query=R0524300" target="_blank">[🔍]</a></li>
-
-              <!-- Safety Parts/Bypasses Third -->
-              <li><strong>Heater Bypass Kit:</strong> R0589800 <a href="https://www.pool360.com/Search?query=R0589800" target="_blank">[🔍]</a></li>
-
-              <!-- Rest of Parts -->
-              <li><strong>Igniter Kit:</strong> R0457502 <a href="https://www.pool360.com/Search?query=R0457502" target="_blank">[🔍]</a></li>
-              <li><strong>Power Distribution Board (PDB):</strong> R0458100 <a href="https://www.pool360.com/Search?query=R0458100" target="_blank">[🔍]</a></li>
-              <li><strong>Universal Half Unions:</strong> R0522900 <a href="https://www.pool360.com/Search?query=R0522900" target="_blank">[🔍]</a></li>
-              <li><strong>Drain Cap Assembly:</strong> R0523000 <a href="https://www.pool360.com/Search?query=R0523000" target="_blank">[🔍]</a></li>
-              <li><strong>Access Door Kit:</strong> R0589600 <a href="https://www.pool360.com/Search?query=R0589600" target="_blank">[🔍]</a></li>
-              <li><strong>3 Port Manifold:</strong> R0590100 <a href="https://www.pool360.com/Search?query=R0590100" target="_blank">[🔍]</a></li>
-            </ul>
-          </div>
-          <button class="expand-btn">Show More Parts ▼</button>
-        </div>
+        <img src="Jandy Automation Guide_files/aqualink-rs-panel.png" alt="Jandy AquaLink RS Automation Panel">
+        <a href="https://www.google.com/search?tbm=isch&q=Jandy+AquaLink+RS+Automation+Panel" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
       </div>
-      <!-- End Jandy JXi Series Gas Heater Card -->
+      <h3>Jandy AquaLink RS Automation Panel</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Part Information:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- System Boards -->
+          <p class="category-header"><strong>System Boards</strong></p>
+          <li><strong>Primary Power Center PCB Kit:</strong> R0466700 <a href="https://www.pool360.com/Search?query=R0466700" target="_blank">[🔍]</a></li>
+          <li><strong>OneTouch Indoor Service Controller:</strong> R0551800 <a href="https://www.pool360.com/Search?query=R0551800" target="_blank">[🔍]</a></li>
+          <li><strong>OneTouch Replacement PCB:</strong> R0550700 <a href="https://www.pool360.com/Search?query=R0550700" target="_blank">[🔍]</a></li>
 
-      <!-- Jandy JE Series Heat Pump Card -->
-      <div class="pump-card">
-        <a href="https://images.inyopools.com/cloud/documents/jandy-je-series-om.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
-          <img src="Jandy Heaters_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
-        </a>
-        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://images.inyopools.com/cloud/documents/jandy-je-series-om.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
-          <img src="Jandy Heaters_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
-        </a>
-        <div class="image-container">
-          <img src="./Jandy Heaters_Files/je-hp.png" alt="Jandy Pro Series JE Heat Pump">
-          <a href="https://www.google.com/search?tbm=isch&q=Jandy+Pro+Series+JE+Heat+Pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
-        </div>
-        <h3>
-          Jandy Pro Series JE Heat Pump
-        </h3>
-        <div class="pump-details">
-          <div class="pump-specs">
-            <p><strong>Models:</strong> JE1500T, JE2000T, JE2500T, JE3000T</p>
-            <p><strong>Key Replacement Parts:</strong></p>
-          </div>
-          <ul class="part-list">
-            <li><strong>Fan Grille:</strong> R0571800 <a href="https://www.pool360.com/Search?query=R0571800" target="_blank">[🔍]</a></li>
-            <li><strong>Control Cover (Smoked):</strong> R3008700 <a href="https://www.pool360.com/Search?query=R3008700" target="_blank">[🔍]</a></li>
-            <li><strong>Power Interface PCB:</strong> R3009200 <a href="https://www.pool360.com/Search?query=R3009200" target="_blank">[🔍]</a></li>
-            <li><strong>Universal Union & Buttress Set:</strong> R0472700 <a href="https://www.pool360.com/Search?query=R0472700" target="_blank">[🔍]</a></li>
-          </ul>
-          <!-- Expandable section for additional parts (if more are found, add here) -->
-        </div>
-      </div>
-      <!-- End Jandy JE Series Heat Pump Card -->
+          <!-- Electronic Components -->
+          <p class="category-header"><strong>Electronic Components</strong></p>
+          <li><strong>RS Service Controller Wire Harness:</strong> R0467100 <a href="https://www.pool360.com/Search?query=R0467100" target="_blank">[🔍]</a></li>
+          <li><strong>Wiring Harness Kit:</strong> R0447500 <a href="https://www.pool360.com/Search?query=R0447500" target="_blank">[🔍]</a></li>
+          <li><strong>Battery Door Kit:</strong> R0447300 <a href="https://www.pool360.com/Search?query=R0447300" target="_blank">[🔍]</a></li>
 
-      <!-- Jandy VersaTemp Heat/Chill Pump Card -->
-      <div class="pump-card">
-        <a href="https://clarksonpools.com/wp-content/uploads/2024/06/Jandy-VersaTemp-JRTxxxR-Heatpump-Chiller-Installation-and-Operation-Manual.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
-          <img src="Jandy Heaters_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
-        </a>
-        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://clarksonpools.com/wp-content/uploads/2024/06/Jandy-VersaTemp-JRTxxxR-Heatpump-Chiller-Installation-and-Operation-Manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
-          <img src="Jandy Heaters_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
-        </a>
-        <div class="image-container">
-          <img src="./Jandy Heaters_Files/versatemp.png" alt="Jandy VersaTemp Heat/Chill Pump">
-          <a href="https://www.google.com/search?tbm=isch&q=Jandy+VersaTemp+Heat+Chill+Pump" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
-        </div>
-        <h3>
-          Jandy VersaTemp Heat/Chill Pump
-        </h3>
-        <div class="pump-details">
-          <div class="pump-specs">
-            <p><strong>Models:</strong> VersaTemp (Heat/Chill) Series</p>
-            <p><strong>Key Replacement Parts:</strong></p>
-          </div>
-          <ul class="part-list">
-            <!-- Sensors -->
-            <li><strong>Temperature Sensor Kit:</strong> R0935700 <a href="https://www.pool360.com/Search?query=R0935700" target="_blank">[🔍]</a></li>
-            <!-- Switches -->
-            <li><strong>High Pressure Switch:</strong> R0936200 <a href="https://www.pool360.com/Search?query=R0936200" target="_blank">[🔍]</a></li>
-            <li><strong>Low Pressure Switch:</strong> R0936100 <a href="https://www.pool360.com/Search?query=R0936100" target="_blank">[🔍]</a></li>
-            <li><strong>Water Pressure Switch:</strong> R0936000 <a href="https://www.pool360.com/Search?query=R0936000" target="_blank">[🔍]</a></li>
-            <!-- Electrical Parts -->
-            <li><strong>User Interface Kit:</strong> R0591900 <a href="https://www.pool360.com/Search?query=R0591900" target="_blank">[🔍]</a></li>
-            <li><strong>User Interface Lid Kit:</strong> R0592000 <a href="https://www.pool360.com/Search?query=R0592000" target="_blank">[🔍]</a></li>
-            <li><strong>Transformer:</strong> R0936300 <a href="https://www.pool360.com/Search?query=R0936300" target="_blank">[🔍]</a></li>
-          </ul>
-        </div>
+          <!-- Salt Cell Parts -->
+          <p class="category-header"><strong>Salt Cell Parts</strong></p>
+          <li><strong>AquaPure User Interface Assembly:</strong> R0467400 <a href="https://www.pool360.com/Search?query=R0467400" target="_blank">[🔍]</a></li>
+          <li><strong>AquaPure Power Interface Assembly:</strong> R0467600 <a href="https://www.pool360.com/Search?query=R0467600" target="_blank">[🔍]</a></li>
+          <li><strong>Chlorine Generator Face Plate:</strong> R0503400 <a href="https://www.pool360.com/Search?query=R0503400" target="_blank">[🔍]</a></li>
+          <li><strong>Battery Door for Chlorine Generator:</strong> R0503300 <a href="https://www.pool360.com/Search?query=R0503300" target="_blank">[🔍]</a></li>
+
+          <!-- Other -->
+          <p class="category-header"><strong>Other</strong></p>
+          <li><strong>AquaLink RS Bezel Plate Kit:</strong> R0467700 <a href="https://www.pool360.com/Search?query=R0467700" target="_blank">[🔍]</a></li>
+          <li><strong>Combo Only Primary PC RS Bezel:</strong> R0468300 <a href="https://www.pool360.com/Search?query=R0468300" target="_blank">[🔍]</a></li>
+          <li><strong>Dual Equipment Primary PC RS Bezel:</strong> R0468400 <a href="https://www.pool360.com/Search?query=R0468400" target="_blank">[🔍]</a></li>
+          <li><strong>Hardware Kit:</strong> R0467800 <a href="https://www.pool360.com/Search?query=R0467800" target="_blank">[🔍]</a></li>
+          <li><strong>AquaLink RS Bezel Plate (08/09+):</strong> R0562100 <a href="https://www.pool360.com/Search?query=R0562100" target="_blank">[🔍]</a></li>
+        </ul>
       </div>
-      <!-- End Jandy VersaTemp Heat/Chill Pump Card -->
+    </div>
+
+
+
+    <!-- Card 2: AquaLink RS System Boards & Configurations -->
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://images.inyopools.com/cloud/documents/jandy-rs8-pool-spa-installation-manual.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Jandy Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/share/https://images.inyopools.com/cloud/documents/jandy-rs8-pool-spa-installation-manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Jandy Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Jandy Automation Guide_files/aqualink-rs-board.png" alt="Jandy AquaLink RS System Boards">
+        <a href="https://www.google.com/search?tbm=isch&q=Jandy+AquaLink+RS+System+Boards" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>AquaLink RS System Boards & Configurations</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Part Information:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- System Boards -->
+          <p class="category-header"><strong>System Boards</strong></p>
+          <li style="list-style-type: none; margin-left: -20px;"><a href="https://www.iaqualink.com/-/media/zodiac/global/downloads/jandy/automation/h0698700.pdf" target="_blank" title="iAquaLink 3.0 Manual"><img src="Jandy Automation Guide_files/pdf-red.png" alt="PDF" style="width: 15px; height: auto; vertical-align: middle; margin-right: 5px;" class="icon-no-zoom"></a><strong>iAquaLink 3.0 Web Connect Device:</strong> iQ30-RS <a href="https://www.pool360.com/Search?query=iQ30-RS" target="_blank">[🔍]</a></li>
+          <li style="list-style-type: none; margin-left: -20px;"><a href="https://www.pioneerfamilypools.ca/wp-content/uploads/2016/05/aqualink_pda.pdf" target="_blank" title="AquaLink PDA Manual"><img src="Jandy Automation Guide_files/pdf-red.png" alt="PDF" style="width: 15px; height: auto; vertical-align: middle; margin-right: 5px;" class="icon-no-zoom"></a><strong>AquaLink PDA (Pool Digital Assistant):</strong> PDA <a href="https://www.pool360.com/Search?query=PDA" target="_blank">[🔍]</a></li>
+          <li><strong>All Button Remote PCB:</strong> 6475LED4 <a href="https://www.pool360.com/Search?query=6475LED4" target="_blank">[🔍]</a></li>
+          <li><strong>Service Controller Replacement:</strong> R0551800 <a href="https://www.pool360.com/Search?query=R0551800" target="_blank">[🔍]</a></li>
+          <li><strong>PCB Sub-assembly with White Buttons and LCD:</strong> R0550700 <a href="https://www.pool360.com/Search?query=R0550700" target="_blank">[🔍]</a></li>
+          <li><strong>PCB Sub-assembly with Black Buttons and LCD:</strong> R0550800 <a href="https://www.pool360.com/Search?query=R0550800" target="_blank">[🔍]</a></li>
+
+          <!-- Electronic Components -->
+          <p class="category-header"><strong>Electronic Components</strong></p>
+          <li><strong>RS Service Controller Wire Harness with RJ10 Connector:</strong> R0467100 <a href="https://www.pool360.com/Search?query=R0467100" target="_blank">[🔍]</a></li>
+          <li><strong>All Button Terminal Bar:</strong> 6609 <a href="https://www.pool360.com/Search?query=6609" target="_blank">[🔍]</a></li>
+          <li><strong>Ferrite Kit for Ethernet Cable (used with iQ30):</strong> R0914600 <a href="https://www.pool360.com/Search?query=R0914600" target="_blank">[🔍]</a></li>
+          <li><strong>iAquaLink 3.0 Antenna Only:</strong> iQ30-A <a href="https://www.pool360.com/Search?query=iQ30-A" target="_blank">[🔍]</a></li>
+
+          <!-- Other -->
+          <p class="category-header"><strong>Other</strong></p>
+          <li><strong>All Button Keypad:</strong> 6546 <a href="https://www.pool360.com/Search?query=6546" target="_blank">[🔍]</a></li>
+          <li><strong>OneTouch Faceplate – White:</strong> R0550100 <a href="https://www.pool360.com/Search?query=R0550100" target="_blank">[🔍]</a></li>
+          <li><strong>OneTouch Control Surface Mount Housing – White:</strong> R0551000 <a href="https://www.pool360.com/Search?query=R0551000" target="_blank">[🔍]</a></li>
+
+          <!-- AquaLink RS All Button Controllers -->
+          <p class="category-header"><strong>AquaLink RS All Button Controllers</strong></p>
+          <li><strong>RS4 All Button Control Panel:</strong> 6685 <a href="https://www.pool360.com/Search?query=6685" target="_blank">[🔍]</a></li>
+          <li><strong>RS6 All Button Control Panel:</strong> 6686 <a href="https://www.pool360.com/Search?query=6686" target="_blank">[🔍]</a></li>
+          <li><strong>RS8 All Button Control Panel:</strong> 6687 <a href="https://www.pool360.com/Search?query=6687" target="_blank">[🔍]</a></li>
+
+          <!-- AquaLink RS OneTouch Controllers -->
+          <p class="category-header"><strong>AquaLink RS OneTouch Controllers</strong></p>
+          <li><strong>RS4 OneTouch Control Panel:</strong> 7955 <a href="https://www.pool360.com/Search?query=7955" target="_blank">[🔍]</a></li>
+          <li><strong>RS6 OneTouch Control Panel:</strong> 7956 <a href="https://www.pool360.com/Search?query=7956" target="_blank">[🔍]</a></li>
+          <li><strong>RS8 OneTouch Control Panel:</strong> 7957 <a href="https://www.pool360.com/Search?query=7957" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Card 3: AquaLink TCX -->
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://cdn.fluidrausa.com/-/media/zodiac/global/downloads/jandy/automation/h0666500.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Jandy Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/share/https://cdn.fluidrausa.com/-/media/zodiac/global/downloads/jandy/automation/h0666500.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Jandy Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Jandy Automation Guide_files/tcx-panel.png" alt="Jandy AquaLink TCX">
+        <a href="https://www.google.com/search?tbm=isch&q=Jandy+AquaLink+TCX" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>AquaLink® TCX™</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Part Information:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Core Components -->
+          <p class="category-header"><strong>Core Components</strong></p>
+          <li><strong>TCX Power Interface Board (PIB) with Chassis:</strong> R0807301 <a href="https://www.pool360.com/Search?query=R0807301" target="_blank">[🔍]</a></li>
+          <li><strong>AquaLink TCX Command Hub:</strong> TCXCHP <a href="https://www.pool360.com/Search?query=TCXCHP" target="_blank">[🔍]</a></li>
+
+          <!-- Kits and Bundles -->
+          <p class="category-header"><strong>Kits and Bundles</strong></p>
+          <li><strong>Jandy Aqualink TCX Pool Only Automation Bundle:</strong> TCXP <a href="https://www.pool360.com/Search?query=TCXP" target="_blank">[🔍]</a></li>
+          <li><strong>Jandy TCX Conversion Kit For Pool Only:</strong> TCXPCONV <a href="https://www.pool360.com/Search?query=TCXPCONV" target="_blank">[🔍]</a></li>
+
+          <!-- Optional Parts and Accessories -->
+          <p class="category-header"><strong>Optional Parts and Accessories</strong></p>
+          <li><strong>Wireless Wall Light Switch:</strong> WLS4INF <a href="https://www.pool360.com/Search?query=WLS4INF" target="_blank">[🔍]</a></li>
+          <li><strong>Screw with Fuse Package:</strong> R0807600 <a href="https://www.pool360.com/Search?query=R0807600" target="_blank">[🔍]</a></li>
+          <li><strong>Dead Panel:</strong> R0807500 <a href="https://www.pool360.com/Search?query=R0807500" target="_blank">[🔍]</a></li>
+          <li><strong>Metal Enclosure:</strong> R0807400 <a href="https://www.pool360.com/Search?query=R0807400" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
     </div>
   </div>
 
@@ -607,7 +648,6 @@
       initThemeToggle();
       initFontSize();
       initExpandButtons();
-      initImageZoom();
       initToolbarScroll();
     }
 
@@ -709,7 +749,7 @@
           const section = this.previousElementSibling;
           if (section.style.display === 'block') {
             section.style.display = 'none';
-            this.textContent = 'Show More Parts ▼';
+            this.textContent = 'Show Remote Control Options ▼';
           } else {
             section.style.display = 'block';
             this.textContent = 'Show Less ▲';
@@ -718,22 +758,103 @@
       });
     }
 
-    // Initialize image zoom functionality
-    function initImageZoom() {
+    // Dark mode toggle
+    function initThemeToggle() {
+      console.log('Initializing theme toggle');
+
+      // Check for saved theme preference
+      const savedTheme = getCookie('darkMode');
+      console.log('Retrieved saved theme:', savedTheme);
+
+      // Apply saved theme or default to light
+      if (savedTheme === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('toggle-theme').textContent = '☀️';
+      } else {
+        document.getElementById('toggle-theme').textContent = '🌓';
+      }
+
+      // Add event listener for theme toggle
+      document.getElementById('toggle-theme').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+
+        // Update button icon
+        this.textContent = isDarkMode? '☀️' : '🌓';
+
+        // Save preference
+        setCookie('darkMode', isDarkMode.toString(), 365);
+        console.log('Saved theme preference:', isDarkMode);
+      });
+    }
+
+    // Initialize zoom controls
+    function initFontSize() {
+      console.log('Initializing zoom controls');
+
+      const decreaseBtn = document.getElementById('decrease-font');
+      const increaseBtn = document.getElementById('increase-font');
+      const resetBtn = document.getElementById('reset-font');
+
+      // Get stored zoom level or default to 100%
+      const storedZoom = getCookie('zoomLevel');
+      const zoomLevel = storedZoom ? parseInt(storedZoom) : 100;
+
+      // Apply stored zoom level
+      if (storedZoom) {
+        updateZoom(zoomLevel);
+      }
+
+      // Add event listeners to zoom buttons
+      decreaseBtn.addEventListener('click', function() {
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom > 70) {
+          updateZoom(currentZoom - 10);
+        }
+      });
+
+      increaseBtn.addEventListener('click', function() {
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom < 150) {
+          updateZoom(currentZoom + 10);
+        }
+      });
+
+      resetBtn.addEventListener('click', function() {
+        updateZoom(100);
+      });
+
+      // Update zoom level and save to localStorage
+      function updateZoom(zoomPercent) {
+        console.log('Updating zoom to:', zoomPercent + '%');
+        document.body.style.zoom = zoomPercent + '%';
+        setCookie('zoomLevel', zoomPercent.toString(), 365); // Save for 1 year
+        console.log('Saved zoom level:', zoomPercent.toString());
+      }
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        initControls();
+        initImageModal();
+      });
+    } else {
+      // DOM already loaded
+      initControls();
+      initImageModal();
+    }
+
+    // Image Modal Functionality
+    function initImageModal() {
       // Create modal element
       const modal = document.createElement('div');
       modal.className = 'image-modal';
+      modal.innerHTML = '<div class="modal-content"><img class="modal-image" src="" alt="Enlarged pump image"></div>';
       document.body.appendChild(modal);
 
-      // Create modal content
-      const modalContent = document.createElement('div');
-      modalContent.className = 'modal-content';
-      modal.appendChild(modalContent);
-
-      // Create modal image
-      const modalImg = document.createElement('img');
-      modalImg.className = 'modal-image';
-      modalContent.appendChild(modalImg);
+      const modalContent = modal.querySelector('.modal-content');
+      const modalImg = modal.querySelector('.modal-image');
 
       // Variables for zoom and pan
       let scale = 1;
@@ -745,61 +866,54 @@
       let lastTap = 0;
       let touchTimeout;
 
-      // Variables for pinch-to-zoom
-      let initialDistance = 0;
-      let initialScale = 1;
-      let lastTouchCount = 0;
+      // Add click event to all pump images (excluding icons)
+      const pumpImages = document.querySelectorAll('.image-container img:not(.icon-no-zoom)');
+      pumpImages.forEach(img => {
+        img.addEventListener('click', function() {
+          modalImg.src = this.src;
+          modal.style.display = 'block';
 
-      // Add click event to all product images (excluding icons)
-      const images = document.querySelectorAll('.image-container img:not(.icon-no-zoom)');
-      images.forEach(img => {
-        if (!img.classList.contains('eye-button')) {
-          img.addEventListener('click', function() {
-            modal.style.display = 'block';
-            modalImg.src = this.src;
+          // Initial scale will be calculated when image loads
+          scale = 1;
+          translateX = 0;
+          translateY = 0;
+          updateTransform();
 
-            // Initial scale will be calculated when image loads
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
+          // We need to wait for the image to load to properly size and center it
+          modalImg.onload = function() {
+            // Get modal and image dimensions
+            const modalRect = modal.getBoundingClientRect();
+            const imgRect = modalImg.getBoundingClientRect();
+
+            // Calculate available space (with 20px margin)
+            const availableWidth = modalRect.width - 40;
+            const availableHeight = modalRect.height - 40;
+
+            // Calculate scale needed to fit image within available space
+            const widthScale = availableWidth / imgRect.width;
+            const heightScale = availableHeight / imgRect.height;
+
+            // Use the smaller scale to ensure image fits in both dimensions
+            let fitScale = Math.min(widthScale, heightScale);
+
+            // On mobile, use 1.5x zoom as requested
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+              scale = 1.5;
+            } else {
+              // On desktop, use the fit scale, but cap it at 1.5x
+              scale = Math.min(fitScale, 1.5);
+            }
+
+            // Center the image
+            const scaledWidth = imgRect.width * scale;
+            const scaledHeight = imgRect.height * scale;
+            translateX = (modalRect.width - scaledWidth) / 2 - imgRect.left;
+            translateY = (modalRect.height - scaledHeight) / 2 - imgRect.top;
+
             updateTransform();
-
-            // We need to wait for the image to load to properly size and center it
-            modalImg.onload = function() {
-              // Get modal and image dimensions
-              const modalRect = modal.getBoundingClientRect();
-              const imgRect = modalImg.getBoundingClientRect();
-
-              // Calculate available space (with 20px margin)
-              const availableWidth = modalRect.width - 40;
-              const availableHeight = modalRect.height - 40;
-
-              // Calculate scale needed to fit image within available space
-              const widthScale = availableWidth / imgRect.width;
-              const heightScale = availableHeight / imgRect.height;
-
-              // Use the smaller scale to ensure image fits in both dimensions
-              let fitScale = Math.min(widthScale, heightScale);
-
-              // On mobile, use 1.5x zoom as requested
-              const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-              if (isMobile) {
-                scale = 1.5;
-              } else {
-                // On desktop, use the fit scale, but cap it at 1.5x
-                scale = Math.min(fitScale, 1.5);
-              }
-
-              // Center the image
-              const scaledWidth = imgRect.width * scale;
-              const scaledHeight = imgRect.height * scale;
-              translateX = (modalRect.width - scaledWidth) / 2 - imgRect.left;
-              translateY = (modalRect.height - scaledHeight) / 2 - imgRect.top;
-
-              updateTransform();
-            };
-          });
-        }
+          };
+        });
       });
 
       // Track if we're dragging to prevent accidental dismissal
@@ -849,6 +963,7 @@
           const newScale = Math.min(Math.max(scale * scaleFactor, 0.25), 4);
 
           // Calculate new translate values to zoom toward mouse position
+          // For both zooming in and out, we want to keep the point under the mouse in the same position
           const zoomPointX = rect.width * x;
           const zoomPointY = rect.height * y;
 
@@ -856,37 +971,34 @@
           const scaleDiffX = zoomPointX * (newScale - scale) / scale;
           const scaleDiffY = zoomPointY * (newScale - scale) / scale;
 
-          // Adjust translation to compensate
-          translateX -= scaleDiffX;
-          translateY -= scaleDiffY;
+          // Adjust translation to compensate for the scaling
+          translateX = translateX - scaleDiffX;
+          translateY = translateY - scaleDiffY;
 
-          // Update scale
           scale = newScale;
-
-          // Apply transform
           updateTransform();
         }
       }, { passive: false });
 
-      // Pan functionality
+      // Mouse drag functionality
       modalImg.addEventListener('mousedown', function(e) {
+        e.preventDefault(); // Prevent image dragging default behavior
         isDragging = true;
         startX = e.clientX - translateX;
         startY = e.clientY - translateY;
         lastX = e.clientX;
         lastY = e.clientY;
-        e.preventDefault(); // Prevent image dragging default behavior
         modalImg.style.cursor = 'grabbing';
       });
 
       document.addEventListener('mousemove', function(e) {
         if (isDragging) {
+          e.preventDefault(); // Prevent unwanted selections while dragging
           translateX = e.clientX - startX;
           translateY = e.clientY - startY;
           lastX = e.clientX;
           lastY = e.clientY;
           updateTransform();
-          e.preventDefault(); // Prevent unwanted selections while dragging
         }
       });
 
@@ -898,6 +1010,11 @@
       });
 
       // Touch events for mobile devices
+
+      // Variables for pinch-to-zoom
+      let initialDistance = 0;
+      let initialScale = 1;
+      let lastTouchCount = 0;
 
       // Double tap to zoom - attach to the entire modal
       modal.addEventListener('touchstart', function(e) {
@@ -1085,94 +1202,21 @@
         lastTouchCount = e.touches.length;
       });
 
+      // Add code to close modal on tap when not dragged
+      // This is now handled in the main touchend handler above
+
       // Set appropriate cursor based on zoom level
       function updateCursor() {
         modalImg.style.cursor = scale > 1? 'move' : 'default';
       }
 
-      // Helper function to update transform
+      // Update transform with current scale and translation
       function updateTransform() {
         modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
         updateCursor();
       }
     }
-
-    // Initialize theme toggle
-    function initThemeToggle() {
-      console.log('Initializing theme toggle');
-
-      // Check for saved theme preference
-      const savedTheme = getCookie('darkMode');
-      console.log('Saved theme preference:', savedTheme);
-
-      if (savedTheme === 'true') {
-        document.body.classList.add('dark-mode');
-        document.getElementById('toggle-theme').textContent = '☀️';
-      } else {
-        document.getElementById('toggle-theme').textContent = '🌓';
-      }
-
-      // Add event listener for theme toggle
-      document.getElementById('toggle-theme').addEventListener('click', function() {
-        document.body.classList.toggle('dark-mode');
-        const isDarkMode = document.body.classList.contains('dark-mode');
-
-        // Update button icon
-        this.textContent = isDarkMode ? '☀️' : '🌓';
-
-        // Save preference
-        setCookie('darkMode', isDarkMode.toString(), 365);
-        console.log('Saved theme preference:', isDarkMode);
-      });
-    }
-
-    // Initialize zoom controls
-    function initFontSize() {
-      console.log('Initializing zoom controls');
-
-      const decreaseBtn = document.getElementById('decrease-font');
-      const increaseBtn = document.getElementById('increase-font');
-      const resetBtn = document.getElementById('reset-font');
-
-      // Get stored zoom level or default to 100%
-      const storedZoom = getCookie('zoomLevel');
-      const zoomLevel = storedZoom ? parseInt(storedZoom) : 100;
-
-      // Apply stored zoom level
-      if (storedZoom) {
-        updateZoom(zoomLevel);
-      }
-
-      // Add event listeners to zoom buttons
-      decreaseBtn.addEventListener('click', function() {
-        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
-        if (currentZoom > 70) {
-          updateZoom(currentZoom - 10);
-        }
-      });
-
-      increaseBtn.addEventListener('click', function() {
-        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
-        if (currentZoom < 150) {
-          updateZoom(currentZoom + 10);
-        }
-      });
-
-      resetBtn.addEventListener('click', function() {
-        updateZoom(100);
-      });
-
-      // Update zoom level and save to localStorage
-      function updateZoom(zoomPercent) {
-        console.log('Updating zoom to:', zoomPercent + '%');
-        document.body.style.zoom = zoomPercent + '%';
-        setCookie('zoomLevel', zoomPercent.toString(), 365); // Save for 1 year
-        console.log('Saved zoom level:', zoomPercent.toString());
-      }
-    }
-
-    // Initialize when DOM is loaded
-    document.addEventListener('DOMContentLoaded', initControls);
   </script>
+
 </body>
 </html>
