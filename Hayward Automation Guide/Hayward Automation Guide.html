@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Hayward Automation Guide</title>
+  <script>
+    // Cookie functions
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      // For local file, we need to use localStorage instead of cookies
+      try {
+        localStorage.setItem(name, value);
+      } catch (e) {
+        console.error("Local storage not available", e);
+        // Fallback to cookies
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+      }
+    }
+
+    function getCookie(name) {
+      // Try localStorage first
+      try {
+        const value = localStorage.getItem(name);
+        if (value!== null) {
+          return value;
+        }
+      } catch (e) {
+        console.error("Local storage not available", e);
+      }
+
+      // Fallback to cookies
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    }
+  </script>
+  <style>
+    :root {
+      --base-font-size: 16px;
+      --bg-color: #f7f7f7;
+      --card-bg: #fff;
+      --text-color: #333;
+      --border-color: #eee;
+      --shadow-color: rgba(0,0,0,0.1);
+      --link-color: #0066cc;
+      --link-color-install: #cc6600;
+    }
+
+.dark-mode {
+      --bg-color: #222;
+      --card-bg: #333;
+      --text-color: #eee;
+      --border-color: #444;
+      --shadow-color: rgba(0,0,0,0.3);
+      --link-color: #4d9fff;
+      --link-color-install: #ff9d4d;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      font-size: var(--base-font-size);
+      transition: background-color 0.3s, color 0.3s;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    .page-content {
+      padding: 20px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      box-shadow: 0 2px 5px var(--shadow-color);
+      padding: 4px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      width: 100%;
+      box-sizing: border-box;
+      white-space: nowrap;
+      height: 50px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      position: relative;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .toolbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .guide-links {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0 10px;
+      min-width: max-content;
+      cursor: grab;
+    }
+
+    .ui-controls {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: auto;
+      padding: 0 10px;
+      background: var(--card-bg);
+      position: sticky;
+      right: 0;
+      z-index: 10;
+    }
+
+    .toolbar span {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin: 0 5px;
+      white-space: nowrap;
+    }
+
+.font-controls,.theme-control {
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
+    .font-btn, .theme-btn {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-color);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 2px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      padding: 0;
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.2s;
+    }
+
+.font-btn:hover,.theme-btn:hover {
+      background-color: var(--border-color);
+      transform: translateY(-2px);
+    }
+.pump-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+.pump-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      width: 450px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+.pump-card:hover {
+      transform: scale(1.02);
+    }
+.image-container {
+      position: relative;
+      height: 150px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--card-bg);
+      transition: background-color 0.3s;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+.image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+    .eye-button {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 30px;
+      font-size: 16px;
+      text-decoration: none;
+      color: #000;
+      transition: all 0.3s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .dark-mode .eye-button {
+      background-color: rgba(255, 255, 255, 0.95);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 1px 4px rgba(255, 255, 255, 0.3);
+    }
+
+    .eye-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+.manual-link {
+      margin-right: 6px;
+      text-decoration: none;
+      font-size: 16px;
+      position: relative;
+      display: inline-block;
+      line-height: 1;
+    }
+.user-manual {
+      color: var(--link-color);
+      transition: color 0.3s;
+    }
+.install-manual {
+      color: var(--link-color-install);
+      transition: color 0.3s;
+    }
+.manual-tag {
+      font-size: 7px;
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: bold;
+      background-color: rgba(255,255,255,0.7);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+    .ai-link {
+      margin-right: 6px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+    }
+    .icon-no-zoom {
+      pointer-events: none;
+    }
+    .pump-card h3 {
+      margin: 10px;
+      padding: 0 5px;
+      font-size: 1rem;
+      text-align: center;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.2;
+    }
+.pump-details {
+      padding: 0 15px 15px 15px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Ensure consistent spacing */
+.pump-details a {
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+    .pump-details p {
+      font-size: 0.9rem;
+      margin: 10px 0;
+    }
+.pump-specs {
+      flex-shrink: 0;
+      margin-bottom: 5px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 5px;
+      transition: border-color 0.3s;
+    }
+    .part-list,.hardware-list {
+      font-size: 0.85rem;
+      padding-left: 15px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+.part-list li,.hardware-list li {
+      margin-bottom: 6px;
+    }
+.hardware-title {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    sub {
+      font-size: 0.75em;
+      vertical-align: baseline;
+      position: relative;
+      top: -0.4em;
+    }
+
+.hidden {
+      display: none;
+    }
+
+h1 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+.expandable-section {
+      display: none;
+      margin-top: 10px;
+      border-top: 1px dashed var(--border-color);
+      padding-top: 10px;
+    }
+
+.expand-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 10px 0 0;
+      padding: 5px;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      color: var(--text-color);
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+
+.expand-btn:hover {
+      background: var(--border-color);
+    }
+
+    /* Image Modal Styles */
+.image-modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+    }
+
+.modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 90%;
+      max-height: 90%;
+      transform-origin: center center;
+      cursor: move;
+    }
+
+.modal-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      transform-origin: 0 0;
+      transition: transform 0.1s ease-out;
+    }
+
+.image-container img {
+      cursor: pointer;
+    }
+
+    /* Guide Navigation Styles */
+.guide-nav {
+      display: flex;
+      align-items: center;
+      padding: 5px;
+      margin-right: auto; /* Push to the left */
+      transition: background-color 0.3s;
+      flex: 1;
+      gap: 15px;
+    }
+
+.guide-section {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 6px 12px;
+      background-color: rgba(255, 255, 255, 0.05);
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+.dark-mode .guide-section {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+.guide-section-title {
+      margin-right: 10px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+.guide-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .guide-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      padding: 2px;
+      border-radius: 4px;
+      background-color: white;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .guide-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .guide-btn img {
+      max-width: 26px;
+      max-height: 26px;
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="guide-links">
+      <span>Pumps</span>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Pump%20Guide/Pentair%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Pentair Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Pump%20Guide/Hayward%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Hayward Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Pump%20Guide/Jandy%20Residential%20Pool%20Pump%20Guide.html" target="_blank" class="guide-btn" title="Jandy Pump Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
+      <span>Heaters</span>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Heaters/Pentair%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Pentair Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Heaters/Hayward%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Hayward Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Heaters/Jandy%20Heaters%20Product%20Guide.html" target="_blank" class="guide-btn" title="Jandy Heaters Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
+      <span>Automation</span>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Pentair%20Automation%20Guide/Pentair%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Pentair Automation Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/pentair-logo.png" alt="Pentair"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Hayward%20Automation%20Guide/Hayward%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Hayward Automation Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/hayward-logo.png" alt="Hayward"></a>
+      <a href="https://htmlpreview.github.io/?https://github.com/ivesko7/pool-pump-guides/blob/main/Jandy%20Automation%20Guide/Jandy%20Automation%20Guide.html" target="_blank" class="guide-btn" title="Jandy Automation Guide"><img src="../Pentair Pump Guide/Pentair Residential Pool Pump Guide_files/jandy-logo.png" alt="Jandy"></a>
+    </div>
+    <div class="ui-controls">
+      <button class="theme-btn" id="toggle-theme">🌓</button>
+      <button class="font-btn" id="decrease-font">-</button>
+      <button class="font-btn" id="reset-font" title="Reset font size">R</button>
+      <button class="font-btn" id="increase-font">+</button>
+    </div>
+  </div>
+  <div class="page-content">
+    <h1>Hayward Automation Guide</h1>
+    <div class="pump-list">
+
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://hayward.com//media/akeneo_connector/asset_files/0/9/092472_RevL_b093.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward.com//media/akeneo_connector/asset_files/0/9/092472_RevL_b093.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://hayward.com/media/akeneo_connector/asset_files/1/0/1002785_RevA_c323.pdf" target="_blank" rel="noopener" class="manual-link user-manual" title="Open User Manual" style="position: absolute; top: 80px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-blue.png" alt="User Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward.com/media/akeneo_connector/asset_files/1/0/1002785_RevA_c323.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 115px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-blue.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Hayward Automation Guide_files/omnilogic-panel.png" alt="Hayward OmniLogic Automation Panel">
+        <a href="https://www.google.com/search?tbm=isch&q=Hayward+OmniLogic+Automation+Panel" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Hayward OmniLogic® Automation Panel</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Type:</strong> Premium Pool & Spa Automation System </p>
+
+          <p><strong>Features:</strong> Extensive modular expandability, controls up to 20 relays and 16 variable-speed pumps, intuitive app control, voice assistant compatibility, advanced lighting control through OmniDirect Mode™ </p>
+          <p><strong>Key Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Electrical Components First -->
+          <li><strong>Main Circuit Board:</strong> HLXPCBMAIN <a href="https://www.pool360.com/Search?query=HLXPCBMAIN" target="_blank">[🔍]</a></li>
+          <li><strong>Power Supply Assembly:</strong> HLXPSUPPLY <a href="https://www.pool360.com/Search?query=HLXPSUPPLY" target="_blank">[🔍]</a></li>
+          <li><strong>Transformer:</strong> HLXTRNSFMR <a href="https://www.pool360.com/Search?query=HLXTRNSFMR" target="_blank">[🔍]</a></li>
+          <li><strong>T-Cell PCB Board:</strong> HLXPCBTCELL <a href="https://www.pool360.com/Search?query=HLXPCBTCELL" target="_blank">[🔍]</a></li>
+          <li><strong>Terminal Connector Kit:</strong> HLXCONNKIT <a href="https://www.pool360.com/Search?query=HLXCONNKIT" target="_blank">[🔍]</a></li>
+          <li><strong>Fan Kit:</strong> HLXFANKIT <a href="https://www.pool360.com/Search?query=HLXFANKIT" target="_blank">[🔍]</a></li>
+          <li><strong>Temperature Sensor:</strong> GLX-PC-12 <a href="https://www.pool360.com/Search?query=GLX-PC-12" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch:</strong> GLX-FLO <a href="https://www.pool360.com/Search?query=GLX-FLO" target="_blank">[🔍]</a></li>
+
+          <!-- Automation Components -->
+          <li><strong>Local Display:</strong> HLXLOCDSP <a href="https://www.pool360.com/Search?query=HLXLOCDSP" target="_blank">[🔍]</a></li>
+          <li><strong>LCD Display:</strong> HLXLCD <a href="https://www.pool360.com/Search?query=HLXLCD" target="_blank">[🔍]</a></li>
+          <li><strong>1 Relay Module:</strong> HLRELAY <a href="https://www.pool360.com/Search?query=HLRELAY" target="_blank">[🔍]</a></li>
+          <li><strong>Valve Actuator:</strong> GLX-DV <a href="https://www.pool360.com/Search?query=GLX-DV" target="_blank">[🔍]</a></li>
+          <li><strong>Mounting Brackets:</strong> HLXBRACKET <a href="https://www.pool360.com/Search?query=HLXBRACKET" target="_blank">[🔍]</a></li>
+          <li><strong>Door Latch:</strong> HLXLATCH <a href="https://www.pool360.com/Search?query=HLXLATCH" target="_blank">[🔍]</a></li>
+
+
+        </ul>
+
+        <div class="expandable-section">
+          <p class="hardware-title">Remote Control Options:</p>
+          <ul class="hardware-list">
+            <li>
+              <strong>Wireless Remote:</strong> HLWIRELESS <a href="https://www.pool360.com/Search?query=HLWIRELESS" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Wired Wall Mount:</strong> HLWALLMOUNT <a href="https://www.pool360.com/Search?query=HLWALLMOUNT" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Charging Cradle:</strong> HLXCRADLE <a href="https://www.pool360.com/Search?query=HLXCRADLE" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Local Display Mounting Kit:</strong> HLXDSPMOUNT <a href="https://www.pool360.com/Search?query=HLXDSPMOUNT" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Stylus (5-pack):</strong> HLXSTYLUS5PK <a href="https://www.pool360.com/Search?query=HLXSTYLUS5PK" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>USB (5-pack):</strong> HLXUSB5PK <a href="https://www.pool360.com/Search?query=HLXUSB5PK" target="_blank">[🔍]</a>
+            </li>
+          </ul>
+        </div>
+        <button class="expand-btn">Show Remote Control Options ▼</button>
+      </div>
+    </div>
+
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://hayward.com/media/akeneo_connector/asset_files/0/9/092785_RevD_ceaf.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward.com/media/akeneo_connector/asset_files/0/9/092785_RevD_ceaf.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://hayward.com/media/akeneo_connector/asset_files/0/9/092765_RevB_9ec2.pdf" target="_blank" rel="noopener" class="manual-link user-manual" title="Open User Manual" style="position: absolute; top: 80px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-blue.png" alt="User Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward.com/media/akeneo_connector/asset_files/0/9/092765_RevB_9ec2.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 115px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-blue.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Hayward Automation Guide_files/omnipl-panel.png" alt="Hayward OmniPL Automation Panel">
+        <a href="https://www.google.com/search?tbm=isch&q=Hayward+OmniPL+Automation+Panel" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Hayward OmniPL™ Automation Panel</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Type:</strong> Mid-Range Pool & Spa Automation System </p>
+
+          <p><strong>Features:</strong> 4 relays expandable up to 8, seamless integration with OmniLogic app for remote management </p>
+          <p><strong>Key Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Electrical Components First -->
+          <li><strong>Main Circuit Board (2023+):</strong> HLXPLPCBMAIN <a href="https://www.pool360.com/Search?query=HLXPLPCBMAIN" target="_blank">[🔍]</a></li>
+          <li><strong>Transformer (2023+):</strong> HLXPLXFMR <a href="https://www.pool360.com/Search?query=HLXPLXFMR" target="_blank">[🔍]</a></li>
+          <li><strong>T-Cell PCB Board:</strong> HLXPCBTCELL <a href="https://www.pool360.com/Search?query=HLXPCBTCELL" target="_blank">[🔍]</a></li>
+          <li><strong>Cable Kit Retrofit (2023+):</strong> HLXPLCABLEKIT <a href="https://www.pool360.com/Search?query=HLXPLCABLEKIT" target="_blank">[🔍]</a></li>
+          <li><strong>Temperature Sensor:</strong> GLX-PC-12 <a href="https://www.pool360.com/Search?query=GLX-PC-12" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch:</strong> GLX-FLO <a href="https://www.pool360.com/Search?query=GLX-FLO" target="_blank">[🔍]</a></li>
+
+          <!-- Automation Components -->
+          <li><strong>OmniPL Controller:</strong> HLXPLCONTROL <a href="https://www.pool360.com/Search?query=HLXPLCONTROL" target="_blank">[🔍]</a></li>
+          <li><strong>Deadfront (2023+):</strong> HLXPLFRONT <a href="https://www.pool360.com/Search?query=HLXPLFRONT" target="_blank">[🔍]</a></li>
+          <li><strong>RS485 Extension 100ft:</strong> HLXPL485100 <a href="https://www.pool360.com/Search?query=HLXPL485100" target="_blank">[🔍]</a></li>
+          <li><strong>Valve Actuator:</strong> GLX-DV <a href="https://www.pool360.com/Search?query=GLX-DV" target="_blank">[🔍]</a></li>
+          <li><strong>1 Relay Module:</strong> HLRELAY <a href="https://www.pool360.com/Search?query=HLRELAY" target="_blank">[🔍]</a></li>
+
+
+        </ul>
+
+        <div class="expandable-section">
+          <p class="hardware-title">Remote Control Options:</p>
+          <ul class="hardware-list">
+            <li>
+              <strong>Wireless Remote:</strong> PLWIRELESS <a href="https://www.pool360.com/Search?query=PLWIRELESS" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Wired Wall Mount:</strong> PLWALLMOUNT <a href="https://www.pool360.com/Search?query=PLWALLMOUNT" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Ethernet to WiFi Adapter:</strong> PLWIFI <a href="https://www.pool360.com/Search?query=PLWIFI" target="_blank">[🔍]</a>
+            </li>
+          </ul>
+        </div>
+        <button class="expand-btn">Show Remote Control Options ▼</button>
+      </div>
+    </div>
+
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://hayward-pool-assets.com/wp-content/uploads/2020/12/OmniHub-Installation-Manual.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward-pool-assets.com/wp-content/uploads/2020/12/OmniHub-Installation-Manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://hayward-pool-assets.com/wp-content/uploads/2020/12/OmniHub-User-Manual.pdf" target="_blank" rel="noopener" class="manual-link user-manual" title="Open User Manual" style="position: absolute; top: 80px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-blue.png" alt="User Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward-pool-assets.com/wp-content/uploads/2020/12/OmniHub-User-Manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 115px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-blue.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Hayward Automation Guide_files/omnihub.png" alt="Hayward OmniHub Automation Panel">
+        <a href="https://www.google.com/search?tbm=isch&q=Hayward+OmniHub+Automation+Panel" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Hayward OmniHub® Automation Panel</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Type:</strong> Affordable Retrofit Automation System </p>
+
+          <p><strong>Features:</strong> Controls up to 3 relays and 2 valves, built-in Wi-Fi for app and voice control, compatible with most pool equipment brands </p>
+          <p><strong>Key Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Electrical Components First -->
+          <li><strong>OmniHub PCB:</strong> HLXHIOPCB <a href="https://www.pool360.com/Search?query=HLXHIOPCB" target="_blank">[🔍]</a></li>
+          <li><strong>RC Network Snubber Capacitor:</strong> GLX-HAL-XSNUB <a href="https://www.pool360.com/Search?query=GLX-HAL-XSNUB" target="_blank">[🔍]</a></li>
+          <li><strong>T-Cell PCB Board:</strong> HLXPCBTCELL <a href="https://www.pool360.com/Search?query=HLXPCBTCELL" target="_blank">[🔍]</a></li>
+          <li><strong>Temperature Sensor:</strong> GLX-PC-12 <a href="https://www.pool360.com/Search?query=GLX-PC-12" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch:</strong> GLX-FLO <a href="https://www.pool360.com/Search?query=GLX-FLO" target="_blank">[🔍]</a></li>
+
+          <!-- Automation Components -->
+          <li><strong>Replacement Control Panel:</strong> HLHCONTROL <a href="https://www.pool360.com/Search?query=HLHCONTROL" target="_blank">[🔍]</a></li>
+          <li><strong>OmniHub Smart Relay:</strong> HLH485RELAY <a href="https://www.pool360.com/Search?query=HLH485RELAY" target="_blank">[🔍]</a></li>
+          <li><strong>OmniHub IO Hub:</strong> HLHHUB <a href="https://www.pool360.com/Search?query=HLHHUB" target="_blank">[🔍]</a></li>
+          <li><strong>LCD Display:</strong> HLXDLCD <a href="https://www.pool360.com/Search?query=HLXDLCD" target="_blank">[🔍]</a></li>
+          <li><strong>LCD without MSP OmniLogic:</strong> HLXLCD <a href="https://www.pool360.com/Search?query=HLXLCD" target="_blank">[🔍]</a></li>
+          <li><strong>LCD without MSP OmniLogic (May 2020+):</strong> HLXLCD0520 <a href="https://www.pool360.com/Search?query=HLXLCD0520" target="_blank">[🔍]</a></li>
+          <li><strong>Sun Cover:</strong> HLXDCOVER <a href="https://www.pool360.com/Search?query=HLXDCOVER" target="_blank">[🔍]</a></li>
+          <li><strong>Display Case:</strong> HLXDSPCASE <a href="https://www.pool360.com/Search?query=HLXDSPCASE" target="_blank">[🔍]</a></li>
+          <li><strong>Hub Case:</strong> HLXHUBCASE <a href="https://www.pool360.com/Search?query=HLXHUBCASE" target="_blank">[🔍]</a></li>
+          <li><strong>Local Display Mounting Kit:</strong> HLXDSPMOUNT <a href="https://www.pool360.com/Search?query=HLXDSPMOUNT" target="_blank">[🔍]</a></li>
+          <li><strong>Local Display:</strong> HLXLOCDSP <a href="https://www.pool360.com/Search?query=HLXLOCDSP" target="_blank">[🔍]</a></li>
+          <li><strong>OmniLogic Expansion Panel Display:</strong> HLXEXPDSP <a href="https://www.pool360.com/Search?query=HLXEXPDSP" target="_blank">[🔍]</a></li>
+          <li><strong>Valve Actuator:</strong> GLX-DV <a href="https://www.pool360.com/Search?query=GLX-DV" target="_blank">[🔍]</a></li>
+
+
+        </ul>
+
+        <div class="expandable-section">
+          <p class="hardware-title">Remote Control Options:</p>
+          <ul class="hardware-list">
+            <li>
+              <strong>Wireless Remote:</strong> HUBREMOTE <a href="https://www.pool360.com/Search?query=HUBREMOTE" target="_blank">[🔍]</a>
+            </li>
+            <li>
+              <strong>Ethernet to WiFi Adapter:</strong> HUBWIFI <a href="https://www.pool360.com/Search?query=HUBWIFI" target="_blank">[🔍]</a>
+            </li>
+          </ul>
+        </div>
+        <button class="expand-btn">Show Remote Control Options ▼</button>
+      </div>
+    </div>
+
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://hayward-pool-assets.com/wp-content/uploads/2020/12/AquaPlus-Installation-Manual.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward-pool-assets.com/wp-content/uploads/2020/12/AquaPlus-Installation-Manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://hayward-pool-assets.com/wp-content/uploads/2020/12/AquaPlus-User-Manual.pdf" target="_blank" rel="noopener" class="manual-link user-manual" title="Open User Manual" style="position: absolute; top: 80px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-blue.png" alt="User Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward-pool-assets.com/wp-content/uploads/2020/12/AquaPlus-User-Manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 115px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-blue.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Hayward Automation Guide_files/aquaplus-panel.png
+        " alt="Hayward AquaPlus Automation Panel">
+        <a href="https://www.google.com/search?tbm=isch&q=Hayward+AquaPlus+Automation+Panel" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Hayward AquaPlus® Automation Panel</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Type:</strong> Combined Automation and Salt Chlorination System </p>
+
+          <p><strong>Features:</strong> Integrated salt chlorination and automation in a single system, suitable for both new installations and retrofits, supports up to 40,000 gallon pools </p>
+          <p><strong>Key Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Electrical Components First -->
+          <li><strong>Main PCB (Printed Circuit Board):</strong> GLX-PCB-PRO <a href="https://www.pool360.com/Search?query=GLX-PCB-PRO" target="_blank">[🔍]</a></li>
+          <li><strong>Chlorinator Transformer:</strong> GLX-XFMR <a href="https://www.pool360.com/Search?query=GLX-XFMR" target="_blank">[🔍]</a></li>
+          <li><strong>3 HP Relay:</strong> GLX-RELAY <a href="https://www.pool360.com/Search?query=GLX-RELAY" target="_blank">[🔍]</a></li>
+          <li><strong>Temperature Sensor:</strong> GLX-PC-12 <a href="https://www.pool360.com/Search?query=GLX-PC-12" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch:</strong> GLX-FLO <a href="https://www.pool360.com/Search?query=GLX-FLO" target="_blank">[🔍]</a></li>
+
+          <!-- Automation Components -->
+          <li><strong>Local Display/Keypad (P4):</strong> GLX-PL-LOC-P-4 <a href="https://www.pool360.com/Search?query=GLX-PL-LOC-P-4" target="_blank">[🔍]</a></li>
+          <li><strong>Local Display/Keypad (PS4):</strong> GLX-PL-LOC-PS4 <a href="https://www.pool360.com/Search?query=GLX-PL-LOC-PS4" target="_blank">[🔍]</a></li>
+          <li><strong>Local Display/Keypad (PS8):</strong> GLX-PL-LOC-PS8 <a href="https://www.pool360.com/Search?query=GLX-PL-LOC-PS8" target="_blank">[🔍]</a></li>
+          <li><strong>Local Display/Keypad (PS16):</strong> GLX-PL-LOC-PS16 <a href="https://www.pool360.com/Search?query=GLX-PL-LOC-PS16" target="_blank">[🔍]</a></li>
+          <li><strong>Wireless RF Antenna:</strong> AQL2-Base-RF <a href="https://www.pool360.com/Search?query=AQL2-Base-RF" target="_blank">[🔍]</a></li>
+          <li><strong>Valve Actuator:</strong> GLX-DV <a href="https://www.pool360.com/Search?query=GLX-DV" target="_blank">[🔍]</a></li>
+
+          <!-- Remote Controls -->
+          <li><strong>Wireless Wall Mount Remote (PS4):</strong> GLX-WW-RF-PS-4 <a href="https://www.pool360.com/Search?query=GLX-WW-RF-PS-4" target="_blank">[🔍]</a></li>
+          <li><strong>Wireless Wall Mount Remote (PS8):</strong> GLX-WW-RF-PS-8 <a href="https://www.pool360.com/Search?query=GLX-WW-RF-PS-8" target="_blank">[🔍]</a></li>
+          <li><strong>Wireless Wall Mount Remote (PS16):</strong> GLX-WW-RF-PS-16 <a href="https://www.pool360.com/Search?query=GLX-WW-RF-PS-16" target="_blank">[🔍]</a></li>
+          <li><strong>Wired Wall Mount Remote (PS4):</strong> GLX-WW-PS-4 <a href="https://www.pool360.com/Search?query=GLX-WW-PS-4" target="_blank">[🔍]</a></li>
+          <li><strong>Wired Wall Mount Remote (PS8):</strong> GLX-WW-PS-8 <a href="https://www.pool360.com/Search?query=GLX-WW-PS-8" target="_blank">[🔍]</a></li>
+          <li><strong>Tabletop Remote (PS8):</strong> GLX-TB-RF-PS-8 <a href="https://www.pool360.com/Search?query=GLX-TB-RF-PS-8" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://hayward-pool-assets.com/wp-content/uploads/2020/12/OnCommand-Installation-Manual.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward-pool-assets.com/wp-content/uploads/2020/12/OnCommand-Installation-Manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://hayward-pool-assets.com/wp-content/uploads/2020/12/OnCommand-User-Manual.pdf" target="_blank" rel="noopener" class="manual-link user-manual" title="Open User Manual" style="position: absolute; top: 80px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-blue.png" alt="User Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward-pool-assets.com/wp-content/uploads/2020/12/OnCommand-User-Manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 115px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-blue.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Hayward Automation Guide_files/oncommand-panel.png" alt="Hayward OnCommand Automation Panel">
+        <a href="https://www.google.com/search?tbm=isch&q=Hayward+OnCommand+Automation+Panel" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Hayward OnCommand® Automation Panel</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Type:</strong> Essential Automation System </p>
+
+          <p><strong>Features:</strong> Controls pumps, heaters, and lighting with a user-friendly interface </p>
+          <p><strong>Key Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Electrical Components First -->
+          <li><strong>Main PCB (Circuit Board):</strong> GLX-PCB-ONCOM <a href="https://www.pool360.com/Search?query=GLX-PCB-ONCOM" target="_blank">[🔍]</a></li>
+          <li><strong>Base Controller:</strong> ONCOM <a href="https://www.pool360.com/Search?query=ONCOM" target="_blank">[🔍]</a></li>
+          <li><strong>Temperature Sensor:</strong> GLX-PC-12 <a href="https://www.pool360.com/Search?query=GLX-PC-12" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch:</strong> GLX-FLO <a href="https://www.pool360.com/Search?query=GLX-FLO" target="_blank">[🔍]</a></li>
+          <li><strong>Relay:</strong> GLX-RELAY <a href="https://www.pool360.com/Search?query=GLX-RELAY" target="_blank">[🔍]</a></li>
+          <li><strong>AC Relay Kit:</strong> AQL-RELAY-AC-KT <a href="https://www.pool360.com/Search?query=AQL-RELAY-AC-KT" target="_blank">[🔍]</a></li>
+          <li><strong>Smart Relay Kit:</strong> HLH485RELAY <a href="https://www.pool360.com/Search?query=HLH485RELAY" target="_blank">[🔍]</a></li>
+          <li><strong>Valve Actuator:</strong> GVA-24 <a href="https://www.pool360.com/Search?query=GVA-24" target="_blank">[🔍]</a></li>
+
+          <!-- Remote Controls -->
+          <li><strong>Wireless Spa Side Remote (6-Function):</strong> AQL2-SS-RF <a href="https://www.pool360.com/Search?query=AQL2-SS-RF" target="_blank">[🔍]</a></li>
+          <li><strong>AquaPod 2.0 Touchscreen Remote:</strong> AQL2-POD2 <a href="https://www.pool360.com/Search?query=AQL2-POD2" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pump-card">
+      <div class="image-container">
+        <a href="https://hayward-pool-assets.com/wp-content/uploads/2020/12/E-Command-4-Installation-Manual.pdf" target="_blank" rel="noopener" class="manual-link install-manual" title="Open Installation Manual" style="position: absolute; top: 10px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-red.png" alt="Installation Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward-pool-assets.com/wp-content/uploads/2020/12/E-Command-4-Installation-Manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 45px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-red.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://hayward-pool-assets.com/wp-content/uploads/2020/12/E-Command-4-User-Manual.pdf" target="_blank" rel="noopener" class="manual-link user-manual" title="Open User Manual" style="position: absolute; top: 80px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/pdf-blue.png" alt="User Manual" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <a href="https://chat.openai.com/?q=open this pdf file and assist the user with any questions they have: https://hayward-pool-assets.com/wp-content/uploads/2020/12/E-Command-4-User-Manual.pdf" target="_blank" rel="noopener" class="ai-link" title="Ask AI about this manual" style="position: absolute; top: 115px; left: 10px; z-index: 2;">
+          <img src="Hayward Automation Guide_files/ai-blue.png" alt="Ask AI" style="width: 30px; height: auto;" class="icon-no-zoom">
+        </a>
+        <img src="Hayward Automation Guide_files/ecommand-panel.png" alt="Hayward E-Command 4 Automation Panel">
+        <a href="https://www.google.com/search?tbm=isch&q=Hayward+E-Command+4+Automation+Panel" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Hayward E-Command 4® Automation Panel</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Type:</strong> Basic Automation System </p>
+
+          <p><strong>Features:</strong> Manages up to four functions with simple operation </p>
+          <p><strong>Key Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Electrical Components First -->
+          <li><strong>Main PCB, E-Command 4:</strong> GLX-PCB-HPC-4 <a href="https://www.pool360.com/Search?query=GLX-PCB-HPC-4" target="_blank">[🔍]</a></li>
+          <li><strong>AC Relay Kit:</strong> AQL-RELAY-AC-KT <a href="https://www.pool360.com/Search?query=AQL-RELAY-AC-KT" target="_blank">[🔍]</a></li>
+          <li><strong>DC High-voltage Relay Kit:</strong> AQL-RELAY-DC-KT <a href="https://www.pool360.com/Search?query=AQL-RELAY-DC-KT" target="_blank">[🔍]</a></li>
+          <li><strong>Display, Local, E-Command:</strong> GLX-LOC-HPC-2 <a href="https://www.pool360.com/Search?query=GLX-LOC-HPC-2" target="_blank">[🔍]</a></li>
+          <li><strong>Display Local P-4 & Ps-4 (Before Date Codes 0311):</strong> GLX-LOCAL-P-4 <a href="https://www.pool360.com/Search?query=GLX-LOCAL-P-4" target="_blank">[🔍]</a></li>
+          <li><strong>Temperature Sensor:</strong> GLX-PC-12 <a href="https://www.pool360.com/Search?query=GLX-PC-12" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch:</strong> GLX-FLO <a href="https://www.pool360.com/Search?query=GLX-FLO" target="_blank">[🔍]</a></li>
+
+          <!-- Optional Accessories -->
+          <li><strong>3-Button Remote Control, HPC-2:</strong> GLX-RF-3B <a href="https://www.pool360.com/Search?query=GLX-RF-3B" target="_blank">[🔍]</a></li>
+          <li><strong>Light Hub (eliminates Junction Box):</strong> AQL-DC <a href="https://www.pool360.com/Search?query=AQL-DC" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pump-card">
+      <div class="image-container">
+        <img src="Hayward Automation Guide_files/turbocell.png" alt="Hayward TurboCell Salt Cell">
+        <a href="https://www.google.com/search?tbm=isch&q=Hayward+TurboCell+Salt+Cell" target="_blank" class="eye-button" title="Search Images">&#128065;</a>
+      </div>
+      <h3>Hayward TurboCell Salt Cells</h3>
+      <div class="pump-details">
+        <div class="pump-specs">
+          <p><strong>Type:</strong> Salt Chlorination System Components </p>
+          <p><strong>Compatible With:</strong> OmniLogic, OmniPL, OmniHub, AquaPlus, AquaRite, and AquaTrol systems </p>
+          <p><strong>Key Replacement Parts:</strong></p>
+        </div>
+        <ul class="part-list">
+          <!-- Salt Cells -->
+          <li><strong>T-CELL-9 (25,000 Gallon):</strong> W3T-CELL-9 <a href="https://www.pool360.com/Search?query=W3T-CELL-9" target="_blank">[🔍]</a></li>
+          <li><strong>T-CELL-15 (40,000 Gallon):</strong> W3T-CELL-15 <a href="https://www.pool360.com/Search?query=W3T-CELL-15" target="_blank">[🔍]</a></li>
+          <li><strong>T-CELL-15 (40,000 Gallon):</strong> GLX-CELL-15 <a href="https://www.pool360.com/Search?query=GLX-CELL-15" target="_blank">[🔍]</a></li>
+          <li><strong>T-CELL-3 (15,000 Gallon):</strong> GLXCELL3 <a href="https://www.pool360.com/Search?query=GLXCELL3" target="_blank">[🔍]</a></li>
+          <li><strong>T-CELL-3 (15,000 Gallon):</strong> W3T-CELL-3 <a href="https://www.pool360.com/Search?query=W3T-CELL-3" target="_blank">[🔍]</a></li>
+
+          <!-- Plumbing Components -->
+          <li><strong>Unions (2-inch slip):</strong> GLX-CELL-UNION <a href="https://www.pool360.com/Search?query=GLX-CELL-UNION" target="_blank">[🔍]</a></li>
+          <li><strong>Union O-ring:</strong> GLX-UNION-ORING <a href="https://www.pool360.com/Search?query=GLX-UNION-ORING" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch (15' cable, no tee):</strong> GLX-FLO-RP <a href="https://www.pool360.com/Search?query=GLX-FLO-RP" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch (25' cable, no tee):</strong> GLX-FLO-RP-25 <a href="https://www.pool360.com/Search?query=GLX-FLO-RP-25" target="_blank">[🔍]</a></li>
+          <li><strong>Flow Switch Tee:</strong> GLX-FLO-T <a href="https://www.pool360.com/Search?query=GLX-FLO-T" target="_blank">[🔍]</a></li>
+          <li><strong>Plumbing Kit:</strong> P-KIT <a href="https://www.pool360.com/Search?query=P-KIT" target="_blank">[🔍]</a></li>
+
+          <!-- Electronics -->
+          <li><strong>Main PCB Board (AquaRite/AquaTrol):</strong> GLX-PCB-RITE <a href="https://www.pool360.com/Search?query=GLX-PCB-RITE" target="_blank">[🔍]</a></li>
+          <li><strong>Display PCB Board:</strong> GLX-PCB-DSP <a href="https://www.pool360.com/Search?query=GLX-PCB-DSP" target="_blank">[🔍]</a></li>
+          <li><strong>Rectifier Upgrade:</strong> GLX-DRK <a href="https://www.pool360.com/Search?query=GLX-DRK" target="_blank">[🔍]</a></li>
+          <li><strong>Transformer:</strong> GLX-XFMR <a href="https://www.pool360.com/Search?query=GLX-XFMR" target="_blank">[🔍]</a></li>
+
+          <!-- Optional Parts -->
+          <li><strong>Cell Cleaning Stand:</strong> GLX-CELLSTAND <a href="https://www.pool360.com/Search?query=GLX-CELLSTAND" target="_blank">[🔍]</a></li>
+          <li><strong>Dummy Cell / Bypass Pipe:</strong> GLX-CELL-PIPE <a href="https://www.pool360.com/Search?query=GLX-CELL-PIPE" target="_blank">[🔍]</a></li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize controls
+    function initControls() {
+      console.log('Initializing controls');
+      initThemeToggle();
+      initFontSize();
+      initExpandButtons();
+      initToolbarScroll();
+    }
+
+    // Initialize toolbar horizontal scrolling
+    function initToolbarScroll() {
+      const toolbar = document.querySelector('.toolbar');
+      const guideLinks = document.querySelector('.guide-links');
+
+      // Variables for drag scrolling
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      // Mouse events for desktop
+      toolbar.addEventListener('mousedown', (e) => {
+        // Only handle clicks on the guide-links or its children
+        if (!e.target.closest('.guide-links') && e.target !== guideLinks) return;
+
+        isDown = true;
+        toolbar.style.cursor = 'grabbing';
+        startX = e.pageX - toolbar.offsetLeft;
+        scrollLeft = toolbar.scrollLeft;
+        e.preventDefault();
+      });
+
+      toolbar.addEventListener('mouseleave', () => {
+        isDown = false;
+        toolbar.style.cursor = '';
+      });
+
+      toolbar.addEventListener('mouseup', () => {
+        isDown = false;
+        toolbar.style.cursor = '';
+      });
+
+      toolbar.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - toolbar.offsetLeft;
+        const walk = (x - startX) * 2; // Scroll speed multiplier
+        toolbar.scrollLeft = scrollLeft - walk;
+      });
+
+      // Touch events for mobile
+      toolbar.addEventListener('touchstart', (e) => {
+        // Only handle touches on the guide-links or its children
+        if (!e.target.closest('.guide-links') && e.target !== guideLinks) return;
+
+        isDown = true;
+        startX = e.touches[0].pageX - toolbar.offsetLeft;
+        scrollLeft = toolbar.scrollLeft;
+      }, { passive: false });
+
+      toolbar.addEventListener('touchend', () => {
+        isDown = false;
+      });
+
+      toolbar.addEventListener('touchcancel', () => {
+        isDown = false;
+      });
+
+      toolbar.addEventListener('touchmove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - toolbar.offsetLeft;
+        const walk = (x - startX) * 2;
+        toolbar.scrollLeft = scrollLeft - walk;
+      }, { passive: false });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+          return; // Don't interfere with input fields
+        }
+
+        if (e.key === 'ArrowLeft') {
+          toolbar.scrollLeft -= 50;
+          e.preventDefault();
+        } else if (e.key === 'ArrowRight') {
+          toolbar.scrollLeft += 50;
+          e.preventDefault();
+        }
+      });
+
+      // Mouse wheel horizontal scrolling
+      toolbar.addEventListener('wheel', (e) => {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          toolbar.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    }
+
+    // Initialize expand buttons
+    function initExpandButtons() {
+      const expandButtons = document.querySelectorAll('.expand-btn');
+      expandButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const section = this.previousElementSibling;
+          if (section.style.display === 'block') {
+            section.style.display = 'none';
+            this.textContent = 'Show Remote Control Options ▼';
+          } else {
+            section.style.display = 'block';
+            this.textContent = 'Show Less ▲';
+          }
+        });
+      });
+    }
+
+    // Dark mode toggle
+    function initThemeToggle() {
+      console.log('Initializing theme toggle');
+
+      // Check for saved theme preference
+      const savedTheme = getCookie('darkMode');
+      console.log('Retrieved saved theme:', savedTheme);
+
+      // Apply saved theme or default to light
+      if (savedTheme === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('toggle-theme').textContent = '☀️';
+      } else {
+        document.getElementById('toggle-theme').textContent = '🌓';
+      }
+
+      // Add event listener for theme toggle
+      document.getElementById('toggle-theme').addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+
+        // Update button icon
+        this.textContent = isDarkMode? '☀️' : '🌓';
+
+        // Save preference
+        setCookie('darkMode', isDarkMode.toString(), 365);
+        console.log('Saved theme preference:', isDarkMode);
+      });
+    }
+
+    // Initialize zoom controls
+    function initFontSize() {
+      console.log('Initializing zoom controls');
+
+      const decreaseBtn = document.getElementById('decrease-font');
+      const increaseBtn = document.getElementById('increase-font');
+      const resetBtn = document.getElementById('reset-font');
+
+      // Get stored zoom level or default to 100%
+      const storedZoom = getCookie('zoomLevel');
+      const zoomLevel = storedZoom ? parseInt(storedZoom) : 100;
+
+      // Apply stored zoom level
+      if (storedZoom) {
+        updateZoom(zoomLevel);
+      }
+
+      // Add event listeners to zoom buttons
+      decreaseBtn.addEventListener('click', function() {
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom > 70) {
+          updateZoom(currentZoom - 10);
+        }
+      });
+
+      increaseBtn.addEventListener('click', function() {
+        const currentZoom = parseInt(getCookie('zoomLevel') || '100');
+        if (currentZoom < 150) {
+          updateZoom(currentZoom + 10);
+        }
+      });
+
+      resetBtn.addEventListener('click', function() {
+        updateZoom(100);
+      });
+
+      // Update zoom level and save to localStorage
+      function updateZoom(zoomPercent) {
+        console.log('Updating zoom to:', zoomPercent + '%');
+        document.body.style.zoom = zoomPercent + '%';
+        setCookie('zoomLevel', zoomPercent.toString(), 365); // Save for 1 year
+        console.log('Saved zoom level:', zoomPercent.toString());
+      }
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        initControls();
+        initImageModal();
+      });
+    } else {
+      // DOM already loaded
+      initControls();
+      initImageModal();
+    }
+
+    // Image Modal Functionality
+    function initImageModal() {
+      // Create modal element
+      const modal = document.createElement('div');
+      modal.className = 'image-modal';
+      modal.innerHTML = '<div class="modal-content"><img class="modal-image" src="" alt="Enlarged pump image"></div>';
+      document.body.appendChild(modal);
+
+      const modalContent = modal.querySelector('.modal-content');
+      const modalImg = modal.querySelector('.modal-image');
+
+      // Variables for zoom and pan
+      let scale = 1;
+      let isDragging = false;
+      let startX, startY, translateX = 0, translateY = 0;
+      let lastX, lastY;
+
+      // Variables for double tap detection
+      let lastTap = 0;
+      let touchTimeout;
+
+      // Add click event to all pump images (excluding icons)
+      const pumpImages = document.querySelectorAll('.image-container img:not(.icon-no-zoom)');
+      pumpImages.forEach(img => {
+        img.addEventListener('click', function() {
+          modalImg.src = this.src;
+          modal.style.display = 'block';
+
+          // Initial scale will be calculated when image loads
+          scale = 1;
+          translateX = 0;
+          translateY = 0;
+          updateTransform();
+
+          // We need to wait for the image to load to properly size and center it
+          modalImg.onload = function() {
+            // Get modal and image dimensions
+            const modalRect = modal.getBoundingClientRect();
+            const imgRect = modalImg.getBoundingClientRect();
+
+            // Calculate available space (with 20px margin)
+            const availableWidth = modalRect.width - 40;
+            const availableHeight = modalRect.height - 40;
+
+            // Calculate scale needed to fit image within available space
+            const widthScale = availableWidth / imgRect.width;
+            const heightScale = availableHeight / imgRect.height;
+
+            // Use the smaller scale to ensure image fits in both dimensions
+            let fitScale = Math.min(widthScale, heightScale);
+
+            // On mobile, use 1.5x zoom as requested
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+              scale = 1.5;
+            } else {
+              // On desktop, use the fit scale, but cap it at 1.5x
+              scale = Math.min(fitScale, 1.5);
+            }
+
+            // Center the image
+            const scaledWidth = imgRect.width * scale;
+            const scaledHeight = imgRect.height * scale;
+            translateX = (modalRect.width - scaledWidth) / 2 - imgRect.left;
+            translateY = (modalRect.height - scaledHeight) / 2 - imgRect.top;
+
+            updateTransform();
+          };
+        });
+      });
+
+      // Track if we're dragging to prevent accidental dismissal
+      let hasDragged = false;
+
+      // Close modal with click, Esc key, or space bar
+      modal.addEventListener('mousedown', function(e) {
+        hasDragged = false;
+      });
+
+      modal.addEventListener('mousemove', function(e) {
+        if (e.buttons > 0) {
+          hasDragged = true;
+        }
+      });
+
+      modal.addEventListener('click', function(e) {
+        if (!hasDragged && (e.target === modal || e.target === modalContent || e.target === modalImg)) {
+          modal.style.display = 'none';
+        }
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (modal.style.display === 'block' && (e.key === 'Escape' || e.key === ' ')) {
+          modal.style.display = 'none';
+        }
+      });
+
+      // Mouse wheel zoom functionality
+      modal.addEventListener('wheel', function(e) {
+        e.preventDefault();
+
+        if (modal.style.display === 'block') {
+          const rect = modalImg.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          const mouseY = e.clientY - rect.top;
+
+          // Calculate mouse position relative to image
+          const x = mouseX / rect.width;
+          const y = mouseY / rect.height;
+
+          // Determine zoom direction
+          const delta = -Math.sign(e.deltaY);
+          const scaleFactor = delta > 0 ? 1.1 : 0.9;
+
+          // Calculate new scale with limits (0.25x to 4x)
+          const newScale = Math.min(Math.max(scale * scaleFactor, 0.25), 4);
+
+          // Calculate new translate values to zoom toward mouse position
+          // For both zooming in and out, we want to keep the point under the mouse in the same position
+          const zoomPointX = rect.width * x;
+          const zoomPointY = rect.height * y;
+
+          // Calculate how much the point would move due to scaling
+          const scaleDiffX = zoomPointX * (newScale - scale) / scale;
+          const scaleDiffY = zoomPointY * (newScale - scale) / scale;
+
+          // Adjust translation to compensate for the scaling
+          translateX = translateX - scaleDiffX;
+          translateY = translateY - scaleDiffY;
+
+          scale = newScale;
+          updateTransform();
+        }
+      }, { passive: false });
+
+      // Mouse drag functionality
+      modalImg.addEventListener('mousedown', function(e) {
+        e.preventDefault(); // Prevent image dragging default behavior
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        modalImg.style.cursor = 'grabbing';
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+          e.preventDefault(); // Prevent unwanted selections while dragging
+          translateX = e.clientX - startX;
+          translateY = e.clientY - startY;
+          lastX = e.clientX;
+          lastY = e.clientY;
+          updateTransform();
+        }
+      });
+
+      document.addEventListener('mouseup', function() {
+        if (isDragging) {
+          isDragging = false;
+          modalImg.style.cursor = scale > 1? 'move' : 'default';
+        }
+      });
+
+      // Touch events for mobile devices
+
+      // Variables for pinch-to-zoom
+      let initialDistance = 0;
+      let initialScale = 1;
+      let lastTouchCount = 0;
+
+      // Double tap to zoom - attach to the entire modal
+      modal.addEventListener('touchstart', function(e) {
+        // Reset drag tracking
+        hasDragged = false;
+        const now = new Date().getTime();
+        const timeSince = now - lastTap;
+
+        // Only handle double-tap if we have a single touch point
+        if (e.touches.length === 1 && timeSince < 300 && timeSince > 0) {
+          // Double tap detected
+          e.preventDefault();
+
+          // Clear any existing timeout to prevent both zoom and pan
+          if (touchTimeout) {
+            clearTimeout(touchTimeout);
+            touchTimeout = null;
+          }
+
+          // Get touch position
+          const touch = e.touches[0];
+          const rect = modalImg.getBoundingClientRect();
+          const touchX = touch.clientX - rect.left;
+          const touchY = touch.clientY - rect.top;
+
+          // Calculate touch position relative to image
+          const x = touchX / rect.width;
+          const y = touchY / rect.height;
+
+          // Toggle between normal and zoomed state
+          const newScale = scale === 1 ? 2 : 1;
+
+          if (newScale > scale) {
+            // Zooming in - center on touch point
+            const zoomPointX = rect.width * x;
+            const zoomPointY = rect.height * y;
+
+            // Calculate how much the point would move due to scaling
+            const scaleDiffX = zoomPointX * (newScale - scale) / scale;
+            const scaleDiffY = zoomPointY * (newScale - scale) / scale;
+
+            // Adjust translation to center on touch point
+            translateX = translateX - scaleDiffX;
+            translateY = translateY - scaleDiffY;
+          } else {
+            // Zooming out - reset position
+            translateX = 0;
+            translateY = 0;
+          }
+
+          scale = newScale;
+          updateTransform();
+        }
+
+        lastTap = now;
+
+        // Handle pinch-to-zoom with two fingers
+        if (e.touches.length === 2) {
+          e.preventDefault();
+
+          // Calculate initial distance between touch points
+          const touch1 = e.touches[0];
+          const touch2 = e.touches[1];
+          initialDistance = Math.hypot(
+            touch2.clientX - touch1.clientX,
+            touch2.clientY - touch1.clientY
+          );
+
+          // Store the current scale as our reference point
+          initialScale = scale;
+
+          // Calculate the midpoint between the two touches
+          const midX = (touch1.clientX + touch2.clientX) / 2;
+          const midY = (touch1.clientY + touch2.clientY) / 2;
+
+          // Get the position relative to the image
+          const rect = modalImg.getBoundingClientRect();
+
+          // Store the midpoint for reference in touchmove
+          startX = midX;
+          startY = midY;
+
+          isDragging = false; // Disable single-finger dragging during pinch
+        }
+
+        // Handle single-finger dragging (always, not just when zoomed)
+        if (e.touches.length === 1) {
+          const touch = e.touches[0];
+          isDragging = true;
+          startX = touch.clientX - translateX;
+          startY = touch.clientY - translateY;
+
+          // Set a timeout to distinguish between tap and drag
+          touchTimeout = setTimeout(() => {
+            touchTimeout = null;
+          }, 100);
+        }
+
+        lastTouchCount = e.touches.length;
+      }, { passive: false });
+
+      modal.addEventListener('touchmove', function(e) {
+        e.preventDefault(); // Always prevent default to avoid page scrolling
+
+        // Handle pinch-to-zoom
+        if (e.touches.length === 2) {
+          // Calculate current distance between touch points
+          const touch1 = e.touches[0];
+          const touch2 = e.touches[1];
+          const currentDistance = Math.hypot(
+            touch2.clientX - touch1.clientX,
+            touch2.clientY - touch1.clientY
+          );
+
+          // Calculate new scale based on the change in distance
+          // The ratio of current to initial distance gives us our scale multiplier
+          const pinchRatio = currentDistance / initialDistance;
+          let newScale = initialScale * pinchRatio;
+
+          // Limit scale to reasonable bounds (0.5x to 10x)
+          newScale = Math.min(Math.max(newScale, 0.5), 10);
+
+          // Calculate the midpoint between the two touches
+          const midX = (touch1.clientX + touch2.clientX) / 2;
+          const midY = (touch1.clientY + touch2.clientY) / 2;
+
+          // Get the position relative to the image
+          const rect = modalImg.getBoundingClientRect();
+
+          // Calculate the point on the image where the midpoint of the fingers is
+          const zoomPointX = midX - rect.left;
+          const zoomPointY = midY - rect.top;
+
+          // Calculate how much the point would move due to scaling
+          const scaleDiffX = zoomPointX * (newScale - scale) / scale;
+          const scaleDiffY = zoomPointY * (newScale - scale) / scale;
+
+          // Adjust translation to keep the midpoint fixed
+          translateX = translateX - scaleDiffX;
+          translateY = translateY - scaleDiffY;
+
+          scale = newScale;
+          updateTransform();
+          hasDragged = true;
+        }
+        // Handle single-finger dragging
+        else if (e.touches.length === 1 && isDragging) {
+          const touch = e.touches[0];
+
+          // Only start moving after a small threshold to distinguish from taps
+          if (touchTimeout === null || lastTouchCount === 2) {
+            translateX = touch.clientX - startX;
+            translateY = touch.clientY - startY;
+            updateTransform();
+            hasDragged = true;
+          }
+        }
+
+        lastTouchCount = e.touches.length;
+      }, { passive: false });
+
+      modal.addEventListener('touchend', function(e) {
+        // If we're ending a pinch (going from 2 fingers to 1)
+        if (lastTouchCount === 2 && e.touches.length === 1) {
+          // Reset for single-finger dragging
+          const touch = e.touches[0];
+          startX = touch.clientX - translateX;
+          startY = touch.clientY - translateY;
+          isDragging = true;
+        }
+        // If we're ending all touches
+        else if (e.touches.length === 0) {
+          isDragging = false;
+          if (touchTimeout) {
+            clearTimeout(touchTimeout);
+            touchTimeout = null;
+          }
+
+          // Close modal if tapping on the background (not the image) and not dragging
+          if (!hasDragged && e.target === modal) {
+            modal.style.display = 'none';
+          }
+        }
+
+        lastTouchCount = e.touches.length;
+      });
+
+      // Add code to close modal on tap when not dragged
+      // This is now handled in the main touchend handler above
+
+      // Set appropriate cursor based on zoom level
+      function updateCursor() {
+        modalImg.style.cursor = scale > 1? 'move' : 'default';
+      }
+
+      // Update transform with current scale and translation
+      function updateTransform() {
+        modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        updateCursor();
+      }
+    }
+  </script>
+
+</body>
+</html>
