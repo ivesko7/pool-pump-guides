@@ -364,7 +364,7 @@
     .image-modal {
       display: none;
       position: fixed;
-      z-index: 2000;
+      z-index: 10000; /* Much higher z-index */
       left: 0;
       top: 0;
       width: 100%;
@@ -453,6 +453,96 @@
     .guide-btn img {
       max-width: 26px;
       max-height: 26px;
+    }
+
+    /* Lid Types Popup Styles */
+    .lid-line {
+      display: flex;
+      align-items: center;
+      gap: .25rem;
+    }
+
+    .info-btn {
+      border: none;
+      background: none;
+      color: var(--link-color);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    dialog.material-dialog {
+      border: none;
+      border-radius: 8px;
+      padding: 1.5rem;
+      max-width: 500px;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      box-shadow: 0 4px 12px var(--shadow-color);
+      z-index: 2000; /* Ensure this is lower than image-modal z-index */
+    }
+
+    .lid-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    dialog.material-dialog h4 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+    }
+
+    dialog.material-dialog h5 {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .lid-image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+
+    .lid-grid img {
+      width: 100%;
+      display: block;
+      border-radius: 6px;
+      transition: transform 0.2s ease;
+    }
+
+    .lid-image-container:hover img {
+      transform: scale(1.05);
+    }
+
+    .btn-close {
+      margin-left: auto;
+      background: var(--link-color);
+      color: white;
+      border: none;
+      padding: .5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    dialog.material-dialog h4,
+    dialog.material-dialog h5 {
+      color: var(--text-color);
+    }
+
+    dialog.material-dialog footer {
+      display: flex;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    dialog.material-dialog footer a {
+      color: var(--link-color);
+      margin-right: auto;
     }
   </style>
 </head>
@@ -570,6 +660,7 @@
         <div class="pump-specs">
           <p><strong>Horsepower:</strong> 1.0 - 2.0 HP</p>
           <p><strong>Plumbing Size:</strong> 2"</p>
+          <p class="lid-line"><strong>Lid Types:</strong> Threaded (SPX3100D) / Knob (SPX3000D) <button class="info-btn" onclick="lidModal.showModal(); event.stopPropagation();" title="More about lids">ℹ️</button></p>
           <p><strong>Replacement Parts:</strong></p>
         </div>
         <ul class="part-list">
@@ -609,6 +700,7 @@
             <strong>Diffuser O‑Ring:</strong><br>
             SPX1600R&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX1600R" target="_blank">[🔍]</a></sub></sub>
           </li>
+
           <li>
             <strong>Pump Lid O‑Ring:</strong><br>
             SPX3000S&nbsp;&nbsp;<a href="https://www.pool360.com/Search?query=SPX3000S" target="_blank">[🔍]</a></sub></sub>
@@ -1360,16 +1452,29 @@
       }
     }
 
+    // Initialize lid dialog images
+    function initLidDialogImages() {
+      const lidImages = document.querySelectorAll('#lidModal .clickable-image');
+      lidImages.forEach(img => {
+        img.addEventListener('click', function() {
+          // Close the dialog when clicking on an image inside it
+          lidModal.close();
+        });
+      });
+    }
+
     // Initialize when DOM is loaded
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         initControls();
         initImageModal();
+        initLidDialogImages();
       });
     } else {
       // DOM already loaded
       initControls();
       initImageModal();
+      initLidDialogImages();
     }
 
     // Image Modal Functionality
@@ -1401,10 +1506,14 @@
       // Track if we're dragging to prevent accidental dismissal
       let hasDragged = false;
 
-      // Add click event to all pump images (excluding icons)
-      const pumpImages = document.querySelectorAll('.image-container img:not(.icon-no-zoom)');
-      pumpImages.forEach(img => {
+      // Add click event to all pump images and lid images (excluding icons)
+      const clickableImages = document.querySelectorAll('.image-container img:not(.icon-no-zoom), .clickable-image');
+      clickableImages.forEach(img => {
         img.addEventListener('click', function() {
+          // Close any open dialogs when opening the image viewer
+          const openDialogs = document.querySelectorAll('dialog[open]');
+          openDialogs.forEach(dialog => dialog.close());
+
           modalImg.src = this.src;
           modal.style.display = 'block';
 
@@ -1741,5 +1850,35 @@
       }
     }
   </script>
+
+  <!-- Lid Types Popup Dialog -->
+  <dialog id="lidModal" class="material-dialog">
+    <h4>Super II Strainer-Lid Variants</h4>
+    <div class="lid-grid">
+      <article>
+        <div class="lid-image-container">
+          <img src="./Hayward Residential Pool Pump Guide_files/SPX3100D.png" alt="Threaded-Twist lid" class="clickable-image">
+        </div>
+        <h5>Threaded-Twist</h5>
+        <p>Part #: <b>SPX3100D</b> <a href="https://www.pool360.com/Search?query=SPX3100D" target="_blank">[🔍]</a><br>
+           Standard on 1992-present housings.<br>
+           Uses O-ring <b>SPX3000S</b> <a href="https://www.pool360.com/Search?query=SPX3000S" target="_blank">[🔍]</a><br>
+           Rated 40 psi.</p>
+      </article>
+      <article>
+        <div class="lid-image-container">
+          <img src="./Hayward Residential Pool Pump Guide_files/SPX3000D.png" alt="Hand-Knob clamp lid" class="clickable-image">
+        </div>
+        <h5>Hand-Knob Clamp</h5>
+        <p>Part #: <b>SPX3000D</b> <a href="https://www.pool360.com/Search?query=SPX3000D" target="_blank">[🔍]</a><br>
+           Found on early SP3000 / SP3000X pots.<br>
+           Same O-ring <b>SPX3000S</b> <a href="https://www.pool360.com/Search?query=SPX3000S" target="_blank">[🔍]</a></p>
+      </article>
+    </div>
+    <footer>
+      <a href="https://www.pool360.com/Search?query=SP3100T" target="_blank">Lid wrench SP3100T</a>
+      <button onclick="lidModal.close()" class="btn-close">Close</button>
+    </footer>
+  </dialog>
 </body>
 </html>
